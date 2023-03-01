@@ -73,9 +73,9 @@ function dimg() {
     docker images --format {{ "\"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"" }} $@
 }
 
-export DOCKER_BUILDKIT=1
-
 # Fix completion when optional arguments are combined (`-i -t` -> `-it`)
 # https://github.com/docker/cli/issues/993
 zstyle ':completion:*:*:docker:*' option-stacking yes
 zstyle ':completion:*:*:docker-*:*' option-stacking yes
+
+# vim: ft=zsh
