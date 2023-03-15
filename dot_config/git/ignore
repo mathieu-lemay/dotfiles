@@ -1,4 +1,5 @@
 .idea
 .env
 .python-version
+.vim
 poetry.toml
