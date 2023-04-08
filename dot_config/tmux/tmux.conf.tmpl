@@ -1,6 +1,6 @@
 if-shell '[ -n "${ZSH_TMUX_TERM}" ]' 'set -g default-terminal $ZSH_TMUX_TERM' 'set -g default-terminal screen'
-set -ga terminal-overrides ",xterm*:Tc"
-set -ga terminal-overrides ",tmux-256color:Tc"
+set -sa terminal-overrides ",xterm*:RGB"
+set -sa terminal-overrides ",tmux-256color:RGB"
 
 # Set C-a as the prefix
 unbind C-b

@@ -1,0 +1,48 @@
+require("config.plugins.lazy")
+
+plugins = {
+    { "jnurmine/Zenburn", lazy = false, priority = 100 },
+    "vim-airline/vim-airline",
+    "vim-airline/vim-airline-themes",
+    "christoomey/vim-tmux-navigator",
+    "scrooloose/nerdcommenter",
+    "ntpeters/vim-better-whitespace",
+    "mhinz/vim-signify",
+    "tpope/vim-surround",
+    "tpope/vim-repeat",
+    "jiangmiao/auto-pairs",
+    "907th/vim-auto-save",
+    "junegunn/vim-slash",
+    "junegunn/vim-easy-align",
+    "junegunn/fzf",
+    "junegunn/fzf.vim",
+    "easymotion/vim-easymotion",
+    {
+        "ryanoasis/vim-devicons",
+        dependencies = {
+            "vim-airline/vim-airline",
+            "vim-airline/vim-airline-themes",
+        }
+    },
+    { "cespare/vim-toml", branch = "main" },
+    "NoahTheDuke/vim-just",
+    "Glench/Vim-Jinja2-Syntax",
+    "gpanders/editorconfig.nvim",
+    {{- if eq .nvim_enable_coc true }}
+    { "neoclide/coc.nvim", branch = "release", cond = not vim.opt.diff:get() },
+    {{- end }}
+    { "junegunn/vim-peekaboo", cond = not vim.opt.diff:get() },
+    { "glepnir/indent-guides.nvim", cond = vim.g.vscode == nil }
+}
+
+require("lazy").setup(plugins)
+
+require("config.plugins.airline")
+require("config.plugins.auto-save")
+require("config.plugins.better-whitespace")
+{{- if eq .nvim_enable_coc true }}
+require("config.plugins.coc-nvim")
+{{- end }}
+require("config.plugins.easy-align")
+require("config.plugins.fzf")
+require("config.plugins.indent-guides")
