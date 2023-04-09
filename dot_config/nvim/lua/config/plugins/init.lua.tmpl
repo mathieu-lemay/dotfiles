@@ -21,6 +21,16 @@ plugins = {
     { "neoclide/coc.nvim", branch = "release", cond = not vim.opt.diff:get() },
     {{- end }}
     { "ntpeters/vim-better-whitespace" },
+    {
+        "nvim-neotest/neotest",
+        dependencies = {
+            "antoinemadec/FixCursorHold.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-neotest/neotest-python",
+            "nvim-treesitter/nvim-treesitter",
+            "rouge8/neotest-rust",
+        },
+    },
     { "nvim-treesitter/nvim-treesitter" },
     {
         "ryanoasis/vim-devicons",
@@ -47,6 +57,7 @@ require("config.plugins.coc-nvim")
 require("config.plugins.easy-align")
 require("config.plugins.fzf")
 require("config.plugins.indent-guides")
+require("config.plugins.neotest")
 require("config.plugins.treesitter")
 
 -- vim: ft=lua
