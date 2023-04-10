@@ -1,3 +1,5 @@
+local utils = require("config.utils")
+
 require("neotest").setup({
     adapters = {
         require("neotest-python")({
@@ -35,13 +37,13 @@ end)
 -- Toggle output panel
 vim.keymap.set("n", "<leader>to", function()
     require("neotest").output_panel.toggle()
-    --utils.focus_win "Neotest output"
+    utils.focus_win("Neotest Output")
 end)
 
 -- Toggle summary
 vim.keymap.set("n", "<leader>ts", function()
     require("neotest").summary.toggle()
-    --utils.focus_win "Neotest Summary"
+    utils.focus_win("Neotest Summary")
 end)
 
 -- Go to Previous failed test
