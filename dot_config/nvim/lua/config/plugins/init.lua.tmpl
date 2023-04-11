@@ -56,7 +56,9 @@ require("config.plugins.coc-nvim")
 {{- end }}
 require("config.plugins.easy-align")
 require("config.plugins.fzf")
-require("config.plugins.indent-guides")
+if vim.g.vscode == null then
+    require("config.plugins.indent-guides")
+end
 require("config.plugins.neotest")
 require("config.plugins.treesitter")
 
