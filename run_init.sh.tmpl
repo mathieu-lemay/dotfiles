@@ -30,15 +30,8 @@ install_nvim_plugins() {
         return
     fi
 
-    if [ ! -e "${HOME}/.config/nvim/autoload/plug.vim" ]; then
-        info "Installing vim-plug"
-        curl --create-dirs -fLo "${HOME}/.config/nvim/autoload/plug.vim" \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    fi
-
     if ask_yes_no "Install vim plugins [y/N]?" "n"; then
-        # TERM workaround to avoid loading non existing color scheme
-        TERM=xterm nvim -S "{{ .chezmoi.sourceDir }}/vimplug.lock" +qall
+        nvim --headless '+Lazy! restore' +qall
     fi
 }
 

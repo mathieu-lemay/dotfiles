@@ -1,0 +1,65 @@
+require("config.plugins.lazy")
+
+plugins = {
+    { "907th/vim-auto-save" },
+    { "Glench/Vim-Jinja2-Syntax" },
+    { "NoahTheDuke/vim-just" },
+    { "cespare/vim-toml", branch = "main" },
+    { "christoomey/vim-tmux-navigator" },
+    { "easymotion/vim-easymotion" },
+    { "gpanders/editorconfig.nvim" },
+    { "jiangmiao/auto-pairs" },
+    { "jnurmine/Zenburn", lazy = false, priority = 100 },
+    { "junegunn/fzf" },
+    { "junegunn/fzf.vim" },
+    { "junegunn/vim-easy-align" },
+    { "junegunn/vim-peekaboo", cond = not vim.opt.diff:get() },
+    { "junegunn/vim-slash" },
+    { "lukas-reineke/indent-blankline.nvim", cond = vim.g.vscode == nil },
+    { "mhinz/vim-signify" },
+    {{- if eq .nvim_enable_coc true }}
+    { "neoclide/coc.nvim", branch = "release", cond = not vim.opt.diff:get() },
+    {{- end }}
+    { "ntpeters/vim-better-whitespace" },
+    {
+        "nvim-neotest/neotest",
+        dependencies = {
+            "antoinemadec/FixCursorHold.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-neotest/neotest-python",
+            "nvim-treesitter/nvim-treesitter",
+            "rouge8/neotest-rust",
+        },
+    },
+    { "nvim-treesitter/nvim-treesitter" },
+    {
+        "ryanoasis/vim-devicons",
+        dependencies = {
+            "vim-airline/vim-airline",
+            "vim-airline/vim-airline-themes",
+        },
+    },
+    { "scrooloose/nerdcommenter" },
+    { "tpope/vim-repeat" },
+    { "tpope/vim-surround" },
+    { "vim-airline/vim-airline" },
+    { "vim-airline/vim-airline-themes" },
+}
+
+require("lazy").setup(plugins)
+
+require("config.plugins.airline")
+require("config.plugins.auto-save")
+require("config.plugins.better-whitespace")
+{{- if eq .nvim_enable_coc true }}
+require("config.plugins.coc-nvim")
+{{- end }}
+require("config.plugins.easy-align")
+require("config.plugins.fzf")
+if vim.g.vscode == null then
+    require("config.plugins.indent-guides")
+end
+require("config.plugins.neotest")
+require("config.plugins.treesitter")
+
+-- vim: ft=lua
