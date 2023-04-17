@@ -24,6 +24,11 @@ vim.keymap.set("n", "<leader>ta", function()
     require("neotest").run.run({ suite = true })
 end)
 
+-- Run last
+vim.keymap.set("n", "<leader>tt", function()
+    require("neotest").run.run_last()
+end)
+
 -- Debug nearest test
 vim.keymap.set("n", "<leader>td", function()
     require("neotest").run.run({ strategy = "dap" })
