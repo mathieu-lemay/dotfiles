@@ -72,5 +72,9 @@ vim.keymap.set(
 )
 vim.keymap.set("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
+-- Make <CR> to accept selected completion item or notify coc.nvim to format
+-- <C-g>u breaks current undo, please make your own choice
+vim.keymap.set("i", "<cr>", [[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]], opts)
+
 -- Use <c-space> to trigger completion
 vim.keymap.set("i", "<c-space>", "coc#refresh()", { silent = true, expr = true })
