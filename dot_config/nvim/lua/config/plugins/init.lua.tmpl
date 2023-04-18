@@ -8,7 +8,6 @@ plugins = {
     { "christoomey/vim-tmux-navigator" },
     { "easymotion/vim-easymotion" },
     { "gpanders/editorconfig.nvim" },
-    { "jiangmiao/auto-pairs" },
     { "jnurmine/Zenburn", lazy = false, priority = 100 },
     { "junegunn/fzf" },
     { "junegunn/fzf.vim" },
@@ -16,6 +15,7 @@ plugins = {
     { "junegunn/vim-peekaboo", cond = not vim.opt.diff:get() },
     { "junegunn/vim-slash" },
     { "lukas-reineke/indent-blankline.nvim", cond = vim.g.vscode == nil },
+    { "m4xshen/autoclose.nvim" },
     { "mhinz/vim-signify" },
     {{- if eq .nvim_enable_coc true }}
     { "neoclide/coc.nvim", branch = "release", cond = not vim.opt.diff:get() },
@@ -50,6 +50,7 @@ require("lazy").setup(plugins)
 
 require("config.plugins.airline")
 require("config.plugins.auto-save")
+require("config.plugins.autoclose")
 require("config.plugins.better-whitespace")
 {{- if eq .nvim_enable_coc true }}
 require("config.plugins.coc-nvim")
