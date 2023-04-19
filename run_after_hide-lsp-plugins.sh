@@ -3,6 +3,10 @@ set -eu
 
 LOCAL_APPLICATIONS_DIR="${HOME}/.local/share/applications"
 
+if [ ! -d "${LOCAL_APPLICATIONS_DIR}" ]; then
+    mkdir -p "${LOCAL_APPLICATIONS_DIR}"
+fi
+
 find "${LOCAL_APPLICATIONS_DIR}" -name '*lsp_plug*.desktop' -delete
 
 while IFS= read -r -d '' file
