@@ -65,6 +65,23 @@ function docker-kill-all() {
     docker ps -q | {{ .command.xargs }} docker kill
 }
 
+function docker-tail() {
+    container="${1:-}"
+    if [[ -z "${container}" ]] && command -v fzf &>/dev/null; then
+        container="$(docker ps --format={{ "\"{{.Names}}\"" }} | fzf --select-1 --exit-0)"
+    fi
+
+    if [[ -z "${container}" ]]; then
+        echo "No container specified" >&2
+        return 1
+    fi
+
+    while :; do
+        docker logs -f "${container}"
+        sleep 1
+    done
+}
+
 function dps() {
     docker ps --format {{ "\"table {{.Names}}\\t{{.Command}}\\t{{.Status}}\\t{{printf \\\"%.65s\\\" .Image }}\"" }} $@
 }
