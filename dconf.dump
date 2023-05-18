@@ -17,6 +17,9 @@ send-events='disabled-on-external-mouse'
 tap-to-click=true
 two-finger-scrolling-enabled=true
 
+[org/gnome/desktop/privacy]
+remember-recent-files=false
+
 [org/gnome/desktop/sound]
 event-sounds=false
 
