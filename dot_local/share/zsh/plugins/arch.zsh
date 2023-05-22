@@ -76,13 +76,24 @@ elif type yay &>/dev/null; then
     compdef pm='yay'
 fi
 
-function aur-get() {
+function arch-clone() {
     if [ $# -lt 1 ]; then
         echo "Usage: $0 packages"
         exit 1
     fi
 
-    for app in "$@"; do
-        git clone "https://aur.archlinux.org/${app}.git"
+    for pkg in "$@"; do
+        git clone "https://gitlab.archlinux.org/archlinux/packaging/packages/${app}.git"
+    done
+}
+
+function aur-clone() {
+    if [ $# -lt 1 ]; then
+        echo "Usage: $0 packages"
+        exit 1
+    fi
+
+    for pkg in "$@"; do
+        git clone "https://aur.archlinux.org/${pkg}.git"
     done
 }
