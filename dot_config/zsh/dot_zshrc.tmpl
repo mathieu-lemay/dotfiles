@@ -86,6 +86,12 @@ bindkey "^[[1;5C" forward-word
 bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
 bindkey '^[[3~' delete-char
+{{- else if eq .osid "linux-opensuse-tumbleweed" }}
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
+bindkey '^[[3~' delete-char
 {{- else }}
 bindkey "^[OA" history-beginning-search-backward-end
 bindkey "^[OB" history-beginning-search-forward-end
