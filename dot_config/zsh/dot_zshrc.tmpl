@@ -80,13 +80,7 @@ bindkey "^[[A" history-beginning-search-backward-end
 bindkey "^[[B" history-beginning-search-forward-end
 bindkey "^W" backward-kill-word
 bindkey "^R" history-incremental-search-backward
-{{- if eq .chezmoi.os "darwin" }}
-bindkey "^[[1;5D" backward-word
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1~" beginning-of-line
-bindkey "^[[4~" end-of-line
-bindkey '^[[3~' delete-char
-{{- else if eq .osid "linux-opensuse-tumbleweed" }}
+{{- if or (eq .osid "linux-opensuse-tumbleweed") (eq .chezmoi.os "darwin") }}
 bindkey "^[[1;5D" backward-word
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1~" beginning-of-line

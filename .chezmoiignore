@@ -16,6 +16,9 @@ hide-lsp-plugins.sh
 .config/yay
 .local/share/zsh/plugins/arch.zsh
 {{- end }}
+{{- if ne .osid "linux-opensuse-tumbleweed" }}
+.local/share/zsh/plugins/opensuse.zsh
+{{- end }}
 {{- if ne .chezmoi.os "darwin" }}
 .local/share/zsh/plugins/brew.zsh
 {{- end }}
