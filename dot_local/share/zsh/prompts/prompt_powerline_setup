@@ -144,7 +144,6 @@ prompt_nvm() {
 
 prompt_shell_lvl() {
     ((lvl = ${SHLVL} - 1))
-    [[ -n "${TMUX:-}" ]] && ((lvl--))
     [[ -n "${POETRY_ACTIVE:-}" ]] && ((lvl--))
     [[ ${lvl} -gt 0 ]] && rprompt_segment ${red} ${black} "Subshell ${lvl}"
 }
