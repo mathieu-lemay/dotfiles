@@ -45,7 +45,7 @@ function clip() {
     if [[ $# -ge 1 ]]; then
         command cat "$1" | {{ .command.clip }}
     else
-        {{ .command.clip }}
+        perl -pe 'chomp if eof' | {{ .command.clip }}
     fi
 }
 
