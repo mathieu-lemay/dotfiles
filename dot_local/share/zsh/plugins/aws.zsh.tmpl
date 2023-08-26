@@ -1,3 +1,5 @@
+command -v aws &> /dev/null || return
+
 AWS_PROFILE_CACHE_FILE="${XDG_CACHE_HOME:-${HOME}/.cache}/aws/profile"
 AWS_SSO_CHECK_FILE="${XDG_CACHE_HOME:-${HOME}/.cache}/aws/last_sso_check"
 
