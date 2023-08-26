@@ -48,7 +48,7 @@ font_size 10.0
 #: shaped string, you will get the character that would be there had
 #: the the string been LTR. For example, assuming the Hebrew word
 #: ירושלים, selecting the character that on the screen appears to be ם
-#: actually writes into the selection buffer the character י.  kitty's
+#: actually writes into the selection buffer the character י. kitty's
 #: default behavior is useful in conjunction with a filter to reverse
 #: the word order, however, if you wish to manipulate RTL glyphs, it
 #: can be very challenging to work with, so this option is provided to
@@ -216,8 +216,8 @@ font_size 10.0
 #: uneven.
 
 #: You can fine tune the actual contrast curve used for glyph
-#: composition by specifying two space separated numbers for this
-#: setting.
+#: composition by specifying up to two space-separated numbers for
+#: this setting.
 
 #: The first number is the gamma adjustment, which controls the
 #: thickness of dark text on light backgrounds. Increasing the value
@@ -231,6 +231,24 @@ font_size 10.0
 #: The second number is an additional multiplicative contrast. It is
 #: percentage ranging from 0 to 100. The default value is 0 on Linux
 #: and 30 on macOS.
+
+#: If you wish to achieve similar looking thickness in light and dark
+#: themes, a good way to experiment is start by setting the value to
+#: 1.0 0 and use a dark theme. Then adjust the second parameter until
+#: it looks good. Then switch to a light theme and adjust the first
+#: parameter until the perceived thickness matches the dark theme.
+
+# text_fg_override_threshold 0
+
+#: The minimum accepted difference in luminance between the foreground
+#: and background color, below which kitty will override the
+#: foreground color. It is percentage ranging from 0 to 100. If the
+#: difference in luminance of the foreground and background is below
+#: this threshold, the foreground color will be set to white if the
+#: background is dark or black if the background is light. The default
+#: value is 0, which means no overriding is performed. Useful when
+#: working with applications that use colors that do not contrast well
+#: with your preferred color scheme.
 
 #: ]]]
 
@@ -316,7 +334,7 @@ cursor #d9d9d9
 #: the scrollback buffer with pager. This separate buffer is not
 #: available for interactive scrolling but will be piped to the pager
 #: program when viewing scrollback buffer in a separate window. The
-#: current implementation stores the data in UTF-8, so approximatively
+#: current implementation stores the data in UTF-8, so approximately
 #: 10000 lines per megabyte at 100 chars per line, for pure ASCII,
 #: unformatted text. A value of zero or less disables this feature.
 #: The maximum allowed size is 4GB. Note that on config reload if this
@@ -432,7 +450,7 @@ cursor #d9d9d9
 #:     If the text being pasted is a URL and the cursor is at a shell prompt,
 #:     automatically quote the URL (needs shell_integration).
 #: confirm:
-#:     Confirm the paste if bracketed paste mode is not active or there is more
+#:     Confirm the paste if bracketed paste mode is not active or there is
 #:     a large amount of text being pasted.
 #: filter:
 #:     Run the filter_paste() function from the file paste-actions.py in
@@ -827,10 +845,14 @@ enable_audio_bell no
 # hide_window_decorations no
 
 #: Hide the window decorations (title-bar and window borders) with
-#: yes. On macOS, titlebar-only can be used to only hide the titlebar.
-#: Whether this works and exactly what effect it has depends on the
-#: window manager/operating system. Note that the effects of changing
-#: this option when reloading config are undefined.
+#: yes. On macOS, titlebar-only and titlebar-and-corners can be used
+#: to only hide the titlebar and the rounded corners. Whether this
+#: works and exactly what effect it has depends on the window
+#: manager/operating system. Note that the effects of changing this
+#: option when reloading config are undefined. When using titlebar-
+#: only, it is useful to also set window_margin_width and
+#: placement_strategy to prevent the rounded corners from clipping
+#: text. Or use titlebar-and-corners.
 
 # window_logo_path none
 
@@ -853,20 +875,18 @@ enable_audio_bell no
 #: The amount the logo should be faded into the background. With zero
 #: being fully faded and one being fully opaque.
 
-# resize_debounce_time 0.1
+# resize_debounce_time 0.1 0.5
 
-#: The time to wait before redrawing the screen when a resize event is
-#: received (in seconds). On platforms such as macOS, where the
-#: operating system sends events corresponding to the start and end of
-#: a resize, this number is ignored.
-
-# resize_draw_strategy static
-
-#: Choose how kitty draws a window while a resize is in progress. A
-#: value of static means draw the current window contents, mostly
-#: unchanged. A value of scale means draw the current window contents
-#: scaled. A value of blank means draw a blank window. A value of size
-#: means show the window size in cells.
+#: The time to wait before redrawing the screen during a live resize
+#: of the OS window, when no new resize events have been received,
+#: i.e. when resizing is either paused or finished. On platforms such
+#: as macOS, where the operating system sends events corresponding to
+#: the start and end of a live resize, the second number is used for
+#: redraw-after-pause since kitty can distinguish between a pause and
+#: end of resizing.  On such systems the first number is ignored and
+#: redraw is immediate after end of resize.  On other systems the
+#: first number is used so that kitty is "ready" quickly after the end
+#: of resizing, while not also continuously redrawing, to save energy.
 
 # resize_in_steps no
 
@@ -1006,13 +1026,13 @@ tab_title_template "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{index
 #: title
 #:     The current tab title.
 #: index
-#:     The tab index useable with goto_tab N goto_tab shortcuts.
+#:     The tab index usable with goto_tab N goto_tab shortcuts.
 #: layout_name
 #:     The current layout name.
 #: num_windows
 #:     The number of windows in the tab.
 #: num_window_groups
-#:     The number of window groups (not counting overlay windows) in the tab.
+#:     The number of window groups (a window group is a window and all of its overlay windows) in the tab.
 #: tab.active_wd
 #:     The working directory of the currently active window in the tab
 #:     (expensive, requires syscall). Use active_oldest_wd to get
@@ -1086,11 +1106,26 @@ background #3f3f3f
 #: color in the editor color scheme. Or use the escape codes to set
 #: the terminals default colors in a shell script to launch your
 #: editor. Be aware that using a value less than 1.0 is a (possibly
-#: significant) performance hit. If you want to dynamically change
+#: significant) performance hit. When using a low value for this
+#: setting, it is desirable that you set the background color to a
+#: color the matches the general color of the desktop background, for
+#: best text rendering.  If you want to dynamically change
 #: transparency of windows, set dynamic_background_opacity to yes
 #: (this is off by default as it has a performance cost). Changing
 #: this option when reloading the config will only work if
 #: dynamic_background_opacity was enabled in the original config.
+
+# background_blur 0
+
+#: Set to a positive value to enable background blur (blurring of the
+#: visuals behind a transparent window) on platforms that support it.
+#: Only takes effect when background_opacity is less than one. On
+#: macOS, this will also control the blur radius (amount of blurring).
+#: Setting it to too high a value will cause severe performance issues
+#: and/or rendering artifacts. Usually, values up to 64 work well.
+#: Note that this might cause performance issues, depending on how the
+#: platform implements it, so use with care. Currently supported on
+#: macOS and KDE/X11.
 
 # background_image none
 
@@ -1099,7 +1134,9 @@ background #3f3f3f
 # background_image_layout tiled
 
 #: Whether to tile, scale or clamp the background image. The value can
-#: be one of tiled, mirror-tiled, scaled, clamped or centered.
+#: be one of tiled, mirror-tiled, scaled, clamped, centered or
+#: cscaled. The scaled and cscaled values scale the image to the
+#: window size, with cscaled preserving the image aspect ratio.
 
 # background_image_linear no
 
@@ -1534,8 +1571,7 @@ wayland_titlebar_color background
 # macos_window_resizable yes
 
 #: Disable this if you want kitty top-level OS windows to not be
-#: resizable on macOS. Changing this option by reloading the config
-#: will only affect newly created OS windows.
+#: resizable on macOS.
 
 # macos_thicken_font 0
 
@@ -1945,7 +1981,7 @@ map kitty_mod+r no_op
 # map kitty_mod+7 seventh_window
 # map cmd+7       seventh_window
 
-#: Eight window
+#: Eighth window
 
 # map kitty_mod+8 eighth_window
 # map cmd+8       eighth_window
@@ -2237,19 +2273,37 @@ map kitty_mod+space kitten unicode_input
 #::  If you want to operate on all kitty windows instead of just the
 #::  current one, use all instead of active.
 
-#::  It is also possible to remap Ctrl+L to both scroll the current
-#::  screen contents into the scrollback buffer and clear the screen,
-#::  instead of just clearing the screen, for example, for ZSH add the
-#::  following to ~/.zshrc:
+#::  Some useful functions that can be defined in the shell rc files
+#::  to perform various kinds of clearing of the current window:
+
+#::  .. code-block:: sh
+
+#::      clear-only-screen() {
+#::          printf "\e[H\e[2J"
+#::      }
+
+#::      clear-screen-and-scrollback() {
+#::          printf "\e[H\e[3J"
+#::      }
+
+#::      clear-screen-saving-contents-in-scrollback() {
+#::          printf "\e[H\e[22J"
+#::      }
+
+#::  For instance, using these escape codes, it is possible to remap
+#::  Ctrl+L to both scroll the current screen contents into the
+#::  scrollback buffer and clear the screen, instead of just clearing
+#::  the screen. For ZSH, in ~/.zshrc, add:
 
 #::  .. code-block:: zsh
 
-#::      scroll-and-clear-screen() {
-#::          printf '\n%.0s' {1..$LINES}
-#::          zle clear-screen
+#::      ctrl_l() {
+#::          builtin print -rn -- $'\r\e[0J\e[H\e[22J' >"$TTY"
+#::          builtin zle .reset-prompt
+#::          builtin zle -R
 #::      }
-#::      zle -N scroll-and-clear-screen
-#::      bindkey '^l' scroll-and-clear-screen
+#::      zle -N ctrl_l
+#::      bindkey '^l' ctrl_l
 
 #: Clear up to cursor line
 
