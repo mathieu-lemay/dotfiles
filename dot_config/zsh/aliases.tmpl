@@ -4,13 +4,13 @@ alias exec='exec '
 alias xargs='xargs '
 
 # ls aliases
-if installed 'exa'; then
-    alias ls='exa --group-directories-first'
+if installed 'eza'; then
+    alias ls='eza --group-directories-first'
     alias ll='ls -l --time-style=long-iso -b'
     alias la='ls -a'
     alias lf='ll -a'
     alias lr='ll -a -smod'
-    compdef ls='exa'
+    compdef ls='eza'
 else
     alias ls='ls --color=auto -v --group-directories-first'
     alias ll='ls -lh'
