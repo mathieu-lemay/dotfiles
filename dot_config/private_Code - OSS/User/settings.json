@@ -1,7 +1,6 @@
 {
   "[dart]": {
     "editor.formatOnSave": true,
-    "editor.formatOnType": true,
     "editor.rulers": [
       80
     ],
@@ -12,15 +11,16 @@
     "editor.wordBasedSuggestions": false
   },
   "[python]": {
-    "editor.formatOnType": true
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
-  "dart.flutterHotRestartOnSave": false,
-  "dart.flutterSdkPath": "/home/mathieu/.local/opt/flutter",
   "editor.fontFamily": "'InputMono Nerd Font Mono', 'Noto Sans Mono', monospace",
   "editor.formatOnSave": true,
   "editor.scrollBeyondLastLine": false,
   "explorer.confirmDelete": false,
   "explorer.excludeGitIgnore": true,
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
   "files.autoSave": "afterDelay",
   "files.exclude": {
     "**/.coverage": true,
@@ -32,18 +32,16 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
-  "python.formatting.blackPath": "/usr/bin/black",
-  "python.formatting.provider": "black",
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Path": "/usr/bin/flake8",
-  "python.linting.mypyEnabled": true,
-  "python.linting.mypyPath": "/usr/bin/mypy",
+  "json.sortOnSave.enable": true,
   "python.venvFolders": [
     ".cache/pypoetry/virtualenvs"
   ],
   "python.venvPath": "~/.cache/pypoetry/virtualenvs",
+  "ruff.enableExperimentalFormatter": true,
   "simpleIcons.hideArrows": false,
+  "svelte.enable-ts-plugin": true,
   "terminal.integrated.env.linux": {
+    "ZSH_PROMPT": "simple",
     "ZSH_TMUX_AUTOSTART": "false"
   },
   "terminal.integrated.sendKeybindingsToShell": true,
