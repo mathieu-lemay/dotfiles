@@ -4,6 +4,7 @@ plugins = {
     { "907th/vim-auto-save" },
     { "Glench/Vim-Jinja2-Syntax" },
     { "NoahTheDuke/vim-just" },
+    { "akinsho/toggleterm.nvim", config = true },
     { "cespare/vim-toml", branch = "main" },
     { "christoomey/vim-tmux-navigator" },
     { "easymotion/vim-easymotion" },
@@ -61,6 +62,7 @@ if vim.g.vscode == null then
     require("config.plugins.indent-guides")
 end
 require("config.plugins.neotest")
+require("config.plugins.toggleterm")
 require("config.plugins.treesitter")
 
 -- vim: ft=lua
