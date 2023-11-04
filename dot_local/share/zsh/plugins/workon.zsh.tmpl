@@ -1,39 +1,53 @@
-function w() {
-    local srcdir workondir
+__workon_cd() {
+    BUFFER="builtin cd -- ${(q)1}"
+    zle accept-line
+    zle reset-prompt
+}
+
+__workon_err() {
+    echo "\n$@" >&2
+    zle redisplay
+}
+
+function __workon() {
+    local srcdir workondir q prj
     local -a searchdirs
 
     srcdir="${SRC_DIR:-${HOME}/src}"
     {{- if eq .chezmoi.hostname "xenomorph" }}
-    searchdirs=("${HOME}/src" "${HOME}/src/private" "${HOME}/src/boost")
+    searchdirs=("${HOME}/src" "${HOME}/src/private" "${HOME}/src/broadsign")
     {{- else }}
     searchdirs=("${HOME}/src")
     {{- end }}
 
-    if [[ -n "${1:-}" ]]; then
-        workondir="${srcdir}/${1}"
-        if [[ -d "${workondir}" ]]; then
-            cd "${workondir}"
-            return 0
-        fi
+    q="${BUFFER}"
+
+    if [[ -n "${q}" ]] && [[ -d "${srcdir}/${q}" ]]; then
+        __workon_cd "${srcdir}/${q}"
+        return 0
     fi
 
     prj=$(find "${=searchdirs}" -maxdepth 1 -mindepth 1 -type d -print \
         | sed "s@^${srcdir}/@@" \
-        | $(__fzfcmd) -q "${@:-}")
+        | $(__fzfcmd) -q "${BUFFER:-}")
 
     if [[ -z "${prj}" ]]; then
-        echo "No project selected" 1>&2
+        __workon_err "No project selected"
         return 2
     fi
 
     workondir="${srcdir}/${prj}"
-
-    if [[ -d "${workondir}" ]]; then
-        cd "${workondir}"
-    else
-        echo "Invalid environment: ${prj}" 1>&2
+    if [[ ! -d "${workondir}" ]]; then
+        __workon_err "Invalid environment: ${prj}"
         return 1
     fi
+
+    __workon_cd "${workondir}"
 }
+
+zle     -N             __workon
+bindkey -M emacs '^ '  __workon
+bindkey -M vicmd '^ '  __workon
+bindkey -M viins '^ '  __workon
 
 # vim: ft=zsh
