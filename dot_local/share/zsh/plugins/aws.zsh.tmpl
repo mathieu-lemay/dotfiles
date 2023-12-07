@@ -255,8 +255,6 @@ function aws-get-ipgranges {
     curl "https://ip-ranges.amazonaws.com/ip-ranges.json" | jq '.prefixes'
 }
 
-alias aws-local='aws --profile=default --endpoint-url=http://localhost:4566'
-
 # ]]]
 
 # Completion [[[
