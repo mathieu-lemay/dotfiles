@@ -35,6 +35,7 @@ alias hd='hexdump -C'
 alias dd='dd status=progress'
 alias rf='readlink -f'
 alias make='make -j {{ .makejobs }}'
+alias which='print -P "%F{red}Using type!%f"; type'
 
 {{- if eq .chezmoi.os "darwin" }}
 alias f='open .'
