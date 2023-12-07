@@ -12,12 +12,12 @@ set resume=true
 set shuffle=false
 
 # Formatting
-set format_current= %a - %l - %{?D?%D.}%02n. %t%= %y 
-set format_playlist= %-21%a %-21%l %{?D?%D.?  }%02n. %t%= [%{codec} (%4{bitrate}kbps)] %d 
-set format_playlist_va= %-21%a %-21%l %{?D?%D.?  }%02n. %t%= [%{codec} (%4{bitrate}kbps)] %d 
-set format_trackwin= %{?D?%D.?  }%02n. %t%= %g [%{codec} (%4{bitrate}kbps)] %d 
+set format_current= %a - %l - %{?totaldiscs>1?%D.}%02n. %t%= %y 
+set format_playlist= %-21%a %-21%l %{?totaldiscs>1?%D.?  }%02n. %t%= [%{codec} (%4{bitrate}kbps)] %d 
+set format_playlist_va= %-21%a %-21%l %{?totaldiscs?%D.?  }%02n. %t%= [%{codec} (%4{bitrate}kbps)] %d 
+set format_trackwin= %{?totaldiscs>1?%D.?  }%02n. %t%= %g [%{codec} (%4{bitrate}kbps)] %d 
 set format_trackwin_album= %y - %l 
-set format_trackwin_va= %{?D?%D.?  }%02n. %t (%a)%= %g [%{codec} (%4{bitrate}kbps)] %d 
+set format_trackwin_va= %{?totaldiscs>1?%D.?  }%02n. %t (%a)%= %g [%{codec} (%4{bitrate}kbps)] %d 
 set format_treewin=  %y. %l
 set format_treewin_artist=%{?A?%A?%a}
 
