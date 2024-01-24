@@ -8,14 +8,13 @@
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",
     "editor.tabCompletion": "onlySnippets",
-    "editor.wordBasedSuggestions": false
+    "editor.wordBasedSuggestions": "off"
   },
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
   "editor.fontFamily": "'InputMono Nerd Font Mono', 'Noto Sans Mono', monospace",
   "editor.formatOnSave": true,
-  "editor.scrollBeyondLastLine": false,
   "explorer.confirmDelete": false,
   "explorer.excludeGitIgnore": true,
   "extensions.experimental.affinity": {
@@ -36,7 +35,6 @@
     ".cache/pypoetry/virtualenvs"
   ],
   "python.venvPath": "~/.cache/pypoetry/virtualenvs",
-  "ruff.enableExperimentalFormatter": true,
   "simpleIcons.hideArrows": false,
   "svelte.enable-ts-plugin": true,
   "terminal.integrated.env.linux": {
