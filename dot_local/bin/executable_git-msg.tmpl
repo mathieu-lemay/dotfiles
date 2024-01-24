@@ -1,0 +1,14 @@
+#! /bin/bash
+
+set -eu -o pipefail
+
+. ~/.local/lib/log.sh
+
+prompt "Enter message (CTRL+d to end)"
+
+msg=$(</dev/stdin)
+msg="$(echo "$msg" | fold -s)"
+
+info "Message"
+echo "$msg"
+echo "$msg" | {{ .command.clip }}
