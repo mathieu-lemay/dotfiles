@@ -5,6 +5,7 @@ vim.g.coc_global_extensions = {
     "coc-docker",
     "coc-json",
     "coc-pyright",
+    "@yaegassy/coc-ruff",
     "coc-rust-analyzer",
     "coc-sh",
     "coc-yaml",
