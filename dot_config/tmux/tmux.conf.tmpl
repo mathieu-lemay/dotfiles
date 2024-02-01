@@ -32,7 +32,7 @@ set -g set-titles on
 set -g set-titles-string "#W [#U@#h]"
 
 # Colors and Status Line
-if-shell '[ ${ZSH_TRUE_COLOR:0} -eq 1 ]' \
+if-shell '[ ${ZSH_TRUE_COLOR:-0} -eq 1 ]' \
     'source ~/.config/tmux/themes/powerline.conf' \
     'source ~/.config/tmux/themes/16colors.conf'
 set -g status-interval 5
