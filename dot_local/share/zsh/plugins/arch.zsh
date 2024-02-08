@@ -1,6 +1,6 @@
 if type paru &>/dev/null; then
     pm() {
-        if [ -n "${VIRTUAL_ENV}" ]; then
+        if [ -n "${VIRTUAL_ENV:-}" ]; then
             echo "Can't run paru in venv"
             return 1
         fi
@@ -9,7 +9,7 @@ if type paru &>/dev/null; then
     }
 
     up() {
-        if [ -n "${VIRTUAL_ENV}" ]; then
+        if [ -n "${VIRTUAL_ENV:-}" ]; then
             echo "Can't run paru in venv"
             return 1
         fi
@@ -18,7 +18,7 @@ if type paru &>/dev/null; then
     }
 
     pmi() {
-        if [ -n "${VIRTUAL_ENV}" ]; then
+        if [ -n "${VIRTUAL_ENV:-}" ]; then
             echo "Can't run paru in venv"
             return 1
         fi
@@ -27,7 +27,7 @@ if type paru &>/dev/null; then
     }
 
     pmr() {
-        if [ -n "${VIRTUAL_ENV}" ]; then
+        if [ -n "${VIRTUAL_ENV:-}" ]; then
             echo "Can't run paru in venv"
             return 1
         fi
@@ -38,7 +38,7 @@ if type paru &>/dev/null; then
     compdef pm='paru'
 elif type yay &>/dev/null; then
     pm() {
-        if [ -n "${VIRTUAL_ENV}" ]; then
+        if [ -n "${VIRTUAL_ENV:-}" ]; then
             echo "Can't run yay in venv"
             return 1
         fi
@@ -47,7 +47,7 @@ elif type yay &>/dev/null; then
     }
 
     up() {
-        if [ -n "${VIRTUAL_ENV}" ]; then
+        if [ -n "${VIRTUAL_ENV:-}" ]; then
             echo "Can't run yay in venv"
             return 1
         fi
@@ -56,7 +56,7 @@ elif type yay &>/dev/null; then
     }
 
     pmi() {
-        if [ -n "${VIRTUAL_ENV}" ]; then
+        if [ -n "${VIRTUAL_ENV:-}" ]; then
             echo "Can't run yay in venv"
             return 1
         fi
@@ -65,7 +65,7 @@ elif type yay &>/dev/null; then
     }
 
     pmr() {
-        if [ -n "${VIRTUAL_ENV}" ]; then
+        if [ -n "${VIRTUAL_ENV:-}" ]; then
             echo "Can't run yay in venv"
             return 1
         fi
