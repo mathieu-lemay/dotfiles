@@ -20,7 +20,7 @@ if command -v k9s &>/dev/null; then
     function k9s() {
         aws-sso-login
 
-        command k9s
+        command k9s "$@"
     }
 fi
 
