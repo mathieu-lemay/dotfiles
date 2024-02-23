@@ -10,6 +10,9 @@ export LC_ALL="en_CA.UTF-8"
 # Use proper date format
 export LC_TIME="en_DK.UTF-8"
 
+# Use GCR SSH Agent
+export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-/run/user/1000/gcr/ssh}"
+
 # Respect XDG Base Directory spec
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
