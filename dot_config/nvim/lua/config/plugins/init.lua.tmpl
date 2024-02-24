@@ -13,7 +13,7 @@ plugins = {
     { "junegunn/fzf" },
     { "junegunn/fzf.vim" },
     { "junegunn/vim-easy-align" },
-    { "junegunn/vim-peekaboo", cond = not vim.opt.diff:get() },
+    { "junegunn/vim-peekaboo", cond = not vim.opt.diff:get() and vim.g.vscode == nil },
     { "junegunn/vim-slash" },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", cond = vim.g.vscode == nil },
     { "m4xshen/autoclose.nvim" },
