@@ -1,0 +1,50 @@
+[colors.bright]
+black = "#636363"
+blue = "#8cb0d3"
+cyan = "#8cd0d3"
+green = "#8faf9f"
+magenta = "#ec93d3"
+red = "#ecbcbc"
+white = "#f7f7f7"
+yellow = "#f0dfaf"
+
+[colors.normal]
+black = "#313131"
+blue = "#95a4b2"
+cyan = "#7cb5b5"
+green = "#7f9f7f"
+magenta = "#bc6c9c"
+red = "#dca3a3"
+white = "#d9d9d9"
+yellow = "#efdcbc"
+
+[colors.primary]
+background = "#3f3f3f"
+foreground = "#dcdccc"
+
+# [colors.search]
+# background = "#505050"
+# foreground = "#e8e8e8"
+
+[cursor.style]
+blinking = "On"
+
+[font]
+{{- if eq .chezmoi.os "darwin" }}
+size = 12.0
+{{- else }}
+size = 10.0
+{{- end }}
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[font.normal]
+family = "InputMono Nerd Font Mono"
+
+[window]
+opacity = 0.95
+startup_mode = "Maximized"
+
+# vim: ft=toml
