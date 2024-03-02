@@ -15,7 +15,7 @@ vim.g.coc_global_extensions = {
 vim.opt.cmdheight = 2
 -- Smaller updatetime for CursorHold & CursorHoldI
 vim.opt.updatetime = 300
--- don"t give |ins-completion-menu| messages.
+-- don't give |ins-completion-menu| messages.
 vim.opt.shortmess:append({ c = true })
 -- always show signcolumns
 vim.opt.signcolumn = "yes"
