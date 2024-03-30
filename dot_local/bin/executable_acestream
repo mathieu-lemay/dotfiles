@@ -1,10 +1,13 @@
-#! /bin/bash -eu
+#! /bin/bash
+
+set -eu
 
 info()    { printf "\\e[32m[INFO]\\e[0m    %s\\n" "$*" >&2 ; }
-info2()   { printf "\\e[32m[INFO]\\e[0m    %s"    "$*" >&2 ; }
+warning() { printf "\\e[33m[WARNING]\\e[0m %s\\n" "$*" >&2 ; }
+error()   { printf "\\e[31m[ERROR]\\e[0m   %s\\n" "$*" >&2 ; }
 fatal()   { printf "\\e[35m[FATAL]\\e[0m   %s\\n" "$*" >&2 ; exit 1 ; }
 
-IMAGE="blaiseio/acestream"
+IMAGE="acidrain/acestream"
 PORT="6878"
 
 if [ $# -ne 1 ]; then
@@ -13,25 +16,53 @@ fi
 
 stream_id="$1"
 
-export PATH="$PATH:/usr/local/bin"
+# export PATH="$PATH:/usr/local/bin"
 
 if ! docker ps &> /dev/null; then
     fatal "Docker not running"
 fi
 
+retry() {
+    if [ $# -lt 3 ]; then
+        fatal "Usage: $0 max-tries retry-delay command [args...]"
+    fi
+
+    MAX_TRIES=$1
+    RETRY_DELAY=$2
+    shift 2
+
+    command_repr="$*"
+    count=0
+
+    [ ${#command_repr} -gt 80 ] && command_repr="$(echo "${command_repr}" | cut -c 1-77)..."
+
+    until "$@"; do
+        exit=$?
+        count=$((count + 1))
+
+        msg="Attempt ${count}/${MAX_TRIES} for command '${command_repr}' exited with code ${exit}"
+
+        if [[ ${count} -lt ${MAX_TRIES} ]]; then
+            warning "${msg}, retrying in ${RETRY_DELAY} seconds."
+            sleep "${RETRY_DELAY}"
+        else
+            error "${msg}, no more retries left."
+            exit "${exit}"
+        fi
+    done
+}
+
+docker rm -f acestream-server
+
 # Start acestream server if not running
 if ! nc -z 127.0.0.1 "$PORT" &> /dev/null; then
-    info2 "Starting acestream server"
-    docker run --rm --detach \
+    info "Starting acestream server"
+    docker run --detach \
         --publish "$PORT:$PORT" \
         --name="acestream-server" "$IMAGE" 1> /dev/null
 
     # Wait until acestream server runs
-    until curl "http://127.0.0.1:${PORT}/webui/api/service?method=get_version" &> /dev/null; do
-        printf "."
-        sleep 0.5
-    done
-    printf "\n"
+    retry 5 1 curl -sf "http://127.0.0.1:${PORT}/webui/api/service?method=get_version";
 fi
 info "Acestream server is running"
 
