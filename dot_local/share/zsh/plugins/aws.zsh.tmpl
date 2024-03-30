@@ -123,7 +123,13 @@ function aws-eks-get-token() {
     aws eks get-token --cluster-name preprod | jq -r '.status.token'
 }
 
+function aws-sso-enabled() {
+    grep '^\[sso-session ' $AWS_CONFIG_FILE &> /dev/null
+}
+
 function aws-sso-session-expired() {
+    aws-sso-enabled || return 1
+
     local ttl
 
     ttl=$((60*8))
@@ -134,6 +140,8 @@ function aws-sso-session-expired() {
 }
 
 function aws-sso-login() {
+    aws-sso-enabled || return 0
+
     if [[ "${1:-}" != "-f" ]] && ! aws-sso-session-expired; then
         return 0
     fi
