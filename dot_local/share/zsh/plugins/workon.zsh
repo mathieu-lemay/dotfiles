@@ -46,6 +46,7 @@ function __workon() {
     searchdirs=$(cat "${__WORKON_LIST_FILE}")
     prj=$(find "${=searchdirs}" -maxdepth 1 -mindepth 1 -type d -print \
         | sed "s@^${__WORKON_BASE_DIR}/@@" \
+        | sort \
         | $(__fzfcmd) -q "${BUFFER:-}")
 
     if [[ -z "${prj}" ]]; then
