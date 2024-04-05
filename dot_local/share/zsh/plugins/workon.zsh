@@ -27,7 +27,6 @@ __workon_add() {
 }
 
 function __workon() {
-    set -u
     local workondir q prj
     local -a searchdirs
 

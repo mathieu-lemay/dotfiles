@@ -35,6 +35,21 @@ install_nvim_plugins() {
     fi
 }
 
+install_zinit() {
+    ZINIT_INSTALL_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+    if [[ ! -d "${ZINIT_INSTALL_DIR}/.git" ]]; then
+        info "Installing zinit"
+        mkdir -p "$(dirname "${ZINIT_INSTALL_DIR}")"
+        git clone https://github.com/zdharma-continuum/zinit.git "${ZINIT_INSTALL_DIR}"
+    else
+        info "Updating zinit"
+        pushd "${ZINIT_INSTALL_DIR}" > /dev/null
+        git pull
+        popd > /dev/null
+    fi
+}
+
 install_tmux_plugin_manager() {
     if ! command -v tmux &> /dev/null; then
         warning "$0: tmux not installed: skipping"
@@ -133,6 +148,7 @@ sync_library_fonts() {
 }
 
 install_nvim_plugins
+install_zinit
 install_tmux_plugin_manager
 install_fzf_git
 install_cmus_notify
