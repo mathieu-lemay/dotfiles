@@ -9,6 +9,7 @@
 	signingkey = {{ .signingkey }}
 	{{- end}}
 [commit]
+	verbose = true
 	{{- if ne .signingkey "" }}
 	gpgsign = true
 	{{- end}}
@@ -74,17 +75,17 @@
 	fontdiff = -family \"Noto Mono\" -size 10 -weight normal -slant roman -underline 0 -overstrike 0
 	tabsize = 4
 [diff]
+	algorithm = histogram
 	tool = meld
 [merge]
-	conflictstyle = diff3
-[cola]
-	spellcheck = false
-	tabwidth = 4
+	conflictstyle = zdiff3
 [url "https://"]
 	insteadOf = git://
 [includeIf "gitdir:~/src/broadsign/**"]
 	path = config.broadsign
 [help]
-	autocorrect = 10
+	autocorrect = prompt
+[log]
+	date = iso
 
 # vim: set noet syntax=gitconfig:
