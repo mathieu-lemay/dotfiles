@@ -11,12 +11,12 @@ packages:
       - jq
       - lrzip
       - neovim
+      - npm
       - ripgrep
       - rust-analyzer
       - rustup
       - sd
       - tmux
-      - yarn
       - xsel
   macos:
     brew:
@@ -33,10 +33,10 @@ packages:
       - lrzip
       - neovim
       - node
+      - npm
       - ripgrep
       - rust-analyzer
       - rustup-init
       - sd
       - terminal-notifier
       - tmux
-      - yarn
