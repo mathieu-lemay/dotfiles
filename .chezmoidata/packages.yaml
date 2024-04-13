@@ -1,0 +1,18 @@
+packages:
+  linux:
+    arch:
+      - bat
+      - cargo
+      - colordiff
+      - direnv
+      - eza
+      - fd
+      - fzf
+      - handlr-regex
+      - jq
+      - lrzip
+      - ripgrep
+      - sd
+      - tmux
+      - yarn
+      - xsel
