@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. ~/.local/lib/log.sh
+info()    { printf "\\e[32m[INFO]\\e[0m    %s\\n" "$*" >&2 ; }
 
 info "Installing system packages"
 

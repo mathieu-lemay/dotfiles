@@ -2,7 +2,6 @@ packages:
   linux:
     arch:
       - bat
-      - cargo
       - colordiff
       - direnv
       - eza
@@ -14,6 +13,7 @@ packages:
       - neovim
       - ripgrep
       - rust-analyzer
+      - rustup
       - sd
       - tmux
       - yarn
