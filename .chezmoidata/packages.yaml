@@ -11,8 +11,32 @@ packages:
       - handlr-regex
       - jq
       - lrzip
+      - neovim
       - ripgrep
+      - rust-analyzer
       - sd
       - tmux
       - yarn
       - xsel
+  macos:
+    brew:
+      - bat
+      - colordiff
+      - coreutils
+      - direnv
+      - eza
+      - fd
+      - findutils
+      - fzf
+      - gnu-sed
+      - jq
+      - lrzip
+      - neovim
+      - node
+      - ripgrep
+      - rust-analyzer
+      - rustup-init
+      - sd
+      - terminal-notifier
+      - tmux
+      - yarn

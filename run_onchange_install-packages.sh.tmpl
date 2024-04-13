@@ -1,7 +1,13 @@
 #! /bin/bash
 
+. ~/.local/lib/log.sh
+
+info "Installing system packages"
+
 {{ if eq .osid "linux-arch" -}}
 sudo pacman -S --needed {{ range .packages.linux.arch }} {{ . | quote }} {{ end }}
+{{ else if eq .osid "darwin" -}}
+brew install --quiet {{ range .packages.macos.brew }} {{ . | quote }} {{ end }}
 {{ end -}}
 
 # vim: ft=jinja

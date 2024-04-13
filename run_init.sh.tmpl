@@ -113,6 +113,8 @@ rebuild_font_cache
 apply_dconf_config
 {{- else if eq .chezmoi.os "darwin" }}
 sync_library_fonts
+# TODO: Automate this: set xterm-256color-italic in iTerm2 profile
+# https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
 {{- end }}
 
 {{- if eq .signingkey "" }}
