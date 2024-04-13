@@ -1,0 +1,4 @@
+# https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
+MichaelAquilina/zsh-autoswitch-virtualenv
+
+# vim: ft=dosini
