@@ -2,6 +2,7 @@ packages:
   linux:
     arch:
       - bat
+      - base-devel
       - colordiff
       - direnv
       - eza
