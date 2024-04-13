@@ -14,7 +14,6 @@ packages:
       - neovim
       - npm
       - ripgrep
-      - rust-analyzer
       - rustup
       - sd
       - tmux
@@ -36,7 +35,6 @@ packages:
       - node
       - npm
       - ripgrep
-      - rust-analyzer
       - rustup-init
       - sd
       - terminal-notifier
