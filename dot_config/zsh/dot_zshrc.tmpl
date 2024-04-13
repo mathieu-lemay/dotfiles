@@ -127,27 +127,6 @@ done
 
 # ]]]
 
-# Zinit Plugins [[[
-
-_zinit_script="${ZINIT_HOME:-"${HOME}/.local/share/zinit"}/zinit.git/zinit.zsh"
-_zinit_plugins=(
-    "MichaelAquilina/zsh-autoswitch-virtualenv"
-)
-
-if [[ -e "${_zinit_script}" ]]; then
-    source "${_zinit_script}"
-    autoload -Uz _zinit
-    (( ${+_comps} )) && _comps[zinit]=_zinit
-
-    for _zinit_plugin in "${_zinit_plugins[@]}"; do
-        zinit wait lucid for "${_zinit_plugin}"
-    done
-fi
-
-unset _zinit_plugin _zinit_plugins _zinit_script
-
-# ]]]
-
 # Plugins [[[
 
 for f in "${HOME}/.local/share/zsh/plugins"/*; do
