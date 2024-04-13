@@ -1,0 +1,14 @@
+[".local/share/fzf/fzf-git.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh"
+refreshPeriod = "168h"
+
+[".local/share/tmux/tpm"]
+type = "git-repo"
+url = "https://github.com/tmux-plugins/tpm"
+refreshPeriod = "168h"
+
+[".local/share/zinit/zinit.git"]
+type = "git-repo"
+url = "https://github.com/zdharma-continuum/zinit.git"
+refreshPeriod = "168h"

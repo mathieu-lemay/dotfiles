@@ -35,50 +35,6 @@ install_nvim_plugins() {
     fi
 }
 
-install_zinit() {
-    ZINIT_INSTALL_DIR="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-    if [[ ! -d "${ZINIT_INSTALL_DIR}/.git" ]]; then
-        info "Installing zinit"
-        mkdir -p "$(dirname "${ZINIT_INSTALL_DIR}")"
-        git clone https://github.com/zdharma-continuum/zinit.git "${ZINIT_INSTALL_DIR}"
-    else
-        info "Updating zinit"
-        pushd "${ZINIT_INSTALL_DIR}" > /dev/null
-        git pull
-        popd > /dev/null
-    fi
-}
-
-install_tmux_plugin_manager() {
-    if ! command -v tmux &> /dev/null; then
-        warning "$0: tmux not installed: skipping"
-        return
-    fi
-
-    if [ ! -e "$HOME/.local/share/tmux/tpm" ]; then
-        info "Installing tmux plugin manager"
-        mkdir -p "$HOME/.local/share/tmux"
-        git clone https://github.com/tmux-plugins/tpm ~/.local/share/tmux/tpm
-    else
-        info "Updating tmux plugin manager"
-        pushd "$HOME/.local/share/tmux/tpm" > /dev/null
-        git pull
-        popd > /dev/null
-    fi
-}
-
-install_fzf_git() {
-    if ! command -v fzf &> /dev/null; then
-        warning "$0: fzf not installed: skipping"
-        return
-    fi
-
-    info "Installing fzf-git"
-    mkdir -p "${HOME}/.local/share/fzf"
-    curl -sSL "https://raw.githubusercontent.com/junegunn/fzf-git.sh/main/fzf-git.sh" -o "${HOME}/.local/share/fzf/fzf-git.sh"
-}
-
 install_cmus_notify() {
     if ! command -v cargo &> /dev/null; then
         warning "$0: cargo not installed: skipping"
@@ -148,9 +104,6 @@ sync_library_fonts() {
 }
 
 install_nvim_plugins
-install_zinit
-install_tmux_plugin_manager
-install_fzf_git
 install_cmus_notify
 install_crontab
 build_bat_cache
