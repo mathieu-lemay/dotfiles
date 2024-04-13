@@ -2,21 +2,7 @@ command -v fzf &> /dev/null || return
 
 . "{{ .path.fzf_key_bindings }}"
 . "{{ .path.fzf_completion }}"
-
-# TODO: Install this script with system's package manager
-if [[ -e "${HOME}/.local/share/fzf/fzf-git.sh" ]]; then
-    . "${HOME}/.local/share/fzf/fzf-git.sh"
-    bindkey -r '^g'  # Unbind this (list-expand) as it interferes with fzf-git
-
-    functions[_fzf_git_branches_orig]=$functions[_fzf_git_branches]
-
-    _fzf_git_branches () {
-        _fzf_git_branches_orig --preview-window=right,rounded,50%
-    }
-
-    # fzf-git overrides style from bat's config. Override the override.
-    command -v bat &>/dev/null && _fzf_git_cat="bat --color=always"
-fi
+. "${XDG_DATA_HOME}/fzf/fzf-git.sh"
 
 rg_opts="--files --follow --hidden --glob '!.git/*'"
 preview_window_opts="--preview-window hidden --bind '?:toggle-preview'"
@@ -41,5 +27,18 @@ unset rg_opts preview_window_opts
 function _fzf_compgen_path() {
     rg --files --follow --hidden --glob '!.git/*' 2>/dev/null "$1" | sed 's@^\./@@'
 }
+
+# fzf-git
+bindkey -r '^g'  # Unbind this (list-expand) as it interferes with fzf-git
+
+functions[_fzf_git_branches_orig]=$functions[_fzf_git_branches]
+
+_fzf_git_branches () {
+    _fzf_git_branches_orig --preview-window=right,rounded,50%
+}
+
+# fzf-git overrides style from bat's config. Override the override.
+command -v bat &>/dev/null && _fzf_git_cat="bat --color=always"
+
 
 # vim: ft=zsh
