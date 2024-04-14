@@ -1,4 +1,5 @@
 # https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
 MichaelAquilina/zsh-autoswitch-virtualenv
+zsh-users/zsh-syntax-highlighting
 
 # vim: ft=dosini

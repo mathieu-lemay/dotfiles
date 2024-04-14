@@ -29,27 +29,22 @@ xargs = "xargs -r"
 fzf_completion = "/usr/local/opt/fzf/shell/completion.zsh"
 fzf_key_bindings = "/usr/local/opt/fzf/shell/key-bindings.zsh"
 pyenv_completion = ""  # TODO
-zsh_syntax_highlighting = "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 {{- else if eq $osid "linux-fedora" }}
 fzf_completion = "/usr/share/zsh/site-functions/fzf"
 fzf_key_bindings = "/usr/share/fzf/shell/key-bindings.zsh"
 pyenv_completion = ""  # TODO
-zsh_syntax_highlighting = "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 {{- else if or (eq $osid "linux-debian") (eq $osid "linux-ubuntu") }}
 fzf_completion = "/usr/share/doc/fzf/examples/completion.zsh"
 fzf_key_bindings = "/usr/share/doc/fzf/examples/key-bindings.zsh"
 pyenv_completion = ""  # TODO
-zsh_syntax_highlighting = "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 {{- else if eq $osid "linux-opensuse-tumbleweed" }}
 fzf_completion = "/usr/share/zsh/site-functions/_fzf"
 fzf_key_bindings = "/etc/zsh_completion.d/fzf-key-bindings"
 pyenv_completion = ""  # TODO
-zsh_syntax_highlighting = "/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 {{- else }}
 fzf_completion = "/usr/share/fzf/completion.zsh"
 fzf_key_bindings = "/usr/share/fzf/key-bindings.zsh"
 pyenv_completion = "/usr/share/zsh/site-functions/_pyenv"
-zsh_syntax_highlighting = "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 {{- end }}
 jetbrains_jre = ""
 
