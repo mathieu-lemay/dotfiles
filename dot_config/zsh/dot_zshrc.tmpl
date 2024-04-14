@@ -116,7 +116,6 @@ ZSH_EXTRA_FILES=(
     "${ZDOTDIR}/aliases"
     "${ZDOTDIR}/functions"
     "${ZDOTDIR}/local"
-    "{{ .path.virtualenvwrapper_lazy }}"
     "{{ .path.zsh_syntax_highlighting }}"
     "/usr/share/doc/pkgfile/command-not-found.zsh"
 )
@@ -176,9 +175,6 @@ export WORDCHARS="${WORDCHARS/\//}"
 
 # Ensure ~/.local/bin is prioritized in PATH
 export PATH="${HOME}/.local/bin:${PATH}"
-
-# Use Python3 for virtualenvwrapper
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 {{- end}}
 
 # Don't prepend virtual env name to PS1
