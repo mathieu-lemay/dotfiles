@@ -53,7 +53,7 @@ function _zsh_tmux_cleanup() {
 function _zsh_tmux_plugin_run() {
     _zsh_tmux_setup_term
 
-    command tmux -L "${ZSH_TMUX_SOCKET_NAME}" "$@"
+    env SHLVL=0 tmux -L "${ZSH_TMUX_SOCKET_NAME}" "$@"
     ret=$?
     _zsh_tmux_cleanup
     return $ret
