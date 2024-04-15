@@ -13,9 +13,12 @@ __workon_err() {
 }
 
 __workon_add() {
+    [[ $# -eq 0 ]] && { echo "Error: No directories specified" >&2; return 1; }
+
     [[ -e "${__WORKON_LIST_FILE}" ]] || install -D /dev/null "${__WORKON_LIST_FILE}"
 
     for d in "$@"; do
+        d="$(readlink -f "$d")"
         if [[ "$d" =~ "^${__WORKON_BASE_DIR}" ]]; then
             if ! grep -qE "^${d}$" "${__WORKON_LIST_FILE}"; then
                 echo "$d" >> "${__WORKON_LIST_FILE}"
@@ -64,7 +67,7 @@ function __workon() {
 
 w() {
     local cmd="${1:-}"
-    shift
+    [[ $# -ge 1 ]] && shift
 
     case "${cmd}" in
         a | add)
