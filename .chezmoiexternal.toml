@@ -12,3 +12,8 @@ refreshPeriod = "168h"
 type = "git-repo"
 url = "https://github.com/mattmc3/antidote.git"
 refreshPeriod = "168h"
+
+[".local/share/zsh/compl/_antidote"]
+type = "file"
+url = "https://raw.githubusercontent.com/mattmc3/antidote/main/functions/_antidote"
+refreshPeriod = "168h"

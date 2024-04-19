@@ -12,3 +12,13 @@ if [[ ! -e "${_antidote_bundle_file}" ]] || [[ "${_antidote_plugins_file}" -nt "
 fi
 
 source "${_antidote_bundle_file}"
+
+unset _antidote_dir _antidote_plugins_file _antidote_bundle_file
+
+# Lazy load the full plugin
+function antidote() {
+    source "${_antidote_init_script}"
+    unset _antidote_init_script
+
+    antidote "$@"
+}
