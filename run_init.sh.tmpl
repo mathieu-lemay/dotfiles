@@ -24,8 +24,12 @@ ask_yes_no() {
     fi
 }
 
+is_installed() {
+    command -v "${1:?}" &>/dev/null
+}
+
 install_nvim_plugins() {
-    if ! command -v nvim &> /dev/null; then
+    if ! is_installed nvim; then
         warning "$0: nvim not installed: skipping"
         return
     fi
@@ -36,7 +40,7 @@ install_nvim_plugins() {
 }
 
 install_cmus_notify() {
-    if ! command -v cargo &> /dev/null; then
+    if ! is_installed cargo; then
         warning "$0: cargo not installed: skipping"
         return
     fi
@@ -47,7 +51,7 @@ install_cmus_notify() {
 }
 
 install_crontab() {
-    if ! command -v crontab &> /dev/null; then
+    if ! is_installed crontab; then
         warning "$0: crontab not installed: skipping"
         return
     fi
@@ -56,7 +60,7 @@ install_crontab() {
 }
 
 build_bat_cache() {
-    if ! command -v bat &> /dev/null; then
+    if ! is_installed bat; then
         warning "$0: bat not installed: skipping"
         return
     fi
@@ -66,7 +70,7 @@ build_bat_cache() {
 }
 
 compile_terminfo_entries() {
-    if ! command -v tic &> /dev/null; then
+    if ! is_installed tic; then
         warning "$0: tic not installed: skipping"
         return
     fi
@@ -76,8 +80,15 @@ compile_terminfo_entries() {
     done
 }
 
+generate_completions() {
+    if is_installed poetry; then
+        info "$0: generating completion for poetry"
+        poetry completions zsh > ~/.local/share/zsh/compl/_poetry
+    fi
+}
+
 rebuild_font_cache() {
-    if ! command -v fc-cache &> /dev/null; then
+    if ! is_installed fc-cache; then
         warning "$0: fc-cache not installed: skipping"
         return
     fi
@@ -88,7 +99,7 @@ rebuild_font_cache() {
 }
 
 apply_dconf_config() {
-    if ! command -v dconf &> /dev/null; then
+    if ! is_installed dconf; then
         warning "$0: dconf not installed: skipping"
         return
     fi
@@ -108,6 +119,7 @@ install_cmus_notify
 install_crontab
 build_bat_cache
 compile_terminfo_entries
+generate_completions
 {{- if eq .chezmoi.os "linux" }}
 rebuild_font_cache
 apply_dconf_config
