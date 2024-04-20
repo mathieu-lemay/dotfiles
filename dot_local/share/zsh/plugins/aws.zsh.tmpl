@@ -124,7 +124,7 @@ function aws-eks-get-token() {
 }
 
 function aws-sso-enabled() {
-    grep '^\[sso-session ' $AWS_CONFIG_FILE &> /dev/null
+    grep '^\[sso-session ' "${AWS_CONFIG_FILE}" &> /dev/null
 }
 
 function aws-sso-session-expired() {
@@ -284,12 +284,6 @@ complete -C aws_completer aws
 
 # ]]]
 
-{{- if eq .chezmoi.hostname "xenomorph" }}
-
 aws-sso-session-expired && printf "\\e[33m[WARNING]\\e[0m %s\\n" "AWS SSO session is expired" >&2
-
-# ]]]
-
-{{- end }}
 
 # vim: ft=zsh foldmethod=marker foldmarker=[[[,]]]
