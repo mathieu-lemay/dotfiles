@@ -37,9 +37,6 @@ export MYCLI_HISTFILE="${XDG_STATE_HOME}/mycli/history"
 export INPUTRC="${XDG_CONFIG_HOME}/readline/inputrc"
 export _JAVA_OPTIONS=-Djava.util.prefs.userRoot="${XDG_CONFIG_HOME}/java"
 
-# https://github.com/pypa/setuptools/blob/v60.0.0/CHANGES.rst#v6000
-export SETUPTOOLS_USE_DISTUTILS=stdlib
-
 # Set JRE for JetBrains products
 JETBRAINS_JRE="{{ .path.jetbrains_jre }}"
 if [ -d "${JETBRAINS_JRE}" ]; then
