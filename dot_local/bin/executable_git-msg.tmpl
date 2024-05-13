@@ -6,8 +6,7 @@ set -eu -o pipefail
 
 prompt "Enter message (CTRL+d to end)"
 
-msg=$(</dev/stdin)
-msg="$(echo "$msg" | fold -s)"
+msg="$(echo "$(</dev/stdin)" | fold -s)"
 
 info "Message"
 echo "$msg"
