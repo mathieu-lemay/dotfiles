@@ -1,5 +1,7 @@
-# https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
 MichaelAquilina/zsh-autoswitch-virtualenv
-zsh-users/zsh-syntax-highlighting
+# zsh-users/zsh-syntax-highlighting
 
-# vim: ft=dosini
+zdharma-continuum/fast-syntax-highlighting
+Tarrasch/zsh-bd
+
+# vim: ft=config
