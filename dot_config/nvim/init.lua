@@ -27,7 +27,6 @@ vim.opt.cursorline = true
 vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full,full" -- Stop on ambiguity, then go through possibilities
 vim.opt.modeline = true
-vim.opt.pastetoggle = "<F2>"
 vim.opt.scrolloff = 3
 vim.opt.shortmess:append({ I = true }) -- Remove intro text
 vim.opt.completeopt = "menuone,longest" -- Show menu even if one possibility and stop on ambiguity
