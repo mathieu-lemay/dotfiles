@@ -17,7 +17,7 @@ export WINEESYNC=1
 export WINEFSYNC=1
 export WINEARCH=win64
 export WINEEXE=wine
-export WINEPATH=
+export WINEROOT=
 export WINEDLLOVERRIDES="mscoree=d;mshtml=d;winemenubuilder.exe=d;"
 export WINE_LARGE_ADDRESS_AWARE=1
 export WINEDEBUG="-all"
@@ -49,8 +49,20 @@ print_banner() {
     echo -en "\e[0m"
 }
 
+set_wine_root() {
+    WINEROOT="${1:?}/bin"
+
+    WINELOADER="${WINEROOT}/wine"
+    WINESERVER="${WINEROOT}/wineserver"
+
+    [[ -x "${WINELOADER}" ]] || fatal "Invalid WINEROOT: ${WINEROOT}"
+    [[ -x "${WINESERVER}" ]] || fatal "Invalid WINEROOT: ${WINEROOT}"
+
+    export WINEROOT WINELOADER WINESERVER
+}
+
 _get_wine_cmd() {
-    cmd="${WINEPATH:-/usr}/bin/${1:?Command not specified}"
+    cmd="${WINEROOT:-/usr/bin}/${1:?Command not specified}"
     [[ -x "${cmd}" ]] || fatal "Command not found: ${cmd}"
 
     echo "${cmd}"
