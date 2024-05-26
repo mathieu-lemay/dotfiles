@@ -1,21 +1,16 @@
-#! /bin/bash -eu
+#! /bin/bash
+
+set -eu -o pipefail
 
 . ~/.local/lib/log.sh
 
-if git rev-parse --verify main &>/dev/null; then
-    main_branch="main"
-elif git rev-parse --verify master &>/dev/null; then
-    main_branch="master"
-else
-    fatal "Can't determine main branch"
+default_branch="$(git rev-parse --abbrev-ref --default origin | awk -F/ '{print $2}')"
+
+if [[ "$(git branch --show-current)" = "${default_branch}" ]]; then
+    fatal "Can't rebase: already on default branch"
 fi
 
-if [[ "$(git branch --show-current)" = "${main_branch}" ]]; then
-    fatal "Can't rebase: already on main branch"
-fi
-
-git checkout "${main_branch}"
+git checkout "${default_branch}"
 git pull
-git forget
 git checkout -
-git rebase -i "${main_branch}"
+git rebase -i "${default_branch}"
