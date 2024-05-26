@@ -1,12 +1,12 @@
 command -v aws &> /dev/null || return
 
-AWS_PROFILE_CACHE_FILE="${XDG_CACHE_HOME:-${HOME}/.cache}/aws/profile"
-AWS_SSO_CHECK_FILE="${XDG_CACHE_HOME:-${HOME}/.cache}/aws/last_sso_check"
+AWS_PROFILE_FILE="${XDG_STATE_HOME}/aws/profile"
+AWS_SSO_CHECK_FILE="${XDG_CACHE_HOME}/aws/last_sso_check"
 
-[[ -d "$(dirname "${AWS_PROFILE_CACHE_FILE}")" ]] || mkdir -p "$(dirname "${AWS_PROFILE_CACHE_FILE}")"
+[[ -d "$(dirname "${AWS_PROFILE_FILE}")" ]] || mkdir -p "$(dirname "${AWS_PROFILE_FILE}")"
 
-if [ -e "${AWS_PROFILE_CACHE_FILE}" ]; then
-    export AWS_PROFILE="$(< "${AWS_PROFILE_CACHE_FILE}")"
+if [ -e "${AWS_PROFILE_FILE}" ]; then
+    export AWS_PROFILE="$(< "${AWS_PROFILE_FILE}")"
 fi
 
 # Profiles [[[
@@ -29,12 +29,13 @@ function aws-switch-profile {
     [[ -n "${profile}" ]] || return
 
     echo "Switching to profile: ${profile}"
-    echo -n "${profile}" > "${AWS_PROFILE_CACHE_FILE}"
+    mkdir -p "$(dirname "${AWS_PROFILE_FILE}")"
+    echo -n "${profile}" > "${AWS_PROFILE_FILE}"
     export AWS_PROFILE="${profile}"
 }
 
 function aws-unset-profile {
-    [[ -e "${AWS_PROFILE_CACHE_FILE}" ]] && rm "${AWS_PROFILE_CACHE_FILE}"
+    [[ -e "${AWS_PROFILE_FILE}" ]] && rm "${AWS_PROFILE_FILE}"
     unset AWS_PROFILE
 }
 
