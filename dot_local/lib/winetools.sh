@@ -1,10 +1,24 @@
 #!/bin/bash
 
-debug()   { if [[ -n "${WINETOOLS_DEBUG:-}" ]]; then printf "\\e[34m[DEBUG]\\e[0m   %s\\n" "$*" >&2 ; fi }
-info()    { printf "\\e[32m[INFO]\\e[0m    %s\\n" "$*" >&2 ; }
-warning() { printf "\\e[33m[WARNING]\\e[0m %s\\n" "$*" >&2 ; }
-error()   { printf "\\e[31m[ERROR]\\e[0m   %s\\n" "$*" >&2 ; }
-fatal()   { printf "\\e[35m[FATAL]\\e[0m   %s\\n" "$*" >&2 ; exit 1 ; }
+debug()   { if [[ -n "${WINETOOLS_DEBUG:-}" ]]; then _log "\e[34m[DEBUG]\e[0m  " "$*"; fi }
+info()    { _log "\e[32m[INFO]\e[0m   " "$*" ; }
+warning() { _log "\e[33m[WARNING]\e[0m" "$*" ; }
+error()   { _log "\e[31m[ERROR]\e[0m  " "$*" ; }
+fatal()   { _log "\e[35m[FATAL]\e[0m  " "$*"; exit 1 ; }
+_log()    {
+    local level msg msg_line
+    level="${1}"
+    shift
+    msg="$*"
+
+    if [[ -n "${WINETOOLS_DEBUG:-}" ]]; then
+        msg_line="${BASH_SOURCE[0]}:${BASH_LINENO[1]}: "
+    else
+        msg_line=""
+    fi
+
+    printf "%b %s%s\\n" "${level}" "${msg_line}" "${msg}" >&2 ;
+}
 ensure()  { command -v "$1" &> /dev/null || fatal "Command not found: $1"; }
 
 ROOTDIR="${1:?Root Directory not specified}"
@@ -52,11 +66,14 @@ print_banner() {
 set_wine_root() {
     WINEROOT="${1:?}/bin"
 
-    WINELOADER="${WINEROOT}/wine"
+    WINELOADER="${WINEROOT}/${WINEEXE}"
     WINESERVER="${WINEROOT}/wineserver"
 
     [[ -x "${WINELOADER}" ]] || fatal "Invalid WINEROOT: ${WINEROOT}"
     [[ -x "${WINESERVER}" ]] || fatal "Invalid WINEROOT: ${WINEROOT}"
+
+    debug "Setting WINELOADER to '${WINELOADER}'"
+    debug "Setting WINESERVER to '${WINESERVER}'"
 
     export WINEROOT WINELOADER WINESERVER
 }
