@@ -37,7 +37,7 @@ font_size 12.0
 font_size 10.0
 {{- end }}
 
-#: Font size (in pts)
+#: Font size (in pts).
 
 # force_ltr no
 
@@ -277,7 +277,7 @@ cursor #d9d9d9
 
 #: The color of text under the cursor. If you want it rendered with
 #: the background color of the cell underneath instead, use the
-#: special keyword: background. Note that if cursor is set to none
+#: special keyword: `background`. Note that if cursor is set to none
 #: then this option is ignored. Note that some themes set this value,
 #: so if you want to override it, place your value after the lines
 #: where the theme file is included.
@@ -326,6 +326,14 @@ cursor #d9d9d9
 #: scrollback_pager_history_size. Note that on config reload if this
 #: is changed it will only affect newly created windows, not existing
 #: ones.
+
+# scrollback_indicator_opacity 1.0
+
+#: The opacity of the scrollback indicator which is a small colored
+#: rectangle that moves along the right hand side of the window as you
+#: scroll, indicating what fraction you have scrolled. The default is
+#: one which means fully opaque, aka visible. Set to a value between
+#: zero and one to make the indicator less visible.
 
 # scrollback_pager less --chop-long-lines --RAW-CONTROL-CHARS +INPUT_LINE_NUMBER
 
@@ -642,8 +650,8 @@ paste_actions quote-urls-at-prompt,confirm,confirm-if-large
 
 #::  Select from the clicked point to the end of the line. If you
 #::  would like to select the word at the point and then extend to the
-#::  rest of the line, change line_from_point to
-#::  word_and_line_from_point.
+#::  rest of the line, change `line_from_point` to
+#::  `word_and_line_from_point`.
 
 #: Extend the current selection
 
@@ -679,8 +687,8 @@ paste_actions quote-urls-at-prompt,confirm,confirm-if-large
 
 #::  Select from the clicked point to the end of the line even when
 #::  grabbed. If you would like to select the word at the point and
-#::  then extend to the rest of the line, change line_from_point to
-#::  word_and_line_from_point.
+#::  then extend to the rest of the line, change `line_from_point` to
+#::  `word_and_line_from_point`.
 
 #: Extend the current selection even when grabbed
 
@@ -750,7 +758,7 @@ enable_audio_bell no
 # window_alert_on_bell yes
 
 #: Request window attention on bell. Makes the dock icon bounce on
-#: macOS or the taskbar flash on linux.
+#: macOS or the taskbar flash on Linux.
 
 # bell_on_tab "🔔 "
 
@@ -774,7 +782,7 @@ enable_audio_bell no
 #: Path to a sound file to play as the bell sound. If set to none, the
 #: system default bell sound is used. Must be in a format supported by
 #: the operating systems sound API, such as WAV or OGA on Linux
-#: (libcanberra) or AIFF, MP3 or WAV on macOS (NSSound)
+#: (libcanberra) or AIFF, MP3 or WAV on macOS (NSSound).
 
 # linux_bell_theme __custom
 
@@ -867,7 +875,9 @@ enable_audio_bell no
 #: the sides. You can control how that padding is distributed with
 #: this option. Using a value of center means the cell area will be
 #: placed centrally. A value of top-left means the padding will be
-#: only at the bottom and right edges.
+#: only at the bottom and right edges. The value can be one of: top-
+#: left, top, top-right, left, center, right, bottom-left, bottom,
+#: bottom-right.
 
 # active_border_color #00ff00
 
@@ -1090,6 +1100,8 @@ tab_title_template "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{index
 #:     active_oldest_exe for the oldest foreground process.
 #: max_title_length
 #:     The maximum title length available.
+#: keyboard_mode
+#:     The name of the current keyboard mode <https://sw.kovidgoyal.net/kitty/mapping/#modal-mappings> or the empty string if no keyboard mode is active.
 
 #: Note that formatting is done by Python's string formatting
 #: machinery, so you can use, for instance, {layout_name[:2].upper()}
@@ -1172,7 +1184,7 @@ background #3f3f3f
 #: and/or rendering artifacts. Usually, values up to 64 work well.
 #: Note that this might cause performance issues, depending on how the
 #: platform implements it, so use with care. Currently supported on
-#: macOS and KDE under X11.
+#: macOS and KDE.
 
 # background_image none
 
@@ -1600,7 +1612,8 @@ shell_integration no-cursor
 #:     # Ring a bell when a command takes more than 10 seconds in a invisible window
 #:     notify_on_cmd_finish invisible 10.0 bell
 #:     # Run 'notify-send' when a command takes more than 10 seconds in a invisible window
-#:     notify_on_cmd_finish invisible 10.0 command notify-send job finished
+#:     # Here %c is replaced by the current command line and %s by the job exit code
+#:     notify_on_cmd_finish invisible 10.0 command notify-send "job finished with status: %s" %c
 
 # term xterm-kitty
 
@@ -1614,6 +1627,17 @@ shell_integration no-cursor
 #: from key-presses, to colors, to various advanced features may not
 #: work. Changing this option by reloading the config will only affect
 #: newly created windows.
+
+# terminfo_type path
+
+#: The value of the TERMINFO environment variable to set. This
+#: variable is used by programs running in the terminal to search for
+#: terminfo databases. The default value of path causes kitty to set
+#: it to a filesystem location containing the kitty terminfo database.
+#: A value of direct means put the entire database into the env var
+#: directly. This can be useful when connecting to containers, for
+#: example. But, note that not all software supports this. A value of
+#: none means do not touch the variable.
 
 # forward_stdio no
 
@@ -1644,9 +1668,9 @@ wayland_titlebar_color background
 
 #: The color of the kitty window's titlebar on Wayland systems with
 #: client side window decorations such as GNOME. A value of system
-#: means to use the default system color, a value of background means
-#: to use the background color of the currently active window and
-#: finally you can use an arbitrary color, such as #12af59 or red.
+#: means to use the default system colors, a value of background means
+#: to use the background color of the currently active kitty window
+#: and finally you can use an arbitrary color, such as #12af59 or red.
 
 # macos_titlebar_color system
 
@@ -1750,6 +1774,15 @@ wayland_titlebar_color background
 #: backend based on the system state is chosen automatically. Set it
 #: to x11 or wayland to force the choice. Changing this option by
 #: reloading the config is not supported.
+
+# wayland_enable_ime yes
+
+#: Enable Input Method Extension on Wayland. This is typically used
+#: for inputting text in East Asian languages. However, its
+#: implementation in Wayland is often buggy and introduces latency
+#: into the input loop, so disable this if you know you dont need it.
+#: Changing this option by reloading the config is not supported, it
+#: will not have any effect.
 
 #: ]]]
 
@@ -2346,7 +2379,7 @@ map kitty_mod+space kitten unicode_input
 #::      map f1 clear_terminal scrollback active
 #::      # Scroll the contents of the screen into the scrollback
 #::      map f1 clear_terminal scroll active
-#::      # Clear everything up to the line with the cursor or the start of the current prompt (needs shell integration)
+#::      # Clear everything on screen up to the line with the cursor or the start of the current prompt (needs shell integration)
 #::      map f1 clear_terminal to_cursor active
 #::      # Same as above except cleared lines are moved into scrollback
 #::      map f1 clear_terminal to_cursor_scroll active
