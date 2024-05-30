@@ -67,7 +67,6 @@ update_neovim_undo_location
 remove "${XDG_CONFIG_HOME}/zsh/.zcompdump"
 remove "${HOME}/.tmux.zsh"
 remove "${HOME}/.inputrc"
-remove "${HOME}/.java"
 remove "${HOME}/.ideavimrc"
 remove "${HOME}/.config/zsh/local"
 remove "${HOME}/.local/share/zsh/plugins/ssh.zsh"
