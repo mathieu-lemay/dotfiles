@@ -85,6 +85,18 @@ generate_completions() {
         info "$0: generating completion for poetry"
         poetry completions zsh > ~/.local/share/zsh/compl/_poetry
     fi
+{{- if eq .chezmoi.os "darwin" }}
+
+    if is_installed chezmoi; then
+        info "$0: generating completion for chezmoi"
+        chezmoi completion zsh > ~/.local/share/zsh/compl/_chezmoi
+    fi
+
+    if is_installed kubectl; then
+        info "$0: generating completion for kubectl"
+        kubectl completion zsh > ~/.local/share/zsh/compl/_kubectl
+    fi
+{{- end }}
 }
 
 rebuild_font_cache() {
@@ -125,8 +137,7 @@ rebuild_font_cache
 apply_dconf_config
 {{- else if eq .chezmoi.os "darwin" }}
 sync_library_fonts
-# TODO: Automate this: set xterm-256color-italic in iTerm2 profile
-# https://medium.com/@dubistkomisch/how-to-actually-get-italics-and-true-colour-to-work-in-iterm-tmux-vim-9ebe55ebc2be
+warning "Disable Mission Control keyboard shortcuts for ctrl+left and ctrl+right"
 {{- end }}
 
 {{- if eq .signingkey "" }}
