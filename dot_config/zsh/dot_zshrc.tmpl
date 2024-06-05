@@ -15,7 +15,13 @@ fi
 
 # Modules Initializing [[[
 
-fpath=("$HOME/.local/share/zsh/compl" "$HOME/.local/share/zsh/prompts" $fpath)
+fpath=(
+    "$HOME/.local/share/zsh/compl"
+    "$HOME/.local/share/zsh/prompts"
+    {{- if eq .chezmoi.os "darwin" }}
+    "/opt/homebrew/share/zsh/site-functions"
+    {{- end }}
+    $fpath)
 
 autoload -U compinit promptinit history-search-end
 autoload -Uz vcs_info
