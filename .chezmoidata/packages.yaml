@@ -1,8 +1,8 @@
 packages:
   linux:
     arch:
-      - bat
       - base-devel
+      - bat
       - colordiff
       - direnv
       - eza
@@ -16,26 +16,35 @@ packages:
       - ripgrep
       - rustup
       - sd
+      - terraform
       - tmux
       - xsel
   macos:
     brew:
-      - bat
-      - colordiff
-      - coreutils
-      - direnv
-      - eza
-      - fd
-      - findutils
-      - fzf
-      - gnu-sed
-      - jq
-      - lrzip
-      - neovim
-      - node
-      - npm
-      - ripgrep
-      - rustup-init
-      - sd
-      - terminal-notifier
-      - tmux
+      taps:
+        - hashicorp/tap
+        - joallard/cf-keylayout
+      packages:
+        - bat
+        - cf-keylayout
+        - colordiff
+        - coreutils
+        - direnv
+        - eza
+        - fd
+        - findutils
+        - fzf
+        - gnu-sed
+        - gnupg
+        - hashicorp/tap/terraform
+        - jq
+        - lrzip
+        - neovim
+        - node
+        - npm
+        - pinentry-mac
+        - ripgrep
+        - rustup-init
+        - sd
+        - terminal-notifier
+        - tmux

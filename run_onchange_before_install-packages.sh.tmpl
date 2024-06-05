@@ -5,9 +5,15 @@ info()    { printf "\\e[32m[INFO]\\e[0m    %s\\n" "$*" >&2 ; }
 info "Installing system packages"
 
 {{ if eq .osid "linux-arch" -}}
+info "Installing packages: {{ .packages.linux.arch }}"
 sudo pacman -S --needed {{ range .packages.linux.arch }} {{ . | quote }} {{ end }}
 {{ else if eq .osid "darwin" -}}
-brew install --quiet {{ range .packages.macos.brew }} {{ . | quote }} {{ end }}
+{{ range .packages.macos.brew.taps -}}
+info "Tapping {{ . }}"
+brew tap {{ . | quote }}
+{{ end }}
+info "Installing packages: {{ .packages.macos.brew.packages }}"
+brew install --quiet {{ range .packages.macos.brew.packages }} {{ . | quote }} {{ end }}
 {{ end -}}
 
 # vim: ft=jinja
