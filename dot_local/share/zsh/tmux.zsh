@@ -1,5 +1,5 @@
-# Only run if tmux is actually installed
-if ! command -v tmux &> /dev/null; then
+# Only run if tmux is actually installed, and we are in a tty
+if ! { command -v tmux &> /dev/null && test -t 0 }; then
     return 0
 fi
 
