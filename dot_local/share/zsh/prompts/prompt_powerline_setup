@@ -142,9 +142,14 @@ prompt_nvm() {
     [[ -n "${NVM_BIN:-}" ]] && rprompt_segment ${black} ${magenta} "node ${${NVM_BIN%/*}##*/}"
 }
 
+prompt_chezmoi() {
+    [[ -n "${CHEZMOI_SUBSHELL:-}" ]] && rprompt_segment ${black} ${magenta} "Chezmoi"
+}
+
 prompt_shell_lvl() {
     ((lvl = ${SHLVL} - 1))
     [[ -n "${POETRY_ACTIVE:-}" ]] && ((lvl--))
+    [[ "${CHEZMOI_SUBSHELL:-}" -eq 1 ]] && ((lvl--))
     [[ ${lvl} -gt 0 ]] && rprompt_segment ${red} ${black} "Subshell ${lvl}"
 }
 
@@ -154,6 +159,7 @@ build_rprompt() {
     prompt_shell_lvl
     prompt_nvm
     prompt_venv
+    prompt_chezmoi
     prompt_git_action
     prompt_git_branch
     rprompt_end
