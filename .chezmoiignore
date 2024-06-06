@@ -2,7 +2,6 @@ misc/
 terminfo/
 crontab
 dconf.dump
-vimplug.lock
 
 {{- if ne .chezmoi.os "linux" }}
 .config/fontconfig
