@@ -81,11 +81,14 @@
 	conflictstyle = zdiff3
 [url "https://"]
 	insteadOf = git://
-[includeIf "gitdir:~/src/rona/**"]
-	path = config.rona
 [help]
 	autocorrect = prompt
 [log]
 	date = iso
+
+{{- if eq .setupWork true }}
+[includeIf "gitdir:~/src/{{ .work.name }}/**"]
+	path = config.work
+{{- end}}
 
 # vim: set noet syntax=gitconfig:

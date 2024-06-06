@@ -1,0 +1,9 @@
+{{ if eq .setupWork true -}}
+[user]
+	email = {{ .work.email }}
+	{{- if ne .work.signingKey "" }}
+	signingkey = {{ .work.signingKey }}
+	{{- end}}
+[commit]
+	gpgsign = {{ if ne .work.signingKey "" }}true{{ else }}false{{ end}}
+{{- end }}

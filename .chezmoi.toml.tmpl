@@ -3,6 +3,17 @@
 {{- $makejobs := promptIntOnce . "makejobs" "Number of Parallel Make Jobs" 4 -}}
 {{- $nvim_enable_coc := promptBoolOnce . "nvim_enable_coc" "Enable coc.nvim" true -}}
 
+{{- $setupWork := promptBoolOnce . "setupWork" "Add work specific config" false -}}
+{{- $workName := "" -}}
+{{- $workEmail := "" -}}
+{{- $workSigningKey := "" -}}
+
+{{- if eq $setupWork true -}}
+{{- $workName = promptStringOnce . "work.name" "Work Name" -}}
+{{- $workEmail = promptStringOnce . "work.email" "Work Email Address" -}}
+{{- $workSigningKey = promptStringOnce . "work.signingKey" "Work GPG Signing Key" -}}
+{{- end -}}
+
 {{- $osid := .chezmoi.os -}}
 {{- if (and (ne .chezmoi.osRelease nil) (hasKey .chezmoi.osRelease "id")) -}}
 {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
@@ -14,6 +25,15 @@ signingkey = {{ $signingkey | quote }}
 makejobs = {{ $makejobs }}
 nvim_enable_coc = {{ $nvim_enable_coc }}
 osid = {{ $osid | quote }}
+setupWork = {{ $setupWork }}
+
+{{- if eq $setupWork true }}
+
+[data.work]
+name = {{ $workName | quote }}
+email = {{ $workEmail | quote }}
+signingKey = {{ $workSigningKey | quote }}
+{{- end }}
 
 [data.command]
 {{- if eq .chezmoi.os "darwin" }}
