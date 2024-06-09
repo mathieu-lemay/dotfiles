@@ -105,8 +105,8 @@ prompt_git_branch() {
 }
 
 prompt_venv() {
-    # Strip out the path and just leave the env name
-    [[ -n "${VIRTUAL_ENV:-}" ]] && printc ${cyan} "[${VIRTUAL_ENV##*/}]"
+    # Show the prompt name if defined, otherwise, fallback to the basename of the venv's path
+    [[ -n "${VIRTUAL_ENV:-}" ]] && printc ${cyan} "[${VIRTUAL_ENV_PROMPT:-${VIRTUAL_ENV##*/}}]"
 }
 
 prompt_nvm() {
