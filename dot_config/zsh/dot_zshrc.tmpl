@@ -19,7 +19,7 @@ fpath=(
     "$HOME/.local/share/zsh/compl"
     "$HOME/.local/share/zsh/prompts"
     {{- if eq .chezmoi.os "darwin" }}
-    "/opt/homebrew/share/zsh/site-functions"
+    "{{ .homebrewPrefix }}/share/zsh/site-functions"
     {{- end }}
     $fpath)
 

@@ -14,6 +14,11 @@
 {{- $workSigningKey = promptStringOnce . "work.signingKey" "Work GPG Signing Key" -}}
 {{- end -}}
 
+{{- $homebrewPrefix := "" -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $homebrewPrefix = promptStringOnce . "homebrewPrefix" "Homebrew prefix" "/opt/homebrew" -}}
+{{- end -}}
+
 {{- $osid := .chezmoi.os -}}
 {{- if (and (ne .chezmoi.osRelease nil) (hasKey .chezmoi.osRelease "id")) -}}
 {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
@@ -26,6 +31,9 @@ makejobs = {{ $makejobs }}
 nvim_enable_coc = {{ $nvim_enable_coc }}
 osid = {{ $osid | quote }}
 setupWork = {{ $setupWork }}
+{{- if eq .chezmoi.os "darwin" }}
+homebrewPrefix = {{ $homebrewPrefix | quote }}
+{{- end }}
 
 {{- if eq $setupWork true }}
 
@@ -46,8 +54,8 @@ xargs = "xargs -r"
 
 [data.path]
 {{- if eq .chezmoi.os "darwin" }}
-fzf_completion = "/opt/homebrew/opt/fzf/shell/completion.zsh"
-fzf_key_bindings = "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+fzf_completion = "{{ $homebrewPrefix }}/opt/fzf/shell/completion.zsh"
+fzf_key_bindings = "{{ $homebrewPrefix }}/opt/fzf/shell/key-bindings.zsh"
 pyenv_completion = ""  # TODO
 {{- else if eq $osid "linux-fedora" }}
 fzf_completion = "/usr/share/zsh/site-functions/fzf"
