@@ -31,3 +31,7 @@ if [[ -d "${QT_PATH}" ]]; then
     export CMAKE_PREFIX_PATH="${QT_PATH}:$CMAKE_PREFIX_PATH"
     export PATH="$PATH:${QT_PATH}/bin"
 fi
+
+unquarantine() {
+    xattr -r -d com.apple.quarantine "${1:?app not specified}"
+}
