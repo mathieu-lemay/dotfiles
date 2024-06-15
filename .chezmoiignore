@@ -20,6 +20,6 @@ hide-lsp-plugins.sh
 {{- if ne .chezmoi.os "darwin" }}
 .local/bin/vim
 .local/bin/vimdiff
-.local/share/zsh/plugins/brew.zsh
+.local/share/zsh/plugins/macos.zsh
 Library/
 {{- end }}
