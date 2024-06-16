@@ -14,6 +14,8 @@ brew tap {{ . | quote }}
 {{ end }}
 info "Installing packages: {{ .packages.macos.brew.packages }}"
 brew install --quiet {{ range .packages.macos.brew.packages }} {{ . | quote }} {{ end }}
+info "Installing casks: {{ .packages.macos.brew.casks }}"
+brew install --quiet --cask {{ range .packages.macos.brew.casks }} {{ . | quote }} {{ end }}
 {{ end -}}
 
 # vim: ft=jinja

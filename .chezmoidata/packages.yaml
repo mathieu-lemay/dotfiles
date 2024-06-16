@@ -48,3 +48,9 @@ packages:
         - sd
         - terminal-notifier
         - tmux
+      casks:
+        - alt-tab
+        - betterdisplay
+        - kitty
+        - linearmouse
+        - rectangle
