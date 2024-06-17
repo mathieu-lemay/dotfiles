@@ -13,6 +13,7 @@ packages:
       - lrzip
       - neovim
       - npm
+      - ov-bin
       - ripgrep
       - rustup
       - sd
@@ -40,6 +41,7 @@ packages:
         - jq
         - lrzip
         - neovim
+        - noborus/tap/ov
         - node
         - npm
         - pinentry-mac
