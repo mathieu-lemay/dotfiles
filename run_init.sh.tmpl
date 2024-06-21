@@ -28,17 +28,6 @@ is_installed() {
     command -v "${1:?}" &>/dev/null
 }
 
-install_nvim_plugins() {
-    if ! is_installed nvim; then
-        warning "$0: nvim not installed: skipping"
-        return
-    fi
-
-    if ask_yes_no "Install vim plugins [y/N]?" "n"; then
-        nvim --headless '+Lazy! restore' +qall
-    fi
-}
-
 install_cmus_notify() {
     if ! is_installed cargo; then
         warning "$0: cargo not installed: skipping"
@@ -131,7 +120,6 @@ load_setenv_agent() {
     launchctl load ~/Library/LaunchAgents/org.acidrain.setenv.plist
 }
 
-install_nvim_plugins
 install_cmus_notify
 install_crontab
 build_bat_cache

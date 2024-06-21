@@ -1,0 +1,17 @@
+#! /bin/bash
+
+# neovim-is-installed: {{ ne (lookPath "nvim") "" }}
+# hash: {{ include "dot_config/nvim/lazy-lock.json" | sha256sum }}
+
+. ~/.local/lib/log.sh
+
+info "Installing neovim plugins"
+
+if ! command -v nvim &> /dev/null; then
+    warning "$0: nvim not installed: skipping"
+    exit 0
+fi
+
+nvim --headless '+Lazy! restore' +qall
+
+# vim: ft=bash
