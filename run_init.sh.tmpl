@@ -50,18 +50,29 @@ compile_terminfo_entries() {
     done
 }
 
-generate_completions() {
-    if is_installed poetry; then
-        info "$0: generating completion for poetry"
-        poetry completions zsh > ~/.local/share/zsh/compl/_poetry
+generate_completion() {
+    local cmd completion_cmd
+
+    cmd="${1:?}"
+    completion_cmd="${2:-completion}"
+
+    if ! is_installed "${cmd}"; then
+        warning "Unable to generate completion for '${cmd}': command not found"
+        return 0
     fi
+
+    if [[ "$(command -v "${cmd}")" -nt "${HOME}/.local/share/zsh/compl/_${cmd}" ]]; then
+        info "Generating completion for ${cmd}"
+        "${cmd}" "${completion_cmd}" zsh > "${HOME}/.local/share/zsh/compl/_${cmd}"
+    fi
+}
+
+generate_completions() {
+    generate_completion poetry completions
 {{- if eq .chezmoi.os "darwin" }}
 
-    for app in "chezmoi" "docker" "kubectl"; do
-        if is_installed "${app}"; then
-            info "$0: generating completion for ${app}"
-            "${app}" completion zsh > "${HOME}/.local/share/zsh/compl/_${app}"
-        fi
+    for app in "docker"; do
+        generate_completion "${app}"
     done
 {{- end }}
 }
