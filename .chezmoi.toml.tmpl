@@ -24,6 +24,9 @@
 {{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{- end -}}
 
+[diff]
+exclude = ["scripts"]
+
 [data]
 email = {{ $email | quote }}
 signingkey = {{ $signingkey | quote }}
