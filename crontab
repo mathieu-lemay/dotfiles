@@ -1,2 +1,2 @@
 # Remove old nvim undo files
-0 12 * * * find $HOME/.local/state/nvim/undo -mtime +28 -exec rm {} \;
+0 12 * * * find $HOME/.local/state/nvim/undo -type f -mtime +28 -exec rm '{}' \;
