@@ -4,6 +4,7 @@ crontab
 dconf.dump
 
 {{- if ne .chezmoi.os "linux" }}
+.config/environment.d
 .config/fontconfig
 .config/pipewire
 .config/wireplumber

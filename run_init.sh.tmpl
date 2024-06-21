@@ -123,6 +123,14 @@ sync_library_fonts() {
     rsync -a --delete ~/.local/share/fonts/ Library/Fonts
 }
 
+load_setenv_agent() {
+    info "Loading setenv agent"
+    if launchctl list | grep org.acidrain.setenv &>/dev/null; then
+        launchctl unload ~/Library/LaunchAgents/org.acidrain.setenv.plist
+    fi
+    launchctl load ~/Library/LaunchAgents/org.acidrain.setenv.plist
+}
+
 install_nvim_plugins
 install_cmus_notify
 install_crontab
@@ -134,6 +142,7 @@ rebuild_font_cache
 apply_dconf_config
 {{- else if eq .chezmoi.os "darwin" }}
 sync_library_fonts
+load_setenv_agent
 warning "Disable Mission Control keyboard shortcuts for ctrl+left and ctrl+right"
 {{- end }}
 
