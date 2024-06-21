@@ -1,12 +1,23 @@
 #! /bin/bash
 
-info()    { printf "\\e[32m[INFO]\\e[0m    %s\\n" "$*" >&2 ; }
+. ~/.local/lib/log.sh
 
 info "Installing system packages"
 
 {{ if eq .osid "linux-arch" -}}
-info "Installing packages: {{ .packages.linux.arch }}"
-sudo pacman -S --needed {{ range .packages.linux.arch }} {{ . | quote }} {{ end }}
+# Ensure the script is marked as changed if paru is installed
+# paru-is-installed: {{ ne (lookPath "paru") "" }}
+
+if command -v paru > /dev/null; then
+    info "Installing Arch/AUR packages: {{ .packages.linux.arch.aur }}"
+    paru -S --needed \
+    {{ range .packages.linux.arch.pacman }} {{ . | quote }} {{ end }} \
+    {{ range .packages.linux.arch.aur }} {{ . | quote }} {{ end }}
+else
+    info "Installing Arch packages: {{ .packages.linux.arch.pacman }}"
+    warning "paru is not installed, skipping AUR packages"
+    sudo pacman -S --needed {{ range .packages.linux.arch.pacman }} {{ . | quote }} {{ end }}
+fi
 {{ else if eq .osid "darwin" -}}
 {{ range .packages.macos.brew.taps -}}
 info "Tapping {{ . }}"

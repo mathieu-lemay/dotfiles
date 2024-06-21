@@ -1,25 +1,27 @@
 packages:
   linux:
     arch:
-      - base-devel
-      - bat
-      - colordiff
-      - direnv
-      - eza
-      - fd
-      - fzf
-      - handlr-regex
-      - jq
-      - lrzip
-      - neovim
-      - npm
-      - ov-bin
-      - ripgrep
-      - rustup
-      - sd
-      - terraform
-      - tmux
-      - xsel
+      pacman:
+        - base-devel
+        - bat
+        - colordiff
+        - direnv
+        - eza
+        - fd
+        - fzf
+        - handlr-regex
+        - jq
+        - lrzip
+        - neovim
+        - npm
+        - ripgrep
+        - rustup
+        - sd
+        - terraform
+        - tmux
+        - xsel
+      aur:
+        - ov
   macos:
     brew:
       taps:
