@@ -36,6 +36,7 @@ export npm_config_cache="${XDG_CONFIG_HOME}/npm"
 export MYCLI_HISTFILE="${XDG_STATE_HOME}/mycli/history"
 export INPUTRC="${XDG_CONFIG_HOME}/readline/inputrc"
 
+{{- if ne .path.jetbrains_jre "" }}
 # Set JRE for JetBrains products
 JETBRAINS_JRE="{{ .path.jetbrains_jre }}"
 if [ -d "${JETBRAINS_JRE}" ]; then
@@ -47,6 +48,8 @@ if [ -d "${JETBRAINS_JRE}" ]; then
     export GOLAND_JDK="${JETBRAINS_JRE}"
     export RUSTROVER_JDK="${JETBRAINS_JRE}"
 fi
+
+{{- end }}
 
 # Local prefix
 if [[ -d "${HOME}/.local/bin" ]] && [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]]; then
