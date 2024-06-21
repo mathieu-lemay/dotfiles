@@ -1,0 +1,17 @@
+#! /bin/bash
+
+# crontab-is-installed: {{ ne (lookPath "crontab") "" }}
+# hash: {{ include "crontab" | sha256sum }}
+
+. ~/.local/lib/log.sh
+
+info "Updating crontab"
+
+if ! command -v crontab &> /dev/null; then
+    warning "$0: crontab not installed: skipping"
+    exit 0
+fi
+
+crontab "{{ .chezmoi.sourceDir }}/crontab"
+
+# vim: ft=bash

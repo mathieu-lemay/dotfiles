@@ -39,15 +39,6 @@ install_cmus_notify() {
     fi
 }
 
-install_crontab() {
-    if ! is_installed crontab; then
-        warning "$0: crontab not installed: skipping"
-        return
-    fi
-
-    crontab "{{ .chezmoi.sourceDir }}/crontab"
-}
-
 build_bat_cache() {
     if ! is_installed bat; then
         warning "$0: bat not installed: skipping"
@@ -110,7 +101,6 @@ load_setenv_agent() {
 }
 
 install_cmus_notify
-install_crontab
 build_bat_cache
 compile_terminfo_entries
 generate_completions
