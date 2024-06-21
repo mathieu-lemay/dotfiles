@@ -1,9 +1,8 @@
-if ! installed brew; then
+HOMEBREW_PREFIX="{{ .homebrewPrefix }}"
+
+if [[ ! -d "${HOMEBREW_PREFIX}/bin" ]]; then
     return
 fi
-
-HOMEBREW_PREFIX="$(brew --prefix)"
-HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar";
 
 export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin${PATH+:$PATH}";
 export MANPATH="${HOMEBREW_PREFIX}/share/man${MANPATH+:$MANPATH}:";
@@ -35,3 +34,5 @@ fi
 unquarantine() {
     xattr -r -d com.apple.quarantine "${1:?app not specified}"
 }
+
+# vim: ft=zsh
