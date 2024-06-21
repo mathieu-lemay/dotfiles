@@ -76,9 +76,6 @@ for p in "${paths[@]}"; do
 done
 unset paths
 
-# Firefox on Wayland
-export MOZ_ENABLE_WAYLAND=1
-
 # Set an invalid default prefix to ensure wine is always called with a non default prefix
 export WINEPREFIX=/dev/null
 # Prevent Wine from taking over file associations
