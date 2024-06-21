@@ -39,16 +39,6 @@ install_cmus_notify() {
     fi
 }
 
-build_bat_cache() {
-    if ! is_installed bat; then
-        warning "$0: bat not installed: skipping"
-        return
-    fi
-
-    info "Building bat cache"
-    bat cache --build > /dev/null
-}
-
 compile_terminfo_entries() {
     if ! is_installed tic; then
         warning "$0: tic not installed: skipping"
@@ -90,7 +80,6 @@ load_setenv_agent() {
 }
 
 # install_cmus_notify
-build_bat_cache
 compile_terminfo_entries
 generate_completions
 {{- if eq .chezmoi.os "darwin" }}

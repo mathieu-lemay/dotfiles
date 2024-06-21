@@ -1,0 +1,18 @@
+#! /bin/bash
+
+{{ $batPath := lookPath "bat" -}}
+# bat-is-installed: {{ ne $batPath "" }}
+# hash: {{ if ne $batPath "" }}{{ include $batPath | sha256sum }}{{ else }}{{ end }}
+
+. ~/.local/lib/log.sh
+
+info "Building bat cache"
+
+if ! command -v bat &> /dev/null; then
+    warning "$0: bat not installed: skipping"
+    exit 0
+fi
+
+bat cache --build > /dev/null
+
+# vim: ft=bash
