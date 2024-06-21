@@ -85,17 +85,6 @@ generate_completions() {
 {{- end }}
 }
 
-rebuild_font_cache() {
-    if ! is_installed fc-cache; then
-        warning "$0: fc-cache not installed: skipping"
-        return
-    fi
-
-    if ask_yes_no "Update font cache [y/N]?" "n"; then
-        fc-cache -f
-    fi
-}
-
 apply_dconf_config() {
     if ! is_installed dconf; then
         warning "$0: dconf not installed: skipping"
@@ -126,7 +115,6 @@ build_bat_cache
 compile_terminfo_entries
 generate_completions
 {{- if eq .chezmoi.os "linux" }}
-rebuild_font_cache
 apply_dconf_config
 {{- else if eq .chezmoi.os "darwin" }}
 sync_library_fonts

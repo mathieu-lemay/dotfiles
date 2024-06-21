@@ -1,0 +1,21 @@
+#! /bin/bash
+
+{{ if eq .chezmoi.os "linux" -}}
+
+# fc-cache-is-installed: {{ ne (lookPath "fc-cache") "" }}
+# hashes: {{ range (glob (joinPath .chezmoi.sourceDir "dot_local/share/fonts/*")) }} {{ . | include | sha256sum }} {{ end }}
+
+. ~/.local/lib/log.sh
+
+info "Updating font cache"
+
+if ! command -v fc-cache &> /dev/null; then
+    warning "$0: fc-cache not installed: skipping"
+    exit 0
+fi
+
+fc-cache -f
+
+{{- end }}
+
+# vim: ft=bash
