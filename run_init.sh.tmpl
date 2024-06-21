@@ -76,17 +76,6 @@ generate_completions() {
 {{- end }}
 }
 
-apply_dconf_config() {
-    if ! is_installed dconf; then
-        warning "$0: dconf not installed: skipping"
-        return
-    fi
-
-    dconf load / < "{{ .chezmoi.sourceDir }}/dconf.dump"
-
-    # TODO: Add org.gnome.shell.extensions.dash-to-dock
-}
-
 sync_library_fonts() {
     info "Syncing ~/.local/share/fonts to ~/Library/Fonts"
     rsync -a --delete ~/.local/share/fonts/ Library/Fonts
@@ -104,9 +93,7 @@ install_cmus_notify
 build_bat_cache
 compile_terminfo_entries
 generate_completions
-{{- if eq .chezmoi.os "linux" }}
-apply_dconf_config
-{{- else if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" }}
 sync_library_fonts
 load_setenv_agent
 warning "Disable Mission Control keyboard shortcuts for ctrl+left and ctrl+right"
