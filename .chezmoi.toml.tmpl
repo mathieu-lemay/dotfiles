@@ -7,11 +7,13 @@
 {{- $workName := "" -}}
 {{- $workEmail := "" -}}
 {{- $workSigningKey := "" -}}
+{{- $workGithubOrganization := "" -}}
 
 {{- if eq $setupWork true -}}
 {{- $workName = promptStringOnce . "work.name" "Work Name" -}}
 {{- $workEmail = promptStringOnce . "work.email" "Work Email Address" -}}
 {{- $workSigningKey = promptStringOnce . "work.signingKey" "Work GPG Signing Key" -}}
+{{- $workGithubOrganization = promptStringOnce . "work.githubOrganization" "Work Github Organization" -}}
 {{- end -}}
 
 {{- $homebrewPrefix := "" -}}
@@ -44,6 +46,7 @@ homebrewPrefix = {{ $homebrewPrefix | quote }}
 name = {{ $workName | quote }}
 email = {{ $workEmail | quote }}
 signingKey = {{ $workSigningKey | quote }}
+githubOrganization = {{ $workGithubOrganization | quote }}
 {{- end }}
 
 [data.command]

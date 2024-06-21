@@ -2,8 +2,18 @@
 [user]
 	email = {{ .work.email }}
 	{{- if ne .work.signingKey "" }}
-	signingkey = {{ .work.signingKey }}
+	signingKey = {{ .work.signingKey }}
 	{{- end}}
 [commit]
-	gpgsign = {{ if ne .work.signingKey "" }}true{{ else }}false{{ end}}
+	gpgSign = {{ if ne .work.signingKey "" }}true{{ else }}false{{ end}}
+[core]
+	sshCommand = "ssh -i ~/.ssh/id_{{ .work.name }} -F /dev/null"
+
+{{- if ne .work.githubOrganization "" }}
+[url "ssh://git@github.com/{{ .work.githubOrganization }}/"]
+	insteadOf = https://github.com/{{ .work.githubOrganization }}/
+{{- end}}
+
 {{- end }}
+
+# vim: set noet syntax=gitconfig:
