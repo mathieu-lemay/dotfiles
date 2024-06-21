@@ -1,9 +1,35 @@
 {
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5",
   "schemes" : [
     {
       "buttons" : {
         "universalBackForward" : true
+      },
+      "pointer" : {
+        "acceleration" : 0.8956,
+        "speed" : 0.1,
+        "disableAcceleration" : false
+      },
+      "scrolling" : {
+        "distance" : {
+          "vertical" : "auto"
+        },
+        "reverse" : {
+          "vertical" : false
+        },
+        "acceleration" : {
+          "horizontal" : 0,
+          "vertical" : 1
+        },
+        "speed" : {
+          "vertical" : 5
+        },
+        "modifiers" : {
+          "vertical" : {
+            "command" : {
+              "type" : "preventDefault"
+            }
+          }
+        }
       },
       "if" : {
         "device" : {
@@ -12,48 +38,42 @@
           "productName" : "USB Receiver",
           "category" : "mouse"
         }
-      },
+      }
+    },
+    {
       "scrolling" : {
-        "distance" : {
-          "vertical" : "auto"
-        },
-        "speed" : {
-          "vertical" : 5
-        },
         "reverse" : {
-          "vertical" : false
-        },
-        "modifiers" : {
-          "vertical" : {
-            "command" : {
-              "type" : "preventDefault"
-            }
-          }
-        },
-        "acceleration" : {
-          "vertical" : 1
+          "vertical" : true
         }
       },
-      "pointer" : {
-        "acceleration" : 0.8956,
-        "speed" : 0.1,
-        "disableAcceleration" : false
+      "if" : {
+        "device" : {
+          "productName" : "USB Receiver",
+          "category" : "mouse",
+          "vendorID" : "0x46d",
+          "productID" : "0xc52b"
+        },
+        "app" : "com.utmapp.UTM"
       }
     },
     {
       "if" : {
         "device" : {
           "productName" : "Apple Internal Keyboard \/ Trackpad",
+          "category" : "trackpad",
           "productID" : "0x0",
-          "vendorID" : "0x0",
-          "category" : "trackpad"
+          "vendorID" : "0x0"
         }
       },
       "scrolling" : {
+        "acceleration" : {
+          "horizontal" : 0
+        },
         "reverse" : {
           "vertical" : true
         }
       }
     }
-  ]
+  ],
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5"
 }
