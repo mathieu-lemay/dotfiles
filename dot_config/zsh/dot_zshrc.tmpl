@@ -33,6 +33,15 @@ compinit -d "${XDG_STATE_HOME}/zsh/zcompdump"
 {{- end }}
 promptinit
 
+{{- if eq .chezmoi.os "darwin" }}
+
+# Ensure Homebrew prefix is in PATH before anything else
+if [[ -d "{{ .homebrewPrefix }}/bin" ]] && [[ ":${PATH}:" != *":{{ .homebrewPrefix }}/bin:"* ]]; then
+    export PATH="{{ .homebrewPrefix }}/bin:${PATH}"
+fi
+
+{{- end }}
+
 [[ -e "${XDG_DATA_HOME}/zsh/tmux.zsh" ]] && . "${XDG_DATA_HOME}/zsh/tmux.zsh"
 
 # ]]]

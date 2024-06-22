@@ -4,7 +4,8 @@ if [[ ! -d "${HOMEBREW_PREFIX}/bin" ]]; then
     return
 fi
 
-export PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin${PATH+:$PATH}";
+# "#{HOMEBREW_PREFIX}/bin" has already been added to PATH in zshrc
+export PATH="${HOMEBREW_PREFIX}/sbin${PATH+:$PATH}";
 export MANPATH="${HOMEBREW_PREFIX}/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="${HOMEBREW_PREFIX}/share/info:${INFOPATH:-}";
 
