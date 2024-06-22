@@ -16,8 +16,8 @@ fi
 # Modules Initializing [[[
 
 fpath=(
-    "$HOME/.local/share/zsh/compl"
-    "$HOME/.local/share/zsh/prompts"
+    "${XDG_DATA_HOME}/zsh/compl"
+    "${XDG_DATA_HOME}/zsh/prompts"
     {{- if eq .chezmoi.os "darwin" }}
     "{{ .homebrewPrefix }}/share/zsh/site-functions"
     {{- end }}
@@ -33,7 +33,7 @@ compinit -d "${XDG_STATE_HOME}/zsh/zcompdump"
 {{- end }}
 promptinit
 
-[[ -e "${HOME}/.local/share/zsh/tmux.zsh" ]] && . "${HOME}/.local/share/zsh/tmux.zsh"
+[[ -e "${XDG_DATA_HOME}/zsh/tmux.zsh" ]] && . "${XDG_DATA_HOME}/zsh/tmux.zsh"
 
 # ]]]
 
