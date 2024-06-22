@@ -9,8 +9,13 @@
 		<string>sh</string>
 		<string>-c</string>
 		<string>
-		launchctl setenv CARGO_HOME "${XDG_DATA_HOME:-${HOME}/.local/share}/cargo"
-		launchctl setenv GOPATH "${XDG_DATA_HOME:-${HOME}/.local/share}/go"
+		{{- range .envvars.xdg }}
+		launchctl setenv {{ .key }} "{{ .value }}"
+		{{- end }}
+
+		{{- range .envvars.global }}
+		launchctl setenv {{ .key }} "{{ .value }}"
+		{{- end }}
 		</string>
 	</array>
 	<key>RunAtLoad</key>

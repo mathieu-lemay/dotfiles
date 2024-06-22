@@ -1,0 +1,15 @@
+envvars:
+  xdg:
+    - key: XDG_CONFIG_HOME
+      value: "${HOME}/.config"
+    - key: XDG_CACHE_HOME
+      value: "${HOME}/.cache"
+    - key: XDG_DATA_HOME
+      value: "${HOME}/.local/share"
+    - key: XDG_STATE_HOME
+      value: "${HOME}/.local/state"
+  global:
+    - key: CARGO_HOME
+      value: "${XDG_DATA_HOME:-${HOME}/.local/share}/cargo"
+    - key: GOPATH
+      value: "${XDG_DATA_HOME:-${HOME}/.local/share}/go"

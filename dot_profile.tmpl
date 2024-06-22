@@ -10,11 +10,15 @@ export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-/run/user/1000/gcr/ssh}"
 
 {{ end -}}
 
-# Respect XDG Base Directory spec
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_STATE_HOME="$HOME/.local/state"
+# XDG Base Directory spec
+{{- range .envvars.xdg }}
+export {{ .key }}="{{ .value }}"
+{{- end }}
+
+# Global Env Vars
+{{- range .envvars.global }}
+export {{ .key }}="{{ .value }}"
+{{- end }}
 
 export AWS_CONFIG_FILE="${XDG_CONFIG_HOME}/aws/config"
 export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME}/aws/credentials"
@@ -26,10 +30,8 @@ export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
 export PIPX_HOME="${XDG_DATA_HOME}/pipx"
 export PIPX_BIN_DIR="${PIPX_HOME}/bin"
 export VAGRANT_HOME="${XDG_DATA_HOME}/vagrant"
-export CARGO_HOME="${XDG_DATA_HOME}/cargo"
 export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
 export ZINIT_HOME="${XDG_DATA_HOME}/zinit"
-export GOPATH="${XDG_DATA_HOME}/go"
 export K9SCONFIG="${XDG_CONFIG_HOME}/k9s"
 export NVM_DIR="${XDG_DATA_HOME}/nvm"
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
