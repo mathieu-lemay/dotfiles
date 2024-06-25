@@ -90,9 +90,19 @@
 	diff = "ov -F --section-delimiter '^diff' --section-header"
 	show = "ov -F --header 3"
 
-{{- if eq .setupWork true }}
-[includeIf "gitdir:~/src/{{ .work.name }}/**"]
-	path = config.work
+{{- if eq .setupPrivateGit true }}
+[includeIf "gitdir:~/src/private/**"]
+	path = config.private
+[includeIf "gitdir:~/.local/share/chezmoi/**"]
+	path = config.private
+{{- end}}
+
+{{- if ne .githubOrgsForceSSH "" }}
+{{- range (split "," .githubOrgsForceSSH) }}
+{{- $org := (. | trim) }}
+[url "ssh://git@github.com/{{ $org }}/"]
+	insteadOf = https://github.com/{{ $org }}/
+{{- end }}
 {{- end}}
 
 # vim: set noet syntax=gitconfig:

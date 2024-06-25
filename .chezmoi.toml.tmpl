@@ -2,18 +2,17 @@
 {{- $signingkey := promptStringOnce . "signingkey" "GPG Signing Key" -}}
 {{- $makejobs := promptIntOnce . "makejobs" "Number of Parallel Make Jobs" 4 -}}
 {{- $nvim_enable_coc := promptBoolOnce . "nvim_enable_coc" "Enable coc.nvim" true -}}
+{{- $githubOrgsForceSSH := promptStringOnce . "githubOrgsForceSSH" "GitHub Organizations for which to force SSH (comma separated)" "" -}}
 
-{{- $setupWork := promptBoolOnce . "setupWork" "Add work specific config" false -}}
-{{- $workName := "" -}}
-{{- $workEmail := "" -}}
-{{- $workSigningKey := "" -}}
-{{- $workGithubOrganization := "" -}}
+{{- $setupPrivateGit := promptBoolOnce . "setupPrivateGit" "Add private git config" false -}}
+{{- $privateGitName := "" -}}
+{{- $privateGitEmail := "" -}}
+{{- $privateGitSigningKey := "" -}}
 
-{{- if eq $setupWork true -}}
-{{- $workName = promptStringOnce . "work.name" "Work Name" -}}
-{{- $workEmail = promptStringOnce . "work.email" "Work Email Address" -}}
-{{- $workSigningKey = promptStringOnce . "work.signingKey" "Work GPG Signing Key" -}}
-{{- $workGithubOrganization = promptStringOnce . "work.githubOrganization" "Work Github Organization" -}}
+{{- if eq $setupPrivateGit true -}}
+{{- $privateGitName = promptStringOnce . "privateGit.name" "Private Git Name" -}}
+{{- $privateGitEmail = promptStringOnce . "privateGit.email" "Private Git Email Address" -}}
+{{- $privateGitSigningKey = promptStringOnce . "privateGit.signingKey" "Private Git GPG Signing Key" -}}
 {{- end -}}
 
 {{- $homebrewPrefix := "" -}}
@@ -34,19 +33,19 @@ email = {{ $email | quote }}
 signingkey = {{ $signingkey | quote }}
 makejobs = {{ $makejobs }}
 nvim_enable_coc = {{ $nvim_enable_coc }}
+githubOrgsForceSSH = {{ $githubOrgsForceSSH | quote }}
 osid = {{ $osid | quote }}
-setupWork = {{ $setupWork }}
+setupPrivateGit = {{ $setupPrivateGit }}
 {{- if eq .chezmoi.os "darwin" }}
 homebrewPrefix = {{ $homebrewPrefix | quote }}
 {{- end }}
 
-{{- if eq $setupWork true }}
+{{- if eq $setupPrivateGit true }}
 
-[data.work]
-name = {{ $workName | quote }}
-email = {{ $workEmail | quote }}
-signingKey = {{ $workSigningKey | quote }}
-githubOrganization = {{ $workGithubOrganization | quote }}
+[data.privateGit]
+name = {{ $privateGitName | quote }}
+email = {{ $privateGitEmail | quote }}
+signingKey = {{ $privateGitSigningKey | quote }}
 {{- end }}
 
 [data.command]

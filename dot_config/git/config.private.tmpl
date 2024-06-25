@@ -1,0 +1,13 @@
+{{ if eq .setupPrivateGit true -}}
+[user]
+	email = {{ .privateGit.email }}
+	{{- if ne .privateGit.signingKey "" }}
+	signingKey = {{ .privateGit.signingKey }}
+	{{- end}}
+[commit]
+	gpgSign = {{ if ne .privateGit.signingKey "" }}true{{ else }}false{{ end}}
+[core]
+	sshCommand = "ssh -i ~/.ssh/id_git_private -F /dev/null"
+
+# vim: set noet syntax=gitconfig:
+{{- end }}
