@@ -10,7 +10,6 @@
 {{- $privateGitSigningKey := "" -}}
 
 {{- if eq $setupPrivateGit true -}}
-{{- $privateGitName = promptStringOnce . "privateGit.name" "Private Git Name" -}}
 {{- $privateGitEmail = promptStringOnce . "privateGit.email" "Private Git Email Address" -}}
 {{- $privateGitSigningKey = promptStringOnce . "privateGit.signingKey" "Private Git GPG Signing Key" -}}
 {{- end -}}
@@ -43,7 +42,6 @@ homebrewPrefix = {{ $homebrewPrefix | quote }}
 {{- if eq $setupPrivateGit true }}
 
 [data.privateGit]
-name = {{ $privateGitName | quote }}
 email = {{ $privateGitEmail | quote }}
 signingKey = {{ $privateGitSigningKey | quote }}
 {{- end }}
