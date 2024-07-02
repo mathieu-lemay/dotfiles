@@ -30,6 +30,10 @@ For a list of possible key bindings:
 */
 
 {
+  "@\UF702" = moveToBeginningOfLine:; // cmd-left
+  "@$\UF702" = moveToBeginningOfLineAndModifySelection:; // cmd-shift-left
+  "@\UF703" = moveToEndOfLine:; // cmd-right
+  "@$\UF703" = moveToEndOfLineAndModifySelection:; // cmd-shift-right
   "\UF729"  = moveToBeginningOfLine:; // home
   "\UF72B"  = moveToEndOfLine:; // end
   "$\UF729" = moveToBeginningOfLineAndModifySelection:; // shift-home
@@ -42,10 +46,6 @@ For a list of possible key bindings:
   "^$\UF702" = moveWordLeftAndModifySelection:; // ctrl-shift-left
   "^\UF703" = moveWordRight:; // ctrl-right
   "^$\UF703" = moveWordRightAndModifySelection:; // ctrl-shift-right
-  "@\UF702" = moveWordLeft:; // cmd-left
-  "@$\UF702" = moveWordLeftAndModifySelection:; // cmd-shift-left
-  "@\UF703" = moveWordRight:; // cmd-right
-  "@$\UF703" = moveWordRightAndModifySelection:; // cmd-shift-right
   "^\U007F" = deleteWordBackward:;  // ctrl-backspace
   "^\UF728" = deleteWordForward:;  // ctrl-delete
   "^$\U007F" = deleteWordForward:;  // ctrl-shift-backspace

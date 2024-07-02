@@ -47,6 +47,7 @@ packages:
         - node
         - npm
         - pinentry-mac
+        - rename
         - ripgrep
         - rustup-init
         - sd
