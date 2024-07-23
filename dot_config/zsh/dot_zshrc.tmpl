@@ -184,12 +184,6 @@ fi
 # Remove / from WORDCHARS, ie. make / a word delimiter
 export WORDCHARS="${WORDCHARS/\//}"
 
-{{- if eq .chezmoi.os "darwin" }}
-
-# Ensure ~/.local/bin is prioritized in PATH
-export PATH="${HOME}/.local/bin:${PATH}"
-{{- end}}
-
 # Don't prepend virtual env name to PS1
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
@@ -200,6 +194,36 @@ fi
 
 # Python
 [[ -f "$HOME/.pythonrc" ]] && export PYTHONSTARTUP="$HOME/.pythonrc"
+
+# ]]]
+
+# Local and Ecosystem specific PATH [[[
+
+# Local prefix
+if [[ -d "${HOME}/.local/bin" ]] && [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]]; then
+    export PATH="${HOME}/.local/bin:${PATH}"
+fi
+if [[ -d "${HOME}/.local/lib" ]] && [[ ":${LD_LIBRARY_PATH}:" != *":${HOME}/.local/lib:"* ]]; then
+    export LD_LIBRARY_PATH="${HOME}/.local/lib:${LD_LIBRARY_PATH}"
+fi
+if [[ -d "${HOME}/.local/lib/pkgconfig" ]] && [[ ":${PKG_CONFIG_PATH}:" != *":${HOME}/.local/lib/pkgconfig:"* ]]; then
+    export PKG_CONFIG_PATH="${HOME}/usr/lib/pkgconfig:${PKG_CONFIG_PATH}"
+fi
+
+# Extra PATH
+paths=(
+    "${CARGO_HOME}/bin"
+    "${GOPATH}/bin"
+    "${POETRY_HOME}/bin"
+    "${PIPX_BIN_DIR}"
+    "${XDG_DATA_HOME}/npm/bin"
+)
+for p in "${paths[@]}"; do
+    if [[ -d "${p}" ]] && [[ ":${PATH}:" != *":${p}:"* ]]; then
+        export PATH="${p}:${PATH}"
+    fi
+done
+unset paths
 
 # ]]]
 
