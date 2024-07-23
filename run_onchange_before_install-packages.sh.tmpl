@@ -22,6 +22,11 @@ else
     sudo pacman -S --needed {{ range .packages.linux.arch.pacman }} {{ . | quote }} {{ end }}
 fi
 {{ else if eq .osid "darwin" -}}
+if [[ "$EUID" -eq 0 ]]; then
+    warning "Skipping package installation when running as root"
+    exit 0
+fi
+
 {{ range .packages.macos.brew.taps -}}
 info "Tapping {{ . }}"
 brew tap {{ . | quote }}

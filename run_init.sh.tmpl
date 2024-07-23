@@ -79,7 +79,7 @@ generate_completions() {
 
 sync_library_fonts() {
     info "Syncing ~/.local/share/fonts to ~/Library/Fonts"
-    rsync -a --delete ~/.local/share/fonts/ Library/Fonts
+    rsync -a --delete ~/.local/share/fonts/ ~/Library/Fonts
 }
 
 load_setenv_agent() {
