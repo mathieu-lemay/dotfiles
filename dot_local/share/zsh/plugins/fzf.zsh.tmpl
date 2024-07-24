@@ -38,7 +38,6 @@ _fzf_git_branches () {
 }
 
 # fzf-git overrides style from bat's config. Override the override.
-command -v bat &>/dev/null && _fzf_git_cat="bat --color=always"
-
+command -v bat &>/dev/null && FZF_GIT_CAT="bat --color=always"
 
 # vim: ft=zsh
