@@ -72,7 +72,7 @@ prompt_host() {
         fg="${bright_green}"
     fi
 
-    prompt_segment ${black} ${fg} "%n@%m"
+    prompt_segment ${black} ${fg} "${ZSH_PROMPT_USERNAME:-%n}@${ZSH_PROMPT_HOSTNAME:-%m}"
 }
 
 prompt_dir() {

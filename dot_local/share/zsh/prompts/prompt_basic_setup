@@ -29,7 +29,7 @@ prompt_basic_setup() {
             fg="%(!.${red}.${green})"
         fi
 
-        printc ${fg} "%n@%m"
+        printc ${fg} "${ZSH_PROMPT_USERNAME:-%n}@${ZSH_PROMPT_HOSTNAME:-%m}"
     }
 
     prompt_dir() {
