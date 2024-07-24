@@ -62,9 +62,11 @@ function docker-cleanup() {
 }
 
 function docker-kill-all() {
-    docker ps -q | {{ .command.xargs }} docker kill
+    docker ps -q | {{ .command.xargs }} -r docker kill
 
-    [[ "${1:-}" = "-c" ]] && docker-cleanup
+    if [[ "${1:-}" = "-c" ]]; then
+        docker-cleanup
+    fi
 }
 
 function docker-tail() {
