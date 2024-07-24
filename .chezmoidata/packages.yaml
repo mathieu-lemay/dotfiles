@@ -24,12 +24,9 @@ packages:
         - ov
   macos:
     brew:
-      taps:
-        - hashicorp/tap
-        - joallard/cf-keylayout
+      taps: []
       packages:
         - bat
-        - cf-keylayout
         - colordiff
         - coreutils
         - direnv
@@ -49,7 +46,7 @@ packages:
         - pinentry-mac
         - rename
         - ripgrep
-        - rustup-init
+        - rustup
         - sd
         - terminal-notifier
         - tmux
