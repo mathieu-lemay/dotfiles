@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # crontab-is-installed: {{ ne (lookPath "crontab") "" }}
-# hash: {{ include "crontab" | sha256sum }}
+# hash: {{ include "data/crontab" | sha256sum }}
 
 . ~/.local/lib/log.sh
 
@@ -12,6 +12,6 @@ if ! command -v crontab &> /dev/null; then
     exit 0
 fi
 
-crontab "{{ .chezmoi.sourceDir }}/crontab"
+crontab "{{ .chezmoi.sourceDir }}/data/crontab"
 
 # vim: ft=bash

@@ -45,7 +45,8 @@ compile_terminfo_entries() {
         return
     fi
 
-    for file in "{{ .chezmoi.sourceDir }}"/terminfo/*; do
+    for file in "{{ .chezmoi.sourceDir }}"/data/terminfo/*; do
+        info "Compiling terminfo file: $file"
         tic "${file}"
     done
 }

@@ -1,7 +1,4 @@
-misc/
-terminfo/
-crontab
-dconf.dump
+data/
 
 {{- if ne .chezmoi.os "linux" }}
 .config/environment.d
