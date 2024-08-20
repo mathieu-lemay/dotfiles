@@ -1,0 +1,12 @@
+defaults:
+  - domain: com.apple.dock
+    values:
+      - description: Change autohide delay
+        key: autohide-delay
+        type: float
+        value: 0
+      - description: Change autohide speed
+        key: autohide-time-modifier
+        type: float
+        value: 0.25
+    post_command: killall Dock

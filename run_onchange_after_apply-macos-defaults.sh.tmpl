@@ -1,0 +1,22 @@
+#! /bin/bash
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+. ~/.local/lib/log.sh
+
+info "Applying defaults"
+
+{{ range .defaults -}}
+{{- $domain := .domain -}}
+{{ range .values -}}
+info "{{ .description }}"
+defaults write {{ $domain | quote }} {{ .key | quote }} -{{ .type }} {{ .value | quote }}
+{{ end -}}
+{{ if index . "post_command" -}}
+{{ .post_command }}
+{{ end }}
+{{ end -}}
+
+{{- end -}}
+
+# vim: ft=bash
