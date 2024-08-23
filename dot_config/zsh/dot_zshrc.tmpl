@@ -13,6 +13,84 @@ fi
 
 # ]]]
 
+# Global Env Vars [[[
+
+# Set default terminal
+export TERMINAL="kitty"
+
+# Use proper date format
+export LC_TIME="en_DK.UTF-8"
+
+# XDG Base Directory spec
+{{- range .envvars.xdg }}
+export {{ .key }}="{{ .value }}"
+{{- end }}
+
+# Global Env Vars
+{{- range .envvars.global }}
+export {{ .key }}="{{ .value }}"
+{{- end }}
+
+{{ if eq .osid "linux-arch" -}}
+# Use GCR SSH Agent
+export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-"${XDG_RUNTIME_DIR}/gcr/ssh"}"
+
+{{ end -}}
+
+# Force apps to use XDG Spec
+export AWS_CONFIG_FILE="${XDG_CONFIG_HOME}/aws/config"
+export AWS_SHARED_CREDENTIALS_FILE="${XDG_CONFIG_HOME}/aws/credentials"
+export DOCKER_CONFIG="${XDG_CONFIG_HOME}/docker"
+export JFROG_CLI_HOME_DIR="${XDG_DATA_HOME}/jfrog"
+export PYTHONSTARTUP="${XDG_CONFIG_HOME}/python/init.py"
+export POETRY_HOME="${XDG_DATA_HOME}/poetry"
+export PYENV_ROOT="${XDG_DATA_HOME}/pyenv"
+export PIPX_HOME="${XDG_DATA_HOME}/pipx"
+export PIPX_BIN_DIR="${PIPX_HOME}/bin"
+export VAGRANT_HOME="${XDG_DATA_HOME}/vagrant"
+export RUSTUP_HOME="${XDG_DATA_HOME}/rustup"
+export ZINIT_HOME="${XDG_DATA_HOME}/zinit"
+export K9SCONFIG="${XDG_CONFIG_HOME}/k9s"
+export NVM_DIR="${XDG_DATA_HOME}/nvm"
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+export MYCLI_HISTFILE="${XDG_STATE_HOME}/mycli/history"
+export INPUTRC="${XDG_CONFIG_HOME}/readline/inputrc"
+export PSQLRC="${XDG_CONFIG_HOME}/psql/psqlrc"
+export PSQL_HISTORY="${XDG_STATE_HOME}/psql/history"
+export PGPASSFILE="${XDG_CONFIG_HOME}/psql/pgpass"
+
+{{- if ne .path.jetbrains_jre "" }}
+# Set JRE for JetBrains products
+JETBRAINS_JRE="{{ .path.jetbrains_jre }}"
+if [ -d "${JETBRAINS_JRE}" ]; then
+    export IDEA_JDK="${JETBRAINS_JRE}"
+    export PYCHARM_JDK="${JETBRAINS_JRE}"
+    export CLION_JDK="${JETBRAINS_JRE}"
+    export DATAGRIP_JDK="${JETBRAINS_JRE}"
+    export STUDIO_JDK="${JETBRAINS_JRE}"
+    export GOLAND_JDK="${JETBRAINS_JRE}"
+    export RUSTROVER_JDK="${JETBRAINS_JRE}"
+fi
+
+{{- end }}
+
+# Set an invalid default prefix to ensure wine is always called with a non default prefix
+export WINEPREFIX=/dev/null
+# Prevent Wine from taking over file associations
+# https://wiki.archlinux.org/index.php/wine#Prevent_new_Wine_file_associations
+export WINEDLLOVERRIDES="winemenubuilder.exe=d"
+
+{{ if eq .chezmoi.os "darwin" -}}
+# Set locale
+export LC_ALL="en_CA.UTF-8"
+
+# Force python3 for zsh-autoswitch-virtualenv
+export AUTOSWITCH_DEFAULT_PYTHON=python3
+
+{{ end -}}
+
+# ]]]
+
 # Modules Initializing [[[
 
 fpath=(
