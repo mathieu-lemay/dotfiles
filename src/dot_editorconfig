@@ -6,6 +6,10 @@ insert_final_newline = true
 [*.go]
 indent_style = tab
 
+# Go mod files
+[*.mod]
+indent_style = tab
+
 [*.json]
 indent_size = 2
 
