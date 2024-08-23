@@ -2,9 +2,17 @@
 
 set -euo pipefail
 
-XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"${HOME}/.config"}"
-XDG_STATE_HOME="${XDG_STATE_HOME:-"${HOME}/.local/state"}"
-
 . ~/.local/lib/log.sh
+
+remove() {
+    local path
+    path="${1:?}"
+
+    [[ -e "${path}" ]] || return 0
+    info "Removing ${path}"
+    rm -rf "${path}"
+}
+
+remove ~/.local/share/zsh/plugins/bash_compl.zsh
 
 # vi: ft=sh

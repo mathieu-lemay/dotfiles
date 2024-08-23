@@ -21,9 +21,10 @@ fpath=(
     {{- if eq .chezmoi.os "darwin" }}
     "{{ .homebrewPrefix }}/share/zsh/site-functions"
     {{- end }}
-    $fpath)
+    $fpath
+)
 
-autoload -U compinit promptinit history-search-end
+autoload -U compinit promptinit history-search-end bashcompinit
 autoload -Uz vcs_info
 
 {{- if eq .chezmoi.os "darwin" }}
@@ -32,6 +33,7 @@ compinit -i -d "${XDG_STATE_HOME}/zsh/zcompdump"
 compinit -d "${XDG_STATE_HOME}/zsh/zcompdump"
 {{- end }}
 promptinit
+bashcompinit
 
 {{- if eq .chezmoi.os "darwin" }}
 
