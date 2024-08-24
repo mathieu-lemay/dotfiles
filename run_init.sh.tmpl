@@ -39,18 +39,6 @@ install_cmus_notify() {
     fi
 }
 
-compile_terminfo_entries() {
-    if ! is_installed tic; then
-        warning "$0: tic not installed: skipping"
-        return
-    fi
-
-    for file in "{{ .chezmoi.sourceDir }}"/data/terminfo/*; do
-        info "Compiling terminfo file: $file"
-        tic "${file}"
-    done
-}
-
 generate_completion() {
     local cmd completion_cmd
 
@@ -92,7 +80,6 @@ load_setenv_agent() {
 }
 
 # install_cmus_notify
-compile_terminfo_entries
 generate_completions
 {{- if eq .chezmoi.os "darwin" }}
 sync_library_fonts
