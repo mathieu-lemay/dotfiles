@@ -1,0 +1,24 @@
+#! /bin/bash
+
+{{- $cmd := "tic" }}
+
+{{ if eq .chezmoi.os "linux" -}}
+
+# tic-is-installed: {{ ne (lookPath $cmd) "" }}
+# hashes: {{ range (glob (joinPath .chezmoi.sourceDir "data/terminfo/*")) }} {{ . | include | sha256sum }} {{ end }}
+
+. ~/.local/lib/log.sh
+
+if ! command -v {{ $cmd }} &>/dev/null; then
+    warning "$0: {{ $cmd }} not installed: skipping"
+    exit 0
+fi
+
+for file in "{{ .chezmoi.sourceDir }}"/data/terminfo/*; do
+    info "Compiling terminfo file: $file"
+    {{ $cmd }} "${file}"
+done
+
+{{- end }}
+
+# vim: ft=bash
