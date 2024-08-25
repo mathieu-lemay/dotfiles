@@ -1,6 +1,7 @@
 data/
 
 {{- if ne .chezmoi.os "linux" }}
+.config/easyeffects
 .config/environment.d
 .config/fontconfig
 .config/pipewire
