@@ -1,3 +1,6 @@
+# Source Guard
+[[ -n "${__ZSH_PROFILE_LOADED:-}" ]] && return
+
 # Set default terminal
 export TERMINAL="kitty"
 
@@ -71,5 +74,7 @@ export LC_ALL="en_CA.UTF-8"
 export AUTOSWITCH_DEFAULT_PYTHON=python3
 
 {{ end -}}
+
+export __ZSH_PROFILE_LOADED=1
 
 # vim: ft=sh
