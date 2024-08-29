@@ -20,8 +20,12 @@
 {{- end -}}
 
 {{- $osid := .chezmoi.os -}}
-{{- if (and (ne .chezmoi.osRelease nil) (hasKey .chezmoi.osRelease "id")) -}}
-{{-   $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{- if ne .chezmoi.osRelease nil -}}
+{{-   if hasKey .chezmoi.osRelease "idLike" -}}
+{{-     $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.idLike -}}
+{{-   else if hasKey .chezmoi.osRelease "id" -}}
+{{-     $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
+{{-   end -}}
 {{- end -}}
 
 [diff]
