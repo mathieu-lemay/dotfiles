@@ -11,6 +11,7 @@ find "${LOCAL_APPLICATIONS_DIR}" -name '*lsp_plug*.desktop' -delete
 
 while IFS= read -r -d '' file
 do
+    echo "Shadowing ${file}"
     target="${LOCAL_APPLICATIONS_DIR}/$(basename "${file}")"
     cat << EOF > "${target}"
 [Desktop Entry]
