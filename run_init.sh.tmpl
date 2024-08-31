@@ -57,7 +57,9 @@ generate_completion() {
 }
 
 generate_completions() {
-    generate_completion poetry completions
+    if [[ "$(command -v poetry || true)" =~ ^"${HOME}" ]]; then
+        generate_completion poetry completions
+    fi
 {{- if eq .chezmoi.os "darwin" }}
 
     for app in "docker"; do
