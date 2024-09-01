@@ -1,3 +1,7 @@
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'us'), ('xkb', 'ca')]
+xkb-options=['caps:escape']
+
 [org/gnome/desktop/interface]
 clock-show-seconds=true
 clock-show-weekday=true
@@ -64,6 +68,34 @@ name='Terminal'
 binding='<Shift><Control><Alt>t'
 command='env ZSH_TMUX_AUTOSTART=false kitty'
 name='Terminal (Disable tmux)'
+
+[org/gnome/shell/extensions/dash-to-dock]
+animation-time=0.10000000000000002
+background-color='rgb(63,63,63)'
+background-opacity=0.90000000000000002
+custom-background-color=true
+custom-theme-shrink=true
+dash-max-icon-size=42
+disable-overview-on-startup=true
+dock-fixed=false
+dock-position='BOTTOM'
+height-fraction=0.90000000000000002
+hide-delay=0.10000000000000002
+intellihide-mode='FOCUS_APPLICATION_WINDOWS'
+isolate-workspaces=true
+middle-click-action='launch'
+preferred-monitor=-2
+preferred-monitor-by-connector='eDP-1'
+pressure-threshold=0.0
+preview-size-scale=0.0
+require-pressure-to-show=true
+running-indicator-style='DOTS'
+shift-click-action='minimize'
+shift-middle-click-action='launch'
+show-icons-emblems=false
+show-show-apps-button=false
+show-trash=false
+transparency-mode='FIXED'
 
 [org/gnome/terminal/legacy/profiles:]
 default='c6435ecf-9c5b-4bc8-894d-67e68ba25d10'
