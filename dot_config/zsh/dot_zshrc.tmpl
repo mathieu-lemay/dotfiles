@@ -130,6 +130,10 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:*' check-for-changes true
 
+# Makefile: https://unix.stackexchange.com/a/758032
+zstyle ':completion:*:make:*:targets' call-command true
+zstyle ':completion:*:*:make:*' tag-order 'targets'
+
 # ]]]
 
 # Source extra files [[[
