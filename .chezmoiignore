@@ -9,6 +9,7 @@ data/
 hide-lsp-plugins.sh
 {{- end }}
 {{- if ne .osid "linux-arch" }}
+.config/pacman/makepkg.conf
 .config/paru
 .config/yay
 .local/share/zsh/plugins/arch.zsh
