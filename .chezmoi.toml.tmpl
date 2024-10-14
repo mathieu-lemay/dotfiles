@@ -28,6 +28,17 @@
 {{-   end -}}
 {{- end -}}
 
+{{- $chassisType := "desktop" }}
+{{- if eq .chezmoi.os "darwin" }}
+{{-   if contains "MacBook" (output "sysctl" "-n" "hw.model") }}
+{{-     $chassisType = "laptop" }}
+{{-   else }}
+{{-     $chassisType = "desktop" }}
+{{-   end }}
+{{- else if eq .chezmoi.os "linux" }}
+{{-   $chassisType = (output "hostnamectl" "--json=short" | mustFromJson).Chassis }}
+{{- end -}}
+
 [diff]
 exclude = ["scripts"]
 
@@ -42,6 +53,7 @@ setupPrivateGit = {{ $setupPrivateGit }}
 {{- if eq .chezmoi.os "darwin" }}
 homebrewPrefix = {{ $homebrewPrefix | quote }}
 {{- end }}
+chassisType = {{ $chassisType | quote }}
 
 {{- if eq $setupPrivateGit true }}
 

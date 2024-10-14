@@ -3,7 +3,7 @@
 {{ if eq .chezmoi.os "linux" -}}
 
 # dconf-is-installed: {{ ne (lookPath "dconf") "" }}
-# hashes: {{ include "data/dconf.dump" | sha256sum }}
+# hashes: {{ include "data/dconf.dump.tmpl" | sha256sum }}
 
 . ~/.local/lib/log.sh
 
@@ -14,7 +14,7 @@ if ! command -v dconf &> /dev/null; then
     exit 0
 fi
 
-dconf load / < "{{ .chezmoi.sourceDir }}/data/dconf.dump"
+dconf load / < <(chezmoi execute-template < "{{ .chezmoi.sourceDir }}/data/dconf.dump.tmpl")
 
 # TODO: Add org.gnome.shell.extensions.dash-to-dock
 

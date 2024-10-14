@@ -9,7 +9,7 @@ color-scheme='prefer-dark'
 enable-hot-corners=false
 font-antialiasing='rgba'
 monospace-font-name='InputMono Nerd Font Mono 10'
-show-battery-percentage=false
+show-battery-percentage={{ if eq .chassisType "laptop" }}true{{ else }}false{{ end }}
 
 [org/gnome/desktop/peripherals/keyboard]
 numlock-state=true
