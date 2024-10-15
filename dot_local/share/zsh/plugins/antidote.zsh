@@ -22,3 +22,16 @@ function antidote() {
 
     antidote "$@"
 }
+
+# Plugin configuration {{{
+
+# fast-syntax-highlighting {{{
+
+typeset -gA FAST_HIGHLIGHT
+FAST_HIGHLIGHT[git-cmsg-len]=80
+
+# }}}
+
+# }}}
+
+# vim: foldmethod=marker
