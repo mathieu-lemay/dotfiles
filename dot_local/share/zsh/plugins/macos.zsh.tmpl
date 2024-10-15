@@ -9,7 +9,12 @@ if [[ -n "${SSH_AUTH_SOCK}" ]] && ! ssh-add -l &>/dev/null; then
 fi
 
 unquarantine() {
-    xattr -r -d com.apple.quarantine "${1:?app not specified}"
+    if [ $# -lt 1 ]; then
+        echo "No app(s) specified" >&2
+        return 1
+    fi
+
+    xattr -r -d com.apple.quarantine "$@"
 }
 
 if [[ ! -d "${HOMEBREW_PREFIX}/bin" ]]; then
