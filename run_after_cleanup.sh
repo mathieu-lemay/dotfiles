@@ -14,5 +14,6 @@ remove() {
 }
 
 remove ~/.local/share/zsh/plugins/bash_compl.zsh
+remove ~/.local/share/zsh-antidote
 
 # vi: ft=sh

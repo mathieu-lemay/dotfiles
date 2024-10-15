@@ -1,4 +1,4 @@
-_antidote_dir="${HOME}/.local/share/zsh-antidote"
+_antidote_dir="${HOME}/.local/share/antidote"
 
 [[ -e "${_antidote_dir}" ]] || return
 

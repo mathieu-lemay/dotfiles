@@ -8,7 +8,7 @@ type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
 refreshPeriod = "168h"
 
-[".local/share/zsh-antidote/antidote"]
+[".local/share/antidote/antidote"]
 type = "git-repo"
 url = "https://github.com/mattmc3/antidote.git"
 refreshPeriod = "168h"
