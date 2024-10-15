@@ -19,6 +19,9 @@
 {{-   $homebrewPrefix = promptStringOnce . "homebrewPrefix" "Homebrew prefix" "/opt/homebrew" -}}
 {{- end -}}
 
+{{- $cloudProviders := list "none" "aws" "gcloud" -}}
+{{- $defaultCloudProvider := promptChoiceOnce . "defaultCloudProvider" "Default cloud provider" $cloudProviders "none" -}}
+
 {{- $osid := .chezmoi.os -}}
 {{- if ne .chezmoi.osRelease nil -}}
 {{-   if hasKey .chezmoi.osRelease "idLike" -}}
@@ -54,6 +57,7 @@ setupPrivateGit = {{ $setupPrivateGit }}
 homebrewPrefix = {{ $homebrewPrefix | quote }}
 {{- end }}
 chassisType = {{ $chassisType | quote }}
+defaultCloudProvider = {{ $defaultCloudProvider | quote }}
 
 {{- if eq $setupPrivateGit true }}
 

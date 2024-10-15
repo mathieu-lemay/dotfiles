@@ -1,13 +1,21 @@
 if command -v kubectl &>/dev/null; then
     if command -v kubecolor &>/dev/null; then
         function kctl() {
+            {{- if eq .defaultCloudProvider "aws" }}
             aws-sso-login
+            {{- else if eq .defaultCloudProvider "gcloud" }}
+            gcloud-login
+            {{- end }}
 
             kubecolor "$@"
         }
     else
         function kctl() {
+            {{- if eq .defaultCloudProvider "aws" }}
             aws-sso-login
+            {{- else if eq .defaultCloudProvider "gcloud" }}
+            gcloud-login
+            {{- end }}
 
             kubectl "$@"
         }
@@ -18,7 +26,11 @@ fi
 
 if command -v k9s &>/dev/null; then
     function k9s() {
+        {{- if eq .defaultCloudProvider "aws" }}
         aws-sso-login
+        {{- else if eq .defaultCloudProvider "gcloud" }}
+        gcloud-login
+        {{- end }}
 
         command k9s "$@"
     }

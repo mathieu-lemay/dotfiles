@@ -1,0 +1,116 @@
+command -v gcloud &> /dev/null || return
+
+GCLOUD_AUTH_CHECK_FILE="${XDG_CACHE_HOME}/gcloud/last_auth_check"
+GCLOUD_PROJECTS_FILE="${XDG_CACHE_HOME}/gcloud/projects.json"
+GCLOUD_PROJECT_FILE="${XDG_STATE_HOME}/gcloud/project"
+
+source "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"
+source "/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc"
+
+[[ -d "$(dirname "${GCLOUD_PROJECT_FILE}")" ]] || mkdir -p "$(dirname "${GCLOUD_PROJECT_FILE}")"
+
+if [ -e "${GCLOUD_PROJECT_FILE}" ]; then
+    export CLOUDSDK_CORE_PROJECT="$(< "${GCLOUD_PROJECT_FILE}")"
+fi
+
+# Auth [[[
+
+function gcloud-auth-expired() {
+    local ttl
+
+    ttl=$((60*12))
+
+    if [[ -e "${GCLOUD_AUTH_CHECK_FILE}" ]] && [[ -z "$(find "${GCLOUD_AUTH_CHECK_FILE}" -mmin "+${ttl}" 2>/dev/null)" ]]; then
+        return 1
+    fi
+}
+
+function gcloud-login() {
+    if [[ "${1:-}" != "-f" ]] && ! gcloud-auth-expired; then
+        printf "\\e[32m[INFO]\\e[0m    %s\\n" "GCloud auth is still active" >&2
+        return 0
+    fi
+
+    if __gcloud_login; then
+        mkdir -p "$(dirname "${GCLOUD_AUTH_CHECK_FILE}")"
+        touch "${GCLOUD_AUTH_CHECK_FILE}"
+    fi
+}
+
+function gcloud-logout() {
+    gcloud auth revoke
+    gcloud auth application-default revoke
+
+    rm -f "${GCLOUD_AUTH_CHECK_FILE}"
+}
+
+function __gcloud_login() {
+    gcloud auth login
+    gcloud auth application-default login
+}
+
+# ]]]
+
+# Projects [[[
+
+function gcloud-refresh-projects() {
+    local ttl
+
+    ttl=$((60*24))
+
+    if [[ "${1:-}" != "-f" ]] && [[ -e "${GCLOUD_PROJECTS_FILE}" ]] && [[ -z "$(find "${GCLOUD_PROJECTS_FILE}" -mmin "+${ttl}" 2>/dev/null)" ]]; then
+        return 0
+    fi
+
+    printf "\\e[32m[INFO]\\e[0m    %s\\n" "Refreshing gcloud projects" >&2
+    __gcloud_refresh_projects
+}
+
+function gcloud-list-projects() {
+    gcloud-refresh-projects
+
+    jq -r '.[] | select(.lifecycleState == "ACTIVE").projectId' < "${GCLOUD_PROJECTS_FILE}"
+}
+
+function gcloud-get-project-number() {
+    gcloud-refresh-projects
+
+    jq -r '.[] | select(.projectId == "'"${1:?}"'").projectNumber' < "${GCLOUD_PROJECTS_FILE}"
+}
+
+function gcloud-get-current-project {
+    if [[ -n "${CLOUDSDK_CORE_PROJECT}" ]]; then
+        echo "Current project: ${CLOUDSDK_CORE_PROJECT}"
+    else
+        echo "Project not set"
+    fi
+}
+
+function gcloud-switch-project {
+    local project=$(gcloud-list-projects | fzf -q "$*")
+
+    [[ -n "${project}" ]] || return
+
+    echo "Switching to project: ${project}"
+    # gcloud config set project "${project}"
+    mkdir -p "$(dirname "${GCLOUD_PROJECT_FILE}")"
+    echo -n "${project}" > "${GCLOUD_PROJECT_FILE}"
+    export CLOUDSDK_CORE_PROJECT="${project}"
+}
+
+function gcloud-unset-project {
+    [[ -e "${GCLOUD_PROJECT_FILE}" ]] && rm "${GCLOUD_PROJECT_FILE}"
+    unset CLOUDSDK_CORE_PROJECT
+}
+
+function __gcloud_refresh_projects() {
+    gcloud projects list --format json > "${GCLOUD_PROJECTS_FILE}"
+}
+
+# ]]]
+
+if gcloud-auth-expired; then
+    printf "\\e[33m[WARNING]\\e[0m %s\\n" "GCloud auth is expired" >&2
+fi
+
+# vim: ft=zsh foldmethod=marker foldmarker=[[[,]]]
