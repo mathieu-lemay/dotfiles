@@ -109,8 +109,11 @@ function __gcloud_refresh_projects() {
 
 # ]]]
 
+{{ if eq .defaultCloudProvider "gcloud" -}}
 if gcloud-auth-expired; then
     printf "\\e[33m[WARNING]\\e[0m %s\\n" "GCloud auth is expired" >&2
 fi
+
+{{ end -}}
 
 # vim: ft=zsh foldmethod=marker foldmarker=[[[,]]]

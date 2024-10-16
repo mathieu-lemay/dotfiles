@@ -285,6 +285,11 @@ complete -C aws_completer aws
 
 # ]]]
 
-aws-sso-session-expired && printf "\\e[33m[WARNING]\\e[0m %s\\n" "AWS SSO session is expired" >&2
+{{ if eq .defaultCloudProvider "aws" -}}
+if aws-sso-session-expired; then
+    printf "\\e[33m[WARNING]\\e[0m %s\\n" "AWS SSO session is expired" >&2
+fi
+
+{{ end -}}
 
 # vim: ft=zsh foldmethod=marker foldmarker=[[[,]]]
