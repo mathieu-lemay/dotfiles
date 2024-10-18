@@ -38,7 +38,6 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset %C(bold magenta)(%G?)%Creset' --abbrev-commit
 	cia = commit --amend
 	fixup = commit --amend --no-edit
-	wip = commit --no-verify --message WIP
 	pf = push --force-with-lease
 	fnv = commit --amend --no-edit --no-verify
 	cinv = commit --no-verify
@@ -52,6 +51,9 @@
 	# Get the current branch name (not so useful in itself, but used in
 	# other aliases)
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
+
+	# Create a "WIP" commit with the current branch name for reference
+	wip = "!git commit --no-verify --message \"WIP: $(git branch-name)\""
 
 	# Push the current branch to the remote "origin", and set it to track
 	# the upstream branch
