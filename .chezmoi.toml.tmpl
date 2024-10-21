@@ -100,16 +100,27 @@ pyenv_completion = "/usr/share/zsh/site-functions/_pyenv"
 jetbrains_jre = ""
 
 [data.pipewire]
-{{- if eq .chezmoi.hostname "xenomorph" }}
-clock_rate = 96000
-quantum = 2048
-min_quantum = 1024
-max_quantum = 8192
+{{- $pipewireClockRate := 48000 }}
+{{- $pipewireQuantum := 1024 }}
+{{- $pipewireMinQuantum := 16 }}
+{{- $pipewireMaxQuantum := 2048 }}
+{{- if index . "pipewire" }}{{/* Keep currently defined values */}}
+{{-   $pipewireClockRate = .pipewire.clock_rate }}
+{{-   $pipewireQuantum = .pipewire.quantum }}
+{{-   $pipewireMinQuantum = .pipewire.min_quantum }}
+{{-   $pipewireMaxQuantum = .pipewire.max_quantum }}
 {{- else }}
-clock_rate = 48000
-quantum = 1024
-min_quantum = 16
-max_quantum = 2048
+{{-   $setupForFullaSchiit := promptBool "Setup PipeWire for the Fulla Schiit?" false -}}
+{{-   if $setupForFullaSchiit }}
+{{-     $pipewireClockRate = 96000 }}
+{{-     $pipewireQuantum = 2048 }}
+{{-     $pipewireMinQuantum = 1024 }}
+{{-     $pipewireMaxQuantum = 8192 }}
+{{-   end }}
 {{- end }}
+clock_rate = {{ $pipewireClockRate }}
+quantum = {{ $pipewireQuantum }}
+min_quantum = {{ $pipewireMinQuantum }}
+max_quantum = {{ $pipewireMaxQuantum }}
 
 # vim: ft=toml
