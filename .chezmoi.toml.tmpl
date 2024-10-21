@@ -99,28 +99,4 @@ pyenv_completion = "/usr/share/zsh/site-functions/_pyenv"
 {{- end }}
 jetbrains_jre = ""
 
-[data.pipewire]
-{{- $pipewireClockRate := 48000 }}
-{{- $pipewireQuantum := 1024 }}
-{{- $pipewireMinQuantum := 16 }}
-{{- $pipewireMaxQuantum := 2048 }}
-{{- if index . "pipewire" }}{{/* Keep currently defined values */}}
-{{-   $pipewireClockRate = .pipewire.clock_rate }}
-{{-   $pipewireQuantum = .pipewire.quantum }}
-{{-   $pipewireMinQuantum = .pipewire.min_quantum }}
-{{-   $pipewireMaxQuantum = .pipewire.max_quantum }}
-{{- else }}
-{{-   $setupForFullaSchiit := promptBool "Setup PipeWire for the Fulla Schiit?" false -}}
-{{-   if $setupForFullaSchiit }}
-{{-     $pipewireClockRate = 96000 }}
-{{-     $pipewireQuantum = 2048 }}
-{{-     $pipewireMinQuantum = 1024 }}
-{{-     $pipewireMaxQuantum = 8192 }}
-{{-   end }}
-{{- end }}
-clock_rate = {{ $pipewireClockRate }}
-quantum = {{ $pipewireQuantum }}
-min_quantum = {{ $pipewireMinQuantum }}
-max_quantum = {{ $pipewireMaxQuantum }}
-
 # vim: ft=toml
