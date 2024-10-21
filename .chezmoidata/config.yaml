@@ -1,0 +1,14 @@
+host_config:
+  defaults:
+    pipewire:
+      clock_rate: 48000
+      quantum: 1024
+      min_quantum: 16
+      max_quantum: 2048
+
+  ripley:
+    pipewire:
+      clock_rate: 48000
+      quantum: 2048
+      min_quantum: 1024
+      max_quantum: 8192

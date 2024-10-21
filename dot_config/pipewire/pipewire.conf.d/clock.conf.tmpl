@@ -1,8 +1,18 @@
-context.properties = {
-    default.clock.rate          = {{ .pipewire.clock_rate }}
-    default.clock.allowed-rates = [ {{ .pipewire.clock_rate }} ]
+{{- $pipewireConfig := .host_config.defaults.pipewire -}}
+{{- if index .host_config .chezmoi.hostname -}}
+{{- $pipewireConfig = mergeOverwrite $pipewireConfig (get .host_config .chezmoi.hostname).pipewire -}}
+{{- end -}}
 
-    default.clock.quantum     = {{ .pipewire.quantum }}
-    default.clock.min-quantum = {{ .pipewire.min_quantum }}
-    default.clock.max-quantum = {{ .pipewire.max_quantum }}
+{{- $clockRate := $pipewireConfig.clock_rate -}}
+{{- $quantum := $pipewireConfig.quantum -}}
+{{- $minQuantum := $pipewireConfig.min_quantum -}}
+{{- $maxQuantum := $pipewireConfig.max_quantum -}}
+
+context.properties = {
+    default.clock.rate          = {{ $clockRate }}
+    default.clock.allowed-rates = [ {{ $clockRate }} ]
+
+    default.clock.quantum     = {{ $quantum }}
+    default.clock.min-quantum = {{ $maxQuantum }}
+    default.clock.max-quantum = {{ $minQuantum }}
 }
