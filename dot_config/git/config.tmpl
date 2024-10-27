@@ -53,7 +53,7 @@
 	branch-name = "!git rev-parse --abbrev-ref HEAD"
 
 	# Create a "WIP" commit with the current branch name for reference
-	wip = "!git commit --no-verify --message \"WIP: $(git branch-name)\""
+	wip = "!git commit --no-verify --message \"[skip ci] WIP: $(git branch-name)\""
 
 	# Push the current branch to the remote "origin", and set it to track
 	# the upstream branch
