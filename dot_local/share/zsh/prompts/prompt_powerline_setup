@@ -134,7 +134,16 @@ prompt_git_branch() {
 
 prompt_venv() {
     # Show the prompt name if defined, otherwise, fallback to the basename of the venv's path
-    [[ -n "${VIRTUAL_ENV:-}" ]] && rprompt_segment ${magenta} ${black} "${VIRTUAL_ENV_PROMPT:-${VIRTUAL_ENV##*/}}"
+    [[ -z "${VIRTUAL_ENV:-}" ]] && return
+
+    local venvname
+
+    # Use VIRTUAL_ENV_PROMPT with trimmed leading/trailing spaces if available
+    venvname="${VIRTUAL_ENV_PROMPT:+${${VIRTUAL_ENV_PROMPT##[[:space:]]##}%%[[:space:]]##}}"
+    # Fallback on the basename otherwise
+    venvname="${venvname:-${VIRTUAL_ENV##*/}}"
+
+    rprompt_segment ${magenta} ${black} "${venvname}"
 }
 
 prompt_nvm() {

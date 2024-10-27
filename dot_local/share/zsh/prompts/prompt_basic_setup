@@ -11,8 +11,17 @@ prompt_basic_setup() {
     }
 
     prompt_venv() {
-        # Strip out the path and just leave the env name
-        [[ -n "${VIRTUAL_ENV:-}" ]] && printc ${cyan} "[${VIRTUAL_ENV##*/}] "
+        # Show the prompt name if defined, otherwise, fallback to the basename of the venv's path
+        [[ -z "${VIRTUAL_ENV:-}" ]] && return
+
+        local venvname
+
+        # Use VIRTUAL_ENV_PROMPT with trimmed leading/trailing spaces if available
+        venvname="${VIRTUAL_ENV_PROMPT:+${${VIRTUAL_ENV_PROMPT##[[:space:]]##}%%[[:space:]]##}}"
+        # Fallback on the basename otherwise
+        venvname="${venvname:-${VIRTUAL_ENV##*/}}"
+
+        printc ${cyan} "[${venvname}] "
     }
 
     prompt_status() {
