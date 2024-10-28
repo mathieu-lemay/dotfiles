@@ -1,6 +1,14 @@
 defaults:
   - domain: com.apple.dock
     values:
+      - description: Change dock icon size
+        key: tilesize
+        type: int
+        value: 48
+      - description: Prevent changing dock size
+        key: size-immutable
+        type: bool
+        value: yes
       - description: Change autohide delay
         key: autohide-delay
         type: float
