@@ -105,17 +105,9 @@ prompt_git_branch() {
 }
 
 prompt_venv() {
-    # Show the prompt name if defined, otherwise, fallback to the basename of the venv's path
     [[ -z "${VIRTUAL_ENV:-}" ]] && return
 
-    local venvname
-
-    # Use VIRTUAL_ENV_PROMPT with trimmed leading/trailing spaces if available
-    venvname="${VIRTUAL_ENV_PROMPT:+${${VIRTUAL_ENV_PROMPT##[[:space:]]##}%%[[:space:]]##}}"
-    # Fallback on the basename otherwise
-    venvname="${venvname:-${VIRTUAL_ENV##*/}}"
-
-    printc ${cyan} "[${venvname}] "
+    printc ${cyan} "[$(__zsh_get_venv_prompt)] "
 }
 
 prompt_nvm() {
@@ -128,7 +120,7 @@ rprompt_end() {
 }
 
 build_rprompt() {
-    load_vcs_info
+    __zsh_load_vcs_info
 
     prompt_nvm
     prompt_venv

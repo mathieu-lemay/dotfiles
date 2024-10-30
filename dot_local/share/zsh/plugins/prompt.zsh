@@ -15,7 +15,18 @@ color_reset="%f%k"
 
 # }}}
 
-load_vcs_info() {
+__zsh_get_venv_prompt() {
+    local p
+
+    # Use VIRTUAL_ENV_PROMPT with trimmed leading/trailing spaces if available
+    p="${VIRTUAL_ENV_PROMPT:+${${VIRTUAL_ENV_PROMPT##[[:space:]]##}%%[[:space:]]##}}"
+    # Fallback on the basename otherwise
+    p="${p:-${VIRTUAL_ENV##*/}}"
+
+    echo "${p}"
+}
+
+__zsh_load_vcs_info() {
     vcs_info
 
     if contains "${vcs_info_msg_0_}" "|"; then
