@@ -9,6 +9,14 @@ defaults:
         key: size-immutable
         type: bool
         value: yes
+      - description: Remove launch animation
+        key: launchanim
+        type: bool
+        value: no
+      - description: Auto hide dock
+        key: autohide
+        type: bool
+        value: yes
       - description: Change autohide delay
         key: autohide-delay
         type: float
@@ -17,4 +25,12 @@ defaults:
         key: autohide-time-modifier
         type: float
         value: 0.25
+      - description: Minimize to application
+        key: minimize-to-application
+        type: bool
+        value: yes
+      - description: Minimize effect
+        key: mineffect
+        type: string
+        value: scale
     post_command: killall Dock
