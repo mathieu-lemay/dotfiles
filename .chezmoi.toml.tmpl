@@ -1,5 +1,5 @@
 {{- $email := promptStringOnce . "email" "Email Address" "acidrain1@gmail.com" -}}
-{{- $signingkey := promptStringOnce . "signingkey" "GPG Signing Key" -}}
+{{- $signingkey := promptStringOnce . "signingkey" "GPG Signing Key" "" -}}
 {{- $makejobs := promptIntOnce . "makejobs" "Number of Parallel Make Jobs" 4 -}}
 {{- $nvim_enable_coc := promptBoolOnce . "nvim_enable_coc" "Enable coc.nvim" true -}}
 {{- $githubOrgsForceSSH := promptStringOnce . "githubOrgsForceSSH" "GitHub Organizations for which to force SSH (comma separated)" "" -}}
@@ -10,8 +10,8 @@
 {{- $privateGitSigningKey := "" -}}
 
 {{- if eq $setupPrivateGit true -}}
-{{- $privateGitEmail = promptStringOnce . "privateGit.email" "Private Git Email Address" -}}
-{{- $privateGitSigningKey = promptStringOnce . "privateGit.signingKey" "Private Git GPG Signing Key" -}}
+{{- $privateGitEmail = promptStringOnce . "privateGit.email" "Private Git Email Address" "acidrain1@gmail.com" -}}
+{{- $privateGitSigningKey = promptStringOnce . "privateGit.signingKey" "Private Git GPG Signing Key" "" -}}
 {{- end -}}
 
 {{- $homebrewPrefix := "" -}}
