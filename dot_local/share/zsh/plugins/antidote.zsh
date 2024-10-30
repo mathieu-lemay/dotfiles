@@ -30,6 +30,8 @@ function antidote() {
 typeset -gA FAST_HIGHLIGHT
 FAST_HIGHLIGHT[git-cmsg-len]=80
 
+[[ "${$(typeset FAST_THEME_NAME)#*=}" == "zenburn" ]] || fast-theme XDG:zenburn
+
 # }}}
 
 # }}}
