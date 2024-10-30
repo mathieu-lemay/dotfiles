@@ -38,7 +38,7 @@
 {{-   else }}
 {{-     $chassisType = "desktop" }}
 {{-   end }}
-{{- else if eq .chezmoi.os "linux" }}
+{{- else if and (eq .chezmoi.os "linux") (ne (lookPath "hostnamectl") "") }}
 {{-   $chassisType = (output "hostnamectl" "--json=short" | mustFromJson).Chassis }}
 {{- end -}}
 
