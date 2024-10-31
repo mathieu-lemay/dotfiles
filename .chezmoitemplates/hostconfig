@@ -1,0 +1,7 @@
+{{- $hostConfig := .host_config.defaults -}}
+
+{{- if index .host_config .chezmoi.hostname -}}
+{{-   $hostConfig = mergeOverwrite $hostConfig (get .host_config .chezmoi.hostname) -}}
+{{- end -}}
+
+{{- $hostConfig | toYaml -}}
