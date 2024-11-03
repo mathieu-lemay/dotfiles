@@ -1,12 +1,12 @@
 root = true
 
 [*]
+indent_style = space
 insert_final_newline = true
 
-[*.go]
+[*.{go,mod}]
 indent_style = tab
 
-# Go mod files
 [*.mod]
 indent_style = tab
 
@@ -14,12 +14,13 @@ indent_style = tab
 indent_size = 2
 
 [*.py]
-indent_style = space
 indent_size = 4
 max_line_length = 120
 
-[*.yaml]
-indent_style = space
+[*.{yaml,yml}]
+indent_size = 2
+
+[*.tf{,vars}]
 indent_size = 2
 
 [Makefile]
