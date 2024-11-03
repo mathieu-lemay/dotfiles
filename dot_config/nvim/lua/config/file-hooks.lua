@@ -35,11 +35,6 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     command = "set filetype=terraform",
 })
 
--- Set indent / fold options for specific file types
-vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "python",
-    command = "setlocal foldmethod=indent foldnestmax=2 foldlevelstart=99",
-})
 -- Make NFOs look nice
 vim.api.nvim_create_autocmd({ "BufReadPre" }, {
     pattern = "*.nfo",
