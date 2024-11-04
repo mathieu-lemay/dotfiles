@@ -31,22 +31,8 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     command = "set filetype=nasm",
 })
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-    pattern = "*.auto.tfvars",
+    pattern = "*.tfvars",
     command = "set filetype=terraform",
-})
-
--- Set indent / fold options for specific file types
-vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "python",
-    command = "setlocal foldmethod=indent foldnestmax=2 foldlevelstart=99",
-})
-vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "yaml",
-    command = "setlocal tabstop=2 shiftwidth=2",
-})
-vim.api.nvim_create_autocmd({ "FileType" }, {
-    pattern = "terraform",
-    command = "setlocal tabstop=2 shiftwidth=2",
 })
 
 -- Make NFOs look nice
