@@ -33,8 +33,11 @@
 
 {{- $chassisType := "desktop" }}
 {{- if eq .chezmoi.os "darwin" }}
-{{-   if contains "MacBook" (output "sysctl" "-n" "hw.model") }}
+{{- $model := (output "sysctl" "-n" "hw.model") }}
+{{-   if contains "MacBook" $model }}
 {{-     $chassisType = "laptop" }}
+{{-   else if contains "VirtualMac" $model }}
+{{-     $chassisType = "vm" }}
 {{-   else }}
 {{-     $chassisType = "desktop" }}
 {{-   end }}
