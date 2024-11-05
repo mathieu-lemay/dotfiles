@@ -1,4 +1,6 @@
-#! /bin/bash -eu
+#! /bin/bash
+
+set -eu
 
 branches_gone=$(git branch -vv | sed 's/^\*//' | awk '/: gone]/{print $1}')
 

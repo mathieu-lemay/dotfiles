@@ -77,8 +77,13 @@ custom-background-color=true
 custom-theme-shrink=true
 dash-max-icon-size=42
 disable-overview-on-startup=true
+{{- if eq .chassisType "vm" }}
+dock-fixed=true
+dock-position='LEFT'
+{{- else }}
 dock-fixed=false
 dock-position='BOTTOM'
+{{- end }}
 height-fraction=0.90000000000000002
 hide-delay=0.10000000000000002
 intellihide-mode='FOCUS_APPLICATION_WINDOWS'
