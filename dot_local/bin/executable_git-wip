@@ -1,0 +1,6 @@
+#! /bin/bash
+
+set -eu
+
+msg="[skip ci] WIP: $(git branch-name)${*+: ${*}}"
+git commit --no-verify --message "${msg}"
