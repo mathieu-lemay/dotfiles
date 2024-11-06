@@ -17,6 +17,11 @@ unquarantine() {
     xattr -r -d com.apple.quarantine "$@"
 }
 
+# OrbStack
+if [[ -e ~/.orbstack/shell/init.zsh ]]; then
+    source ~/.orbstack/shell/init.zsh 2>/dev/null
+fi
+
 if [[ ! -d "${HOMEBREW_PREFIX}/bin" ]]; then
     return
 fi
