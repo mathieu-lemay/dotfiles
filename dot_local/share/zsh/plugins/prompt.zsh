@@ -18,10 +18,11 @@ color_reset="%f%k"
 __zsh_get_venv_prompt() {
     local p
 
-    # Use VIRTUAL_ENV_PROMPT with trimmed leading/trailing spaces if available
-    p="${VIRTUAL_ENV_PROMPT:+${${VIRTUAL_ENV_PROMPT##[[:space:]]##}%%[[:space:]]##}}"
-    # Fallback on the basename otherwise
-    p="${p:-${VIRTUAL_ENV##*/}}"
+    p=${VIRTUAL_ENV:t}
+
+    if [[ "${VIRTUAL_ENV_PROMPT}" == '('?*') ' && "${VIRTUAL_ENV_PROMPT}" != "(${p}) " ]]; then
+        p="${VIRTUAL_ENV_PROMPT[2,-3]}"
+    fi
 
     echo "${p}"
 }
