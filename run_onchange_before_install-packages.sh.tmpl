@@ -14,13 +14,17 @@ info "Installing system packages"
 if command -v paru > /dev/null; then
     info "Installing Arch/AUR packages: {{ .packages.linux.arch.aur }}"
     paru -S --needed \
-    {{ range .packages.linux.arch.pacman }} {{ . | quote }} {{ end }} \
-    {{ range .packages.linux.arch.aur }} {{ . | quote }} {{ end }}
+    {{ .packages.linux.arch.pacman | quoteList | join " " }} \
+    {{ .packages.linux.arch.aur | quoteList | join " " }} \
 else
     info "Installing Arch packages: {{ .packages.linux.arch.pacman }}"
     warning "paru is not installed, skipping AUR packages"
-    sudo pacman -S --needed {{ range .packages.linux.arch.pacman }} {{ . | quote }} {{ end }}
+    sudo pacman -S --needed {{ .packages.linux.arch.pacman | quoteList | join " " }}
 fi
+{{ else if contains "opensuse" .osid -}}
+info "Installing openSUSE packages: {{ .packages.linux.opensuse.packages }}"
+sudo zypper install -y {{ .packages.linux.opensuse.packages | quoteList | join " " }}
+sudo zypper install -y -t pattern {{ .packages.linux.opensuse.patterns | quoteList | join " " }}
 {{ else if eq .osid "darwin" -}}
 if [[ "$EUID" -eq 0 ]]; then
     warning "Skipping package installation when running as root"
@@ -32,9 +36,9 @@ info "Tapping {{ . }}"
 brew tap {{ . | quote }}
 {{ end }}
 info "Installing packages: {{ .packages.macos.brew.packages }}"
-brew install --quiet {{ range .packages.macos.brew.packages }} {{ . | quote }} {{ end }}
+brew install --quiet {{ .packages.macos.brew.packages | quoteList | join " " }}
 info "Installing casks: {{ .packages.macos.brew.casks }}"
-brew install --quiet --cask {{ range .packages.macos.brew.casks }} {{ . | quote }} {{ end }}
+brew install --quiet --cask {{ .packages.macos.brew.casks | quoteList | join " " }}
 {{ end -}}
 
 # vim: ft=jinja
