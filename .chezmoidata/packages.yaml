@@ -21,6 +21,7 @@ packages:
         - tmux
         - xsel
       aur:
+        - neovim-symlinks
         - ov
   macos:
     brew:
