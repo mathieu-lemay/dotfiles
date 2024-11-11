@@ -14,13 +14,16 @@ hide-lsp-plugins.sh
 .config/yay
 .local/share/zsh/plugins/arch.zsh
 {{- end }}
-{{- if ne .osid "linux-opensuse-tumbleweed" }}
+{{- if ne .osid "linux-opensuse" }}
 .local/share/zsh/plugins/opensuse.zsh
 {{- end }}
 {{- if ne .chezmoi.os "darwin" }}
 .config/linearmouse
-.local/bin/vim
-.local/bin/vimdiff
 .local/share/zsh/plugins/macos.zsh
 Library/
+{{- end }}
+
+{{- if eq .osid "linux-arch" }}
+.local/bin/vim
+.local/bin/vimdiff
 {{- end }}
