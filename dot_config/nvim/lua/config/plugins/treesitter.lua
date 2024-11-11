@@ -8,6 +8,7 @@ require("nvim-treesitter.configs").setup({
         "lua",
         "python",
         "rust",
+        "sql",
         "terraform",
     },
 
