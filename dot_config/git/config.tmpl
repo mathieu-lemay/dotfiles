@@ -85,10 +85,12 @@
 	autocorrect = prompt
 [log]
 	date = iso
+{{- if ne (lookPath "ov") "" }}
 [pager]
 	log = "ov -F --section-delimiter '^commit' --section-header-num 3"
 	diff = "ov -F --section-delimiter '^diff' --section-header"
 	show = "ov -F --header 3"
+{{- end }}
 
 {{- if eq .setupPrivateGit true }}
 [includeIf "gitdir:~/src/private/**"]
