@@ -85,7 +85,9 @@ load_setenv_agent() {
 generate_completions
 {{- if eq .chezmoi.os "darwin" }}
 sync_library_fonts
-load_setenv_agent
+if [[ "${EUID}" != 0 ]]; then
+    load_setenv_agent
+fi
 warning "Disable Mission Control keyboard shortcuts for ctrl+left and ctrl+right"
 {{- end }}
 

@@ -9,6 +9,11 @@
 
 info "Loading dconf settings"
 
+if [[ -z "${DISPLAY:-}" ]]; then
+    warning "$0: Skipping dconf settings: DISPLAY is not set"
+    exit 0
+fi
+
 if ! command -v dconf &> /dev/null; then
     warning "$0: dconf not installed: skipping"
     exit 0
