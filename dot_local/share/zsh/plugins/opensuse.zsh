@@ -1,7 +1,7 @@
 pm() {
-    sudo zypper ""
+    sudo zypper "$@"
 }
 
 up() {
-    sudo zypper update ""
+    sudo zypper update "$@"
 }
