@@ -4,8 +4,21 @@ GCLOUD_AUTH_CHECK_FILE="${XDG_CACHE_HOME}/gcloud/last_auth_check"
 GCLOUD_PROJECTS_FILE="${XDG_CACHE_HOME}/gcloud/projects.json"
 GCLOUD_PROJECT_FILE="${XDG_STATE_HOME}/gcloud/project"
 
-source "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"
-source "/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc"
+{{ if eq .osid "linux-arch" -}}
+. "/opt/google-cloud-cli/path.zsh.inc"
+. "/opt/google-cloud-cli/completion.zsh.inc"
+
+{{ else if eq .osid "linux-opensuse" -}}
+. "/usr/share/google-cloud-sdk/completion.zsh.inc"
+
+{{ else if eq .chezmoi.os "darwin" -}}
+. "/opt/homebrew/share/google-cloud-sdk/path.zsh.inc"
+. "/opt/homebrew/share/google-cloud-sdk/completion.zsh.inc"
+
+{{ else -}}
+echo "gcloud paths not set for {{ .osid }}"
+
+{{ end -}}
 
 [[ -d "$(dirname "${GCLOUD_PROJECT_FILE}")" ]] || mkdir -p "$(dirname "${GCLOUD_PROJECT_FILE}")"
 
