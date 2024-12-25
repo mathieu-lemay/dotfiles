@@ -1,3 +1,4 @@
+debug()   { if [[ -n "${DEBUG:-}" ]]; then printf "\\e[34m[DEBUG]\\e[0m   %s\\n" "$*" >&2 ; fi }
 info()    { printf "\\e[32m[INFO]\\e[0m    %s\\n" "$*" >&2 ; }
 warning() { printf "\\e[33m[WARNING]\\e[0m %s\\n" "$*" >&2 ; }
 error()   { printf "\\e[31m[ERROR]\\e[0m   %s\\n" "$*" >&2 ; }
