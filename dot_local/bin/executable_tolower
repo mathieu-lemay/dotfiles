@@ -46,8 +46,8 @@ def cleanup_foldername(strname):
 
     strname = strname.lower()
     strname = replace_invalid_chars(strname)
-    strname = re.sub("^[^\w]+", "", strname)  # trim the beginning
-    strname = re.sub("[^\w]+$", "", strname)  # trim the end
+    strname = re.sub(r"^[^\w]+", "", strname)  # trim the beginning
+    strname = re.sub(r"[^\w]+$", "", strname)  # trim the end
     strname = invalid_chars.sub("_", strname.strip())  # replace invalid stuff by _
     strname = re.sub("_+", "_", strname)  # squeeze continuous _ to one _
 
