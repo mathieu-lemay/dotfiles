@@ -58,8 +58,7 @@ function gcloud-logout() {
 }
 
 function __gcloud_login() {
-    gcloud auth login
-    gcloud auth application-default login
+    gcloud auth login --update-adc
 }
 
 # ]]]
