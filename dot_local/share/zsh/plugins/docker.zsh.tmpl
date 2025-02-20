@@ -80,9 +80,11 @@ function docker-tail() {
         return 1
     fi
 
+    shift 1
+
     while :; do
         if docker container inspect "${container}" >/dev/null; then
-            docker logs -f "${container}"
+            docker logs -f "$@" "${container}"
             if [[ $? -ne 0 ]]; then
                 return
             fi
