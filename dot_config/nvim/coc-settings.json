@@ -21,11 +21,10 @@
             ]
         }
     },
-    "pyright.disableDiagnostics": true,
-    "python.formatting.provider": "none",
+    "python.formatting.provider": "ruff",
     "python.linting.mypyEnabled": true,
     "python.linting.ruffEnabled": true,
-    "python.sortImports.path": "ruff",
+    "pyright.organizeimports.provider": "ruff",
     "rust-analyzer.server.path": "rust-analyzer",
     "suggest.noselect": true,
     "yaml.customTags": [ "!GetAtt", "!Join", "!Ref", "!Sub" ]

@@ -5,7 +5,6 @@ vim.g.coc_global_extensions = {
     "coc-docker",
     "coc-json",
     "coc-pyright",
-    "@yaegassy/coc-ruff",
     "coc-rust-analyzer",
     "coc-sh",
     "coc-yaml",
@@ -27,12 +26,13 @@ vim.keymap.set("n", "<leader>p", "<cmd>CocCommand<CR>")
 vim.keymap.set("n", "<C-Up>", "<Plug>(coc-diagnostic-prev)", { silent = true })
 vim.keymap.set("n", "<C-Down>", "<Plug>(coc-diagnostic-next)", { silent = true })
 
--- Remap keys for gotos
+-- Remap keys for gotos/formatting
 vim.keymap.set("n", "<leader>ld", "<Plug>(coc-definition)", { silent = true })
 vim.keymap.set("n", "<leader>lt", "<Plug>(coc-type-definition)", { silent = true })
 vim.keymap.set("n", "<leader>li", "<Plug>(coc-implementation)", { silent = true })
 vim.keymap.set("n", "<leader>lg", "<Plug>(coc-references)", { silent = true })
 vim.keymap.set("n", "<leader>lf", "<Plug>(coc-format)", { silent = true })
+vim.keymap.set("n", "<leader>lo", "<cmd>CocCommand editor.action.organizeImport <CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>gb", "<cmd>CocCommand git.showCommit<CR>", { silent = true })
 vim.keymap.set("n", "<leader>gi", "<cmd>CocCommand git.chunkInfo<CR>", { silent = true })
