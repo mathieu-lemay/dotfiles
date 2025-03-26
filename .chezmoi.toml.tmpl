@@ -33,7 +33,7 @@
 {{-   end -}}
 {{- end -}}
 
-{{- $chassisType := "desktop" }}
+{{- $chassisType := "" }}
 {{- if eq .chezmoi.os "darwin" }}
 {{- $model := (output "sysctl" "-n" "hw.model") }}
 {{-   if contains "MacBook" $model }}
@@ -45,7 +45,10 @@
 {{-   end }}
 {{- else if and (eq .chezmoi.os "linux") (ne (lookPath "hostnamectl") "") }}
 {{-   $chassisType = (output "hostnamectl" "--json=short" | mustFromJson).Chassis }}
-{{- end -}}
+{{- end }}
+{{- if not $chassisType }}
+{{-   $chassisType = "desktop" }}
+{{- end }}
 
 [diff]
 exclude = ["scripts"]
