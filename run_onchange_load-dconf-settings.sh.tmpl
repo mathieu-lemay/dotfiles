@@ -9,6 +9,11 @@
 
 info "Loading dconf settings"
 
+if [[ "${EUID}" -eq 0 ]]; then
+    warning "$0: Skipping dconf settings: running as root"
+    exit 0
+fi
+
 if [[ -z "${DISPLAY:-}" ]]; then
     warning "$0: Skipping dconf settings: DISPLAY is not set"
     exit 0
