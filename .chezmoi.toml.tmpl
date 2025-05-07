@@ -118,7 +118,7 @@ jetbrains_jre = ""
 {{-   $pipewireMinQuantum = .pipewire.min_quantum }}
 {{-   $pipewireMaxQuantum = .pipewire.max_quantum }}
 {{- else }}
-{{-   $setupForFullaSchiit := promptBool "Setup PipeWire for the Fulla Schiit?" false -}}
+{{-   $setupForFullaSchiit := promptBool "Setup PipeWire for the Fulla Schiit" false -}}
 {{-   if $setupForFullaSchiit }}
 {{-     $pipewireClockRate = 96000 }}
 {{-     $pipewireQuantum = 2048 }}
