@@ -1,0 +1,30 @@
+$set(title,$lower(%title%))
+$set(title,$rreplace(%title%,[ '#:!?],_))
+$set(title,$rreplace(%title%,[\(\)\,."],))
+$set(title,$rreplace(%title%,_+,_))
+$set(title,$rreplace(%title%,_\$,))
+$set(title,$replace(%title%,[,))
+$set(title,$replace(%title%,],))
+$set(title,$rreplace(%title%,[àáâãäå],a))
+$set(title,$rreplace(%title%,[èéêëę],e))
+$set(title,$rreplace(%title%,[ìíîï],i))
+$set(title,$rreplace(%title%,[òóôõöøō],o))
+$set(title,$rreplace(%title%,[ùúûüū],u))
+$set(title,$rreplace(%title%,[ýÿ],y))
+$set(title,$rreplace(%title%,[çć],c))
+$set(title,$replace(%title%,ð,d))
+$set(title,$replace(%title%,ł,l))
+$set(title,$rreplace(%title%,[ñń],n))
+$set(title,$replace(%title%,ß,ss))
+$set(title,$replace(%title%,æ,ae))
+$set(title,$replace(%title%,&,and))
+
+$if(
+	$gt(%totaldiscs%, 1),
+	$if(
+		$gt(%totaldiscs%, 9),
+		$num(%discnumber%, 2),
+		%discnumber%
+	).,
+)
+$num(%tracknumber%, 2)_-_%title%
