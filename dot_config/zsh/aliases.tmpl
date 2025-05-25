@@ -53,7 +53,7 @@ if ! installed 'eza'; then
     fi
 fi
 {{- else}}
-alias jdmesg='journalctl --dmesg -o short-monotonic --no-hostname --no-pager'
+alias jdmesg='journalctl --dmesg -o short-iso --no-hostname --no-pager'
 
 if installed handlr; then
     alias open='handlr open'
