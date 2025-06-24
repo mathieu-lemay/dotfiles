@@ -1,0 +1,10 @@
+-- Ignore duplicates and lines starting with a space
+\set HISTCONTROL ignoreboth
+
+-- Autocomplete keywords to upper case
+\set COMP_KEYWORD_CASE upper
+
+\set PROMPT1 '%[%033[32m%]%n@%M%[%033[0m%]:%[%033[34m%]%/%R%[%033[0m%]%# '
+\set PROMPT2 '>>> '
+
+-- vim: ft=sql
