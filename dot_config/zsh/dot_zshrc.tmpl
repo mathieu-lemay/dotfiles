@@ -31,9 +31,9 @@ autoload -U compinit promptinit history-search-end bashcompinit
 autoload -Uz vcs_info
 
 {{- if eq .chezmoi.os "darwin" }}
-compinit -i -d "${XDG_STATE_HOME}/zsh/zcompdump"
+compinit -i -d "${XDG_CACHE_HOME}/zsh/zcompdump"
 {{- else }}
-compinit -d "${XDG_STATE_HOME}/zsh/zcompdump"
+compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump"
 {{- end }}
 promptinit
 bashcompinit
