@@ -1,4 +1,10 @@
-# OneDark presets
+# https://github.com/derailed/k9s/blob/master/skins/one-dark.yaml
+
+# -----------------------------------------------------------------------------
+# OneDark Skin
+# -----------------------------------------------------------------------------
+
+# Styles...
 foreground: &foreground "#abb2bf"
 background: &background "#282c34"
 black: &black "#080808"
@@ -11,6 +17,7 @@ red: &red "#e06370"
 yellow: &yellow "#e5c07b"
 yellow_bright: &yellow_bright "#d19a66"
 
+# Skin...
 k9s:
   body:
     fgColor: *foreground
@@ -23,6 +30,12 @@ k9s:
   info:
     fgColor: *grey
     sectionColor: *green
+  help:
+    fgColor: *foreground
+    bgColor: *background
+    keyColor: *yellow
+    numKeyColor: *blue
+    sectionColor: *purple
   dialog:
     fgColor: *black
     bgColor: *background
@@ -94,6 +107,8 @@ k9s:
       indicator:
         fgColor: *blue
         bgColor: *background
+        toggleOnColor: *red
+        toggleOffColor: *grey
     help:
       fgColor: *grey
       bgColor: *background

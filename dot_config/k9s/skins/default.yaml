@@ -1,4 +1,3 @@
-# OneDark presets
 foreground: &foreground "#dcdccc"
 background: &background "#3f3f3f"
 black: &black "#313131"
