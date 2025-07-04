@@ -1,0 +1,41 @@
+#! /bin/bash
+
+{{- $cmd := "gnome-extensions" }}
+
+{{ if eq .chezmoi.os "linux" -}}
+
+# gnome-extensions-is-installed: {{ ne (lookPath $cmd) "" }}
+
+. ~/.local/lib/log.sh
+
+extensions=(
+    appindicatorsupport@rgcjonas.gmail.com
+    bluetooth-quick-connect@bjarosze.gmail.com
+    dash-to-dock@micxgx.gmail.com
+    eepresetselector@ulville.github.io
+    emoji-copy@felipeftn
+    gsconnect@andyholmes.github.io
+    just-perfection-desktop@just-perfection
+    windowIsReady_Remover@nunofarruca@gmail.com
+)
+
+if ! command -v {{ $cmd }} &>/dev/null; then
+    warning "$0: {{ $cmd }} not installed: skipping"
+    exit 0
+fi
+
+installed() {
+    gnome-extensions info "${1}" &>/dev/null
+}
+
+info "Checking for gnome extensions"
+
+for e in "${extensions[@]}"; do
+    if ! installed "${e}"; then
+        warning "Missing gnome extension: ${e}"
+    fi
+done
+
+{{- end }}
+
+# vim: ft=bash
