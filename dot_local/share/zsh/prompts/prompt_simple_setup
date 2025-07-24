@@ -95,7 +95,7 @@ prompt_git_action() {
 prompt_git_branch() {
     [[ -z "${vcs_branch_msg}" ]] && return
 
-    if contains "${vcs_branch_msg}" "${GIT_STAGED}" || contains "${vcs_branch_msg}" "${GIT_UNSTAGED}"; then
+    if [[ "${vcs_branch_msg}" =~ "^[${GIT_UNSTAGED}${GIT_STAGED}]+ " ]]; then
         fg="${yellow}"
     else
         fg="${green}"
