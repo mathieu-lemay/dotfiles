@@ -5,7 +5,7 @@ if [[ -n "${SSH_AUTH_SOCK}" ]] && ! ssh-add -l &>/dev/null; then
     [[ -e ~/.ssh/id_ed25519 ]] && ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 
     # Add the rest
-    ssh-add --apple-load-keychain
+    find ~/.ssh -name 'id_*' -not -name '*.pub' -print0 | xargs -0 --no-run-if-empty ssh-add --apple-use-keychain
 fi
 
 unquarantine() {
