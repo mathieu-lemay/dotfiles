@@ -22,6 +22,8 @@ __zsh_get_venv_prompt() {
 
     if [[ "${VIRTUAL_ENV_PROMPT}" == '('?*') ' && "${VIRTUAL_ENV_PROMPT}" != "(${p}) " ]]; then
         p="${VIRTUAL_ENV_PROMPT[2,-3]}"
+    elif [[ -n "${VIRTUAL_ENV_PROMPT}" ]]; then
+        p="${VIRTUAL_ENV_PROMPT}"
     fi
 
     echo "${p}"
