@@ -28,5 +28,6 @@
     "python.linting.ruffEnabled": true,
     "rust-analyzer.server.path": "rust-analyzer",
     "suggest.noselect": true,
-    "yaml.customTags": [ "!GetAtt", "!Join", "!Ref", "!Sub" ]
+    "yaml.customTags": [ "!GetAtt", "!Join", "!Ref", "!Sub" ],
+    "yaml.format.enable": true
 }
