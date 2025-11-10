@@ -1,4 +1,10 @@
 defaults:
+  - domain: -globalDomain
+    values:
+      - description: Enable tinted liquid glass
+        key: NSGlassDiffusionSetting
+        type: bool
+        value: yes
   - domain: com.apple.dock
     values:
       - description: Change dock icon size
