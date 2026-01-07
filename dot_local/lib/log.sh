@@ -14,7 +14,7 @@ if [[ -n "${ZSH_VERSION:-}" ]]; then
         fi
 
         local prompt defans
-        prompt="$1"
+        prompt="$(printf "\\e[36m[PROMPT]\\e[0m  %s\\n" "$1")"
         defans="${2:-n}"
         defans="${defans:l}"
 
