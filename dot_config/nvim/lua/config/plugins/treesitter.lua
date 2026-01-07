@@ -1,35 +1,33 @@
-require("nvim-treesitter.configs").setup({
-    ensure_installed = {
-        "bash",
-        "dockerfile",
-        "go",
-        "hcl",
-        "json",
-        "lua",
-        "python",
-        "rust",
-        "sql",
-        "terraform",
-    },
+local ts = require("nvim-treesitter")
+ts.install({
+    "bash",
+	"dockerfile",
+	"go",
+	"hcl",
+	"json",
+	"lua",
+	"python",
+	"rust",
+	"sql",
+	"terraform",
+})
 
-    highlight = {
-        enable = true,
+vim.api.nvim_create_autocmd('FileType', {
+  group = group,
+  desc = 'Enable treesitter highlighting and indentation',
+  callback = function(event)
+    local lang = vim.treesitter.language.get_lang(event.match) or event.match
+    local buf = event.buf
 
-        -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-        disable = function(lang, buf)
-            local max_filesize = 1024 * 1024 -- 1 MiB
-            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-            if ok and stats and stats.size > max_filesize then
-                return true
-            end
-        end,
+    -- Start highlighting immediately (works if parser exists)
+    pcall(vim.treesitter.start, buf, lang)
 
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-    },
+    -- Enable treesitter indentation
+    vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+    -- Install missing parsers (async, no-op if already installed)
+    ts.install({ lang })
+  end,
 })
 
 -- Use treesitter as folding method
