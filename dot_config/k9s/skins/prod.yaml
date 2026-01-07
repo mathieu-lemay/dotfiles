@@ -42,7 +42,7 @@ k9s:
       newColor: red
       modifyColor: greenyellow
       addColor: white
-      errorColor: red
+      errorColor: darkorange
       pendingColor: darkred
       highlightColor: red
       killColor: red
