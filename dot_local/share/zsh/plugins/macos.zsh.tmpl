@@ -14,7 +14,7 @@ unquarantine() {
         return 1
     fi
 
-    xattr -r -d com.apple.quarantine "$@"
+    sudo xattr -r -d com.apple.quarantine "$@"
 }
 
 # OrbStack
@@ -34,6 +34,9 @@ export PATH="${HOMEBREW_PREFIX}/sbin${PATH+:$PATH}";
 export MANPATH="${HOMEBREW_PREFIX}/share/man${MANPATH+:$MANPATH}:";
 export INFOPATH="${HOMEBREW_PREFIX}/share/info:${INFOPATH:-}";
 
+export CGO_CFLAGS="-O0 -g -I${HOMEBREW_PREFIX}/include"
+export CGO_LDFLAGS="-L${HOMEBREW_PREFIX}/lib"
+
 # GNU utilities
 for pkg in "coreutils" "findutils" "gnu-sed"; do
     gnubin="${HOMEBREW_PREFIX}/opt/${pkg}/libexec/gnubin"
@@ -41,7 +44,7 @@ for pkg in "coreutils" "findutils" "gnu-sed"; do
 done
 
 # Lib specific flags
-for lib in 'openssl' 'zlib'; do
+for lib in 'openssl' 'sdl3' 'zlib'; do
     lib_path="${HOMEBREW_PREFIX}/opt/${lib}"
     if [[ -d "${lib_path}" ]]; then
         export LDFLAGS="$LDFLAGS -L${lib_path}/lib"
