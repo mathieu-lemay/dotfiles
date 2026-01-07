@@ -25,6 +25,16 @@ multi_line_mode = psql
 # that may cause harm to the database such as "drop table", "drop database"
 # or "shutdown".
 destructive_warning = False
+# When `destructive_warning` is on and the user declines to proceed with a
+# destructive statement, the current transaction (if any) is left untouched,
+# by default. When setting `destructive_warning_restarts_connection` to
+# "True", the connection to the server is restarted. In that case, the
+# transaction (if any) is rolled back.
+destructive_warning_restarts_connection = False
+
+# When this option is on (and if `destructive_warning` is set),
+# destructive statements are not executed when outside of a transaction.
+destructive_statements_require_transaction = False
 
 # Enables expand mode, which is similar to `\x` in psql.
 expand = False
@@ -139,6 +149,13 @@ null_string = '<null>'
 # manage pager on startup
 enable_pager = True
 
+# Use keyring to automatically save and load password in a secure manner
+keyring = True
+
+# Automatically set the session time zone to the local time zone
+# If unset, uses the server's time zone, which is the Postgres default
+use_local_timezone = False
+
 # Custom colors for the completion menu, toolbar, etc.
 [colors]
 Token.Menu.Completions.Completion.Current = 'bg:#ffffff #000000'
@@ -170,6 +187,8 @@ Token.Output.EvenRow = ""
 
 # Named queries are queries you can execute by name.
 [named queries]
+# See the documentation on named queries for more examples.
+simple = select * from abc where a is not Null
 
 # DSN to call by -D option
 [alias_dsn]
@@ -181,5 +200,9 @@ Token.Output.EvenRow = ""
 [data_formats]
 decimal = ""
 float = ""
+
+# Automatically open SSH tunnels for the matched hosts
+[ssh tunnels]
+# ^example.*\.host$ = myuser:mypasswd@my.tunnel.com:4000
 
 # vi: ft=dosini
