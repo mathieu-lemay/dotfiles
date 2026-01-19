@@ -1,0 +1,22 @@
+command -v sk &> /dev/null || return
+
+. "{{ .path.skim_key_bindings }}"
+
+# --files: List files that would be searched but do not search
+# --follow: Follow symlinks
+rg_opts="--files --follow --hidden --glob '!.git/*'"
+preview_window_opts="--preview-window hidden --bind '?:toggle-preview'"
+
+# Show prompt on top
+export SKIM_DEFAULT_OPTIONS="--reverse -1"
+export SKIM_DEFAULT_COMMAND="rg ${=rg_opts} 2>/dev/null"
+export SKIM_COMPLETION_TRIGGER="--"
+export SKIM_CTRL_T_COMMAND="$SKIM_DEFAULT_COMMAND"
+export SKIM_CTRL_T_OPTS="--tiebreak=end --preview '(bat --color=always {} || cat {}) 2>/dev/null | head -200' ${=preview_window_opts}"
+export SKIM_ALT_C_COMMAND="fd --type=d"
+export SKIM_ALT_C_OPTS="--tiebreak=end --preview 'tree -C {} | head -200' ${=preview_window_opts}"
+[[ -n "${TMUX:-}" ]] && export SKIM_TMUX_OPTS="center,75%,75%"
+
+unset rg_opts preview_window_opts
+
+# vim: ft=zsh

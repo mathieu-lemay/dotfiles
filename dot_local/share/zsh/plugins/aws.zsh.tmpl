@@ -24,7 +24,7 @@ function aws-list-profiles() {
 }
 
 function aws-switch-profile {
-    local profile=$(aws-list-profiles | fzf -q "$*")
+    local profile=$(aws-list-profiles | sk -q "$*")
 
     [[ -n "${profile}" ]] || return
 

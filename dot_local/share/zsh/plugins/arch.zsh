@@ -23,7 +23,7 @@ if type paru &>/dev/null; then
             return 1
         fi
 
-        paru -Slq | fzf --multi --preview 'paru -Si {1}' -q "${@:-}" | xargs -ro paru -S
+        paru -Slq | sk --multi --preview 'paru -Si {1}' -q "${@:-}" | xargs -ro paru -S
     }
 
     pmr() {
@@ -32,7 +32,7 @@ if type paru &>/dev/null; then
             return 1
         fi
 
-        paru -Qq | fzf --multi --preview 'paru -Si {1}' -q "${@:-}" | xargs -ro paru -Rns
+        paru -Qq | sk --multi --preview 'paru -Si {1}' -q "${@:-}" | xargs -ro paru -Rns
     }
 
     compdef pm='paru'
@@ -61,7 +61,7 @@ elif type yay &>/dev/null; then
             return 1
         fi
 
-        yay -Slq | fzf --multi --preview 'yay -Si {1}' -q "${@:-}" | xargs -ro yay -S
+        yay -Slq | sk --multi --preview 'yay -Si {1}' -q "${@:-}" | xargs -ro yay -S
     }
 
     pmr() {
@@ -70,7 +70,7 @@ elif type yay &>/dev/null; then
             return 1
         fi
 
-        yay -Qq | fzf --multi --preview 'yay -Si {1}' -q "${@:-}" | xargs -ro yay -Rns
+        yay -Qq | sk --multi --preview 'yay -Si {1}' -q "${@:-}" | xargs -ro yay -Rns
     }
 
     compdef pm='yay'

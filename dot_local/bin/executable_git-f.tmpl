@@ -4,9 +4,9 @@ set -eu -o pipefail
 
 . ~/.local/lib/log.sh
 
-command -v fzf &>/dev/null || fatal "fzf not installed"
+command -v sk &>/dev/null || fatal "skim not installed"
 
 git branch -a | grep -Ev "(^\*| -> )" | awk '{$1=$1};1' | sort | uniq \
-    | fzf-tmux ${FZF_TMUX_OPTS:-} -q "${@:-}" --preview 'git log --color -n 50 {} | head -200' \
+    | sk --tmux="${SKIM_TMUX_OPTS:-}" -q "${@:-}" --preview 'git log --color -n 50 {} | head -200' \
     | sed 's@^remotes/origin/@@' \
     | {{ .command.xargs }} git switch
