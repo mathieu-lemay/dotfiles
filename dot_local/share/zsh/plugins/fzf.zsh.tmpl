@@ -4,13 +4,13 @@ command -v fzf &> /dev/null || return
 . "{{ .path.fzf_completion }}"
 . "${XDG_DATA_HOME}/fzf/fzf-git.sh"
 
+# --files: List files that would be searched but do not search
+# --follow: Follow symlinks
 rg_opts="--files --follow --hidden --glob '!.git/*'"
 preview_window_opts="--preview-window hidden --bind '?:toggle-preview'"
 
 # Show prompt on top
 export FZF_DEFAULT_OPTS="--reverse -1"
-# --files: List files that would be searched but do not search
-# --follow: Follow symlinks
 export FZF_DEFAULT_COMMAND="rg ${=rg_opts} 2>/dev/null"
 export FZF_COMPLETION_TRIGGER=";;"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
