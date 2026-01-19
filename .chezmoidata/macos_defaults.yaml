@@ -5,6 +5,10 @@ defaults:
         key: NSGlassDiffusionSetting
         type: bool
         value: yes
+      - description: Disable lookup on force click
+        key: com.apple.trackpad.forceClick
+        type: int
+        value: 0
   - domain: com.apple.dock
     values:
       - description: Change dock icon size
