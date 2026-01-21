@@ -10,7 +10,7 @@ preview_window_opts="--preview-window hidden --bind '?:toggle-preview'"
 # Show prompt on top
 export SKIM_DEFAULT_OPTIONS="--reverse -1"
 export SKIM_DEFAULT_COMMAND="rg ${=rg_opts} 2>/dev/null"
-export SKIM_COMPLETION_TRIGGER="--"
+export SKIM_COMPLETION_TRIGGER=",,"
 export SKIM_CTRL_T_COMMAND="$SKIM_DEFAULT_COMMAND"
 export SKIM_CTRL_T_OPTS="--tiebreak=end --preview '(bat --color=always {} || cat {}) 2>/dev/null | head -200' ${=preview_window_opts}"
 export SKIM_ALT_C_COMMAND="fd --type=d"
