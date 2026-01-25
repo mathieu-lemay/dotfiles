@@ -1,14 +1,21 @@
 [org/gnome/desktop/input-sources]
-sources=[('xkb', 'us'), ('xkb', 'ca')]
+mru-sources=[('xkb', 'us'), ('xkb', 'ca')]
 per-window=true
+sources=[('xkb', 'us'), ('xkb', 'ca')]
 xkb-options=['caps:escape']
 
 [org/gnome/desktop/interface]
 clock-show-seconds=true
 clock-show-weekday=true
 color-scheme='prefer-dark'
+document-font-name='Noto Sans 11'
+enable-animations=true
 enable-hot-corners=false
 font-antialiasing='rgba'
+font-hinting='slight'
+font-name='Noto Sans 11'
+gtk-theme='Colloid-Dark-Compact'
+icon-theme='Papirus-Dark'
 monospace-font-name='InputMono Nerd Font Mono 10'
 show-battery-percentage={{ if eq .chassisType "laptop" }}true{{ else }}false{{ end }}
 
@@ -38,6 +45,7 @@ switch-windows-backward=['<Shift><Alt>Tab']
 
 [org/gnome/desktop/wm/preferences]
 button-layout='close,minimize,maximize:appmenu'
+titlebar-font='Noto Sans Bold 11'
 
 [org/gnome/meld]
 highlight-current-line=true
@@ -72,9 +80,17 @@ name='Terminal (Disable tmux)'
 
 [org/gnome/shell/extensions/dash-to-dock]
 animation-time=0.10000000000000002
+apply-custom-theme=false
+apply-glossy-effect=false
 background-color='rgb(63,63,63)'
 background-opacity=0.90000000000000002
+click-action='cycle-windows'
 custom-background-color=true
+custom-theme-customize-running-dots=false
+custom-theme-running-dots=true
+custom-theme-running-dots-border-color='rgb(0,0,0)'
+custom-theme-running-dots-border-width=1
+custom-theme-running-dots-color='rgb(255,255,255)'
 custom-theme-shrink=true
 dash-max-icon-size=42
 disable-overview-on-startup=true
@@ -113,6 +129,7 @@ show-running=true
 show-show-apps-button=false
 show-trash=false
 transparency-mode='FIXED'
+unity-backlit-items=false
 
 [org/gnome/shell/extensions/quick-settings-tweaks]
 datemenu-hide-left-box=false
