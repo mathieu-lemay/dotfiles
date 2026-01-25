@@ -147,6 +147,10 @@ prompt_chezmoi() {
     [[ -n "${CHEZMOI_SUBSHELL:-}" ]] && rprompt_segment ${black} ${white} "Chezmoi"
 }
 
+prompt_extra() {
+    [[ -n "${ZSH_RPROMPT_EXTRA:-}" ]] && rprompt_segment ${blue} ${black} "${ZSH_RPROMPT_EXTRA}"
+}
+
 prompt_shell_lvl() {
     ((lvl = ${SHLVL} - 1))
     [[ -n "${POETRY_ACTIVE:-}" ]] && ((lvl--))
@@ -158,6 +162,7 @@ build_rprompt() {
     __zsh_load_vcs_info
 
     prompt_shell_lvl
+    prompt_extra
     prompt_nvm
     prompt_venv
     prompt_chezmoi

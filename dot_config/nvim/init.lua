@@ -40,7 +40,7 @@ vim.opt.listchars = "tab:→ ,trail:~"
 vim.opt.list = true
 
 -- Use persistent undo
-vim.opt.undodir = vim.fn.expand("~/.local/state/nvim/undo")
+vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
 vim.opt.undofile = true
 vim.opt.undolevels = 1000 -- maximum number of changes that can be undone
 vim.opt.undoreload = 10000 -- maximum number lines to save for undo on a buffer reload

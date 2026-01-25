@@ -112,6 +112,8 @@ run_winetricks_cmd() {
 
     info "Running winetricks ${cmd}"
     WINE="$(_get_wine_cmd wine)" winetricks -q "${cmd}"
+
+    wineserver -k
 }
 
 install_dxvk() {
@@ -132,7 +134,18 @@ install_dxvk() {
 }
 
 install_vkd3d() {
-    vkd3d_version="$(curl -s "https://api.github.com/repos/HansKristian-Work/vkd3d-proton/releases/latest" | jq -r ".tag_name" | sed 's/^v//')"
+    if [[ -n "${1:-}" ]]; then
+        vkd3d_version="git"
+        vkd3d_url="${1}"
+        name="vkd3d-proton-${vkd3d_version}"
+        archive="${name}.zip"
+    else
+        vkd3d_version="$(curl -s "https://api.github.com/repos/HansKristian-Work/vkd3d-proton/releases/latest" | jq -r ".tag_name" | sed 's/^v//')"
+        vkd3d_url="https://github.com/HansKristian-Work/vkd3d-proton/releases/download/v${vkd3d_version}/vkd3d-proton-${vkd3d_version}.tar.zst"
+        name="vkd3d-proton-${vkd3d_version}"
+        archive="${name}.tar.zst"
+    fi
+
     vkd3d_version_file="${WINEPREFIX}/.vkd3d"
 
     if [ -f "${vkd3d_version_file}" ] && [ "$(cat "${vkd3d_version_file}")" = "${vkd3d_version}" ]; then
@@ -140,22 +153,25 @@ install_vkd3d() {
         return
     fi
 
-    name="vkd3d-proton-${vkd3d_version}"
-    archive="${name}.tar.zst"
-
     if [[ ! -e "${SUPPORT_DIR}/${archive}" ]]; then
         mkdir -p "${SUPPORT_DIR}"
-        curl -L -o "${SUPPORT_DIR}/${archive}" \
-            "https://github.com/HansKristian-Work/vkd3d-proton/releases/download/v${vkd3d_version}/vkd3d-proton-${vkd3d_version}.tar.zst"
+        curl -L -o "${SUPPORT_DIR}/${archive}" "${vkd3d_url}"
+    fi
+
+    info "Extracting archive: ${archive}"
+    if [[ "${archive}" =~ \.zip$ ]]; then
+        unzip -d "${SUPPORT_DIR}/${name}" "${SUPPORT_DIR}/${archive}"
+    else
+        tar -x -C "${SUPPORT_DIR}" -f "${SUPPORT_DIR}/${archive}"
     fi
 
     info "Installing vkd3d ${vkd3d_version}"
-    tar -x -C "${SUPPORT_DIR}" -f "${SUPPORT_DIR}/${archive}"
-
     bash "${SUPPORT_DIR}/${name}/setup_vkd3d_proton.sh" install
     echo "${vkd3d_version}" > "${vkd3d_version_file}"
 
     rm -rf "${SUPPORT_DIR}/${name:?}"
+
+    wineserver -k
 }
 
 setup_save_link() {
@@ -182,23 +198,40 @@ setup_save_link() {
 
 mount_overlayfs() {
     info "Mounting overlayfs"
+    if [[ ! -d "${ROOTDIR}/files/game" ]]; then
+        fatal "Game files must be placed in ${ROOTDIR}/files/game"
+    fi
+    if [[ ! -d "${ROOTDIR}/files/users" ]]; then
+        fatal "Users files must be placed in ${ROOTDIR}/files/users"
+    fi
+
     unmount_overlayfs &> /dev/null
 
-    mkdir -p "${ROOTDIR}"/{game,files/{game,game-rw,fuse-work}}
+    mkdir -p "${ROOTDIR}"/{game,pfx/drive_c/users,files/{game,users}-{rw,work}}
 
     # shellcheck disable=SC2140
     fuse-overlayfs \
         -o squash_to_uid="$(id -u "${USER}")" \
         -o squash_to_gid="$(id -g "${USER}")" \
-        -o lowerdir="${ROOTDIR}/files/game",upperdir="${ROOTDIR}/files/game-rw",workdir="${ROOTDIR}/files/fuse-work" \
+        -o lowerdir="${ROOTDIR}/files/game",upperdir="${ROOTDIR}/files/game-rw",workdir="${ROOTDIR}/files/game-work" \
         "${ROOTDIR}/game"
+
+    # shellcheck disable=SC2140
+    fuse-overlayfs \
+        -o squash_to_uid="$(id -u "${USER}")" \
+        -o squash_to_gid="$(id -g "${USER}")" \
+        -o lowerdir="${ROOTDIR}/files/users",upperdir="${ROOTDIR}/files/users-rw",workdir="${ROOTDIR}/files/users-work" \
+        "${ROOTDIR}/pfx/drive_c/users"
 }
 
 unmount_overlayfs() {
     info "Unmounting overlayfs"
     #fuser -k "$PWD/files/groot-mnt";
-    fusermount3 -u -z "${ROOTDIR}/game" || true
-    rm -rf "${ROOTDIR}/files/fuse-work"
+    fusermount3 -u -q -z "${ROOTDIR}/game" || true
+    rm -rf "${ROOTDIR}/files/game-work"
+
+    fusermount3 -u -q -z "${ROOTDIR}/pfx/drive_c/users" || true
+    rm -rf "${ROOTDIR}/files/users-work"
 }
 
 start_game() {
