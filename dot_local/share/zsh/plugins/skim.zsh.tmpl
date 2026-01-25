@@ -8,7 +8,7 @@ rg_opts="--files --follow --hidden --glob '!.git/*'"
 preview_window_opts="--preview-window hidden --bind '?:toggle-preview'"
 
 # Show prompt on top
-export SKIM_DEFAULT_OPTIONS="--reverse -1"
+export SKIM_DEFAULT_OPTIONS="--reverse -1 --bind ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all"
 export SKIM_DEFAULT_COMMAND="rg ${=rg_opts} 2>/dev/null"
 export SKIM_COMPLETION_TRIGGER=";;"
 export SKIM_CTRL_T_COMMAND="$SKIM_DEFAULT_COMMAND"
