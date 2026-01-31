@@ -1,4 +1,5 @@
 $set(title,$lower(%title%))
+$set(title,$replace(%title%,...,_))
 $set(title,$rreplace(%title%,[ '#:!?],_))
 $set(title,$rreplace(%title%,[\(\)\,.’"],))
 $set(title,$rreplace(%title%,_+,_))
