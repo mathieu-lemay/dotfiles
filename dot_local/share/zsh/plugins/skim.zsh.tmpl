@@ -19,4 +19,11 @@ export SKIM_ALT_C_OPTS="--tiebreak=end --preview 'tree -C {} | head -200' ${=pre
 
 unset rg_opts preview_window_opts
 
+# Use ripgrep instead of the default find command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+function _skim_compgen_path() {
+    rg --files --follow --hidden --glob '!.git/*' 2>/dev/null "$1" | sed 's@^\./@@'
+}
+
 # vim: ft=zsh
