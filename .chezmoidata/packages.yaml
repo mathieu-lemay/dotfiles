@@ -30,7 +30,7 @@ packages:
         - bat
         - colordiff
         - direnv
-        - eza
+        # - eza
         - fd
         - fzf
         - jq
@@ -39,7 +39,7 @@ packages:
         - npm
         - ripgrep
         - rustup
-        - sd
+        # - sd
         - tmux
         - xsel
       patterns:
