@@ -25,6 +25,10 @@ fi
 info "Installing openSUSE packages: {{ .packages.linux.opensuse.packages }}"
 sudo zypper install -y {{ .packages.linux.opensuse.packages | quoteList | join " " }}
 sudo zypper install -y -t pattern {{ .packages.linux.opensuse.patterns | quoteList | join " " }}
+{{ else if eq .osid "linux-fedora" -}}
+info "Installing fedora packages: {{ .packages.linux.fedora.packages }}"
+sudo dnf install -y {{ .packages.linux.fedora.packages | quoteList | join " " }}
+{# sudo zypper install -y -t pattern {{ .packages.linux.fedora.patterns | quoteList | join " " }} #}
 {{ else if eq .osid "darwin" -}}
 if [[ "$EUID" -eq 0 ]]; then
     warning "Skipping package installation when running as root"
