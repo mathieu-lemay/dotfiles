@@ -30,25 +30,6 @@ packages:
         - bat
         - colordiff
         - direnv
-        # - eza
-        - fd
-        - fzf
-        - jq
-        - ncdu
-        - neovim
-        - npm
-        - ripgrep
-        - rustup
-        # - sd
-        - tmux
-        - xsel
-      patterns:
-        - devel_basis
-    fedora:
-      packages:
-        - bat
-        - colordiff
-        - direnv
         - eza
         - fd
         - fzf
@@ -59,6 +40,25 @@ packages:
         - ripgrep
         - rustup
         - sd
+        - tmux
+        - xsel
+      patterns:
+        - devel_basis
+    fedora:
+      packages:
+        - bat
+        - colordiff
+        - direnv
+        # - eza
+        - fd
+        - fzf
+        - jq
+        - ncdu
+        - neovim
+        - npm
+        - ripgrep
+        - rustup
+        # - sd
         - tmux
         - xsel
       patterns:
