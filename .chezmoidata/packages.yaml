@@ -18,6 +18,7 @@ packages:
         - ripgrep
         - rustup
         - sd
+        - skim
         - terraform
         - tmux
         - xsel
