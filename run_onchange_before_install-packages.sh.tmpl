@@ -14,8 +14,8 @@ info "Installing system packages"
 if command -v paru > /dev/null; then
     info "Installing Arch/AUR packages: {{ .packages.linux.arch.aur }}"
     paru -S --needed \
-    {{ .packages.linux.arch.pacman | quoteList | join " " }} \
-    {{ .packages.linux.arch.aur | quoteList | join " " }} \
+        {{ .packages.linux.arch.pacman | quoteList | join " " }} \
+        {{ .packages.linux.arch.aur | quoteList | join " " }}
 else
     info "Installing Arch packages: {{ .packages.linux.arch.pacman }}"
     warning "paru is not installed, skipping AUR packages"
