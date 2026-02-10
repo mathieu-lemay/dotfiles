@@ -18,7 +18,7 @@ plugins = {
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", cond = vim.g.vscode == nil },
     { "m4xshen/autoclose.nvim" },
     { "mhinz/vim-signify" },
-    {{- if eq .nvim_enable_coc true }}
+    {{- if eq .nvimEnableCoC true }}
     { "neoclide/coc.nvim", branch = "release", cond = not vim.opt.diff:get() },
     {{- end }}
     { "ntpeters/vim-better-whitespace" },
@@ -55,7 +55,7 @@ require("config.plugins.airline")
 require("config.plugins.auto-save")
 require("config.plugins.autoclose")
 require("config.plugins.better-whitespace")
-{{- if eq .nvim_enable_coc true }}
+{{- if eq .nvimEnableCoC true }}
 require("config.plugins.coc-nvim")
 {{- end }}
 require("config.plugins.easy-align")

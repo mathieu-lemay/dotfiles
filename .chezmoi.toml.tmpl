@@ -1,8 +1,10 @@
 {{- $email := promptStringOnce . "email" "Email Address" "acidrain1@gmail.com" -}}
 {{- $signingkey := promptStringOnce . "signingkey" "GPG Signing Key" "" -}}
+{{- /* Base on number of CPUs? */ -}}
+{{- /* https://www.chezmoi.io/user-guide/machines/general/#determine-how-many-cpu-cores-and-threads-the-current-machine-has */ -}}
 {{- $makejobs := promptIntOnce . "makejobs" "Number of Parallel Make Jobs" 4 -}}
-{{- $nvim_enable_coc := promptBoolOnce . "nvim_enable_coc" "Enable coc.nvim" true -}}
-{{- $githubOrgsForceSSH := promptStringOnce . "githubOrgsForceSSH" "GitHub Organizations for which to force SSH (comma separated)" "" -}}
+{{- $nvimEnableCoC := promptBoolOnce . "nvimEnableCoC" "Enable coc.nvim" true -}}
+{{- $gitUrlSSHOverrides := promptStringOnce . "gitUrlSSHOverrides" "Git remotes for which to force SSH (comma separated)" "" -}}
 
 {{- $setupPrivateGit := promptBoolOnce . "setupPrivateGit" "Add private git config" false -}}
 {{- $privateGitName := "" -}}
@@ -57,8 +59,8 @@ exclude = ["scripts"]
 email = {{ $email | quote }}
 signingkey = {{ $signingkey | quote }}
 makejobs = {{ $makejobs }}
-nvim_enable_coc = {{ $nvim_enable_coc }}
-githubOrgsForceSSH = {{ $githubOrgsForceSSH | quote }}
+nvimEnableCoC = {{ $nvimEnableCoC }}
+gitUrlSSHOverrides = {{ $gitUrlSSHOverrides | quote }}
 osid = {{ $osid | quote }}
 setupPrivateGit = {{ $setupPrivateGit }}
 {{- if eq .chezmoi.os "darwin" }}
