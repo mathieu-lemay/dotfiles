@@ -1,5 +1,9 @@
 command -v fzf &> /dev/null || return
 
+. "{{ .path.fzf_key_bindings }}"
+. "{{ .path.fzf_completion }}"
+. "${XDG_DATA_HOME}/fzf/fzf-git.sh"
+
 # --files: List files that would be searched but do not search
 # --follow: Follow symlinks
 rg_opts="--files --follow --hidden --glob '!.git/*'"
