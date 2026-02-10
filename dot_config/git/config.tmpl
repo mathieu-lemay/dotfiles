@@ -103,12 +103,17 @@
 	path = config.private
 {{- end}}
 
-{{- if ne .githubOrgsForceSSH "" }}
-{{- range (split "," .githubOrgsForceSSH) }}
-{{- $org := (. | trim) }}
-[url "ssh://git@github.com/{{ $org }}/"]
-	insteadOf = https://github.com/{{ $org }}/
+{{- if ne .gitUrlSSHOverrides "" }}
+{{- range (split "," .gitUrlSSHOverrides) }}
+{{- $override := (splitn "=" 2 (. | trim)) }}
+{{- if eq (len $override) 2 }}
+[url "ssh://git@{{ $override._1 }}/"]
+	insteadOf = https://{{ $override._0 }}/
+{{- else }}
+[url "ssh://git@{{ $override._0 }}/"]
+	insteadOf = https://{{ $override._0 }}/
 {{- end }}
-{{- end}}
+{{- end }}
+{{- end }}
 
 # vim: set noet syntax=gitconfig:
