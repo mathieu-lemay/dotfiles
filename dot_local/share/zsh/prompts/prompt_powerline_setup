@@ -155,6 +155,7 @@ prompt_shell_lvl() {
     ((lvl = ${SHLVL} - 1))
     [[ -n "${POETRY_ACTIVE:-}" ]] && ((lvl--))
     [[ "${CHEZMOI_SUBSHELL:-}" -eq 1 ]] && ((lvl--))
+    [[ -n "${ZSH_RPROMPT_EXTRA:-}" ]] && ((lvl--))
     [[ ${lvl} -gt 0 ]] && rprompt_segment ${red} ${black} "Subshell ${lvl}"
 }
 
