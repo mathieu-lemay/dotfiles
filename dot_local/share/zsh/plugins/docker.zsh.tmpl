@@ -71,8 +71,8 @@ function docker-kill-all() {
 
 function docker-tail() {
     container="${1:-}"
-    if [[ -z "${container}" ]] && command -v fzf &>/dev/null; then
-        container="$(docker ps --format={{ "\"{{.Names}}\"" }} | fzf --select-1 --exit-0)"
+    if [[ -z "${container}" ]] && command -v sk &>/dev/null; then
+        container="$(docker ps --format={{ "\"{{.Names}}\"" }} | sk --select-1 --exit-0)"
     fi
 
     if [[ -z "${container}" ]]; then

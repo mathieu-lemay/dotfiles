@@ -49,7 +49,7 @@ function __workon() {
     prj=$(find "${=searchdirs}" -maxdepth 1 -mindepth 1 -type d -print \
         | sed "s@^${__WORKON_BASE_DIR}/@@" \
         | sort \
-        | $(__fzfcmd) -q "${BUFFER:-}")
+        | $(__skimcmd) -q "${BUFFER:-}")
 
     if [[ -z "${prj}" ]]; then
         __workon_err "No project selected"

@@ -99,7 +99,7 @@ function gcloud-get-current-project {
 }
 
 function gcloud-switch-project {
-    local project=$(gcloud-list-projects | fzf -q "$*")
+    local project=$(gcloud-list-projects | sk -q "$*")
 
     [[ -n "${project}" ]] || return
 
