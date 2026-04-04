@@ -51,7 +51,7 @@ zle -N zle-keymap-select
 
 if [[ -n "${ZSH_PROMPT:-}" ]]; then
     prompt "${ZSH_PROMPT}"
-elif [[ $(tput colors) -lt 256 ]]; then
+elif [[ $(tput colors) -lt 256 || "${TERMINAL_EMULATOR}" =~ "JetBrains-*"  ]]; then
     prompt simple
 else
     prompt powerline

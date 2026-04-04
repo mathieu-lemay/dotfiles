@@ -5,7 +5,7 @@ fi
 
 # Disable autostart from ssh connections or from virtual terminal
 # Disable also for root as it's probably from sudo, which would result in nested tmux
-if [[ -n "${SSH_CLIENT}" || "${TERM}" = "linux" || ${EUID} -eq 0 ]]; then
+if [[ -n "${SSH_CLIENT}" || "${TERM}" = "linux" || ${TERMINAL_EMULATOR} =~ "JetBrains-.*" || ${EUID} -eq 0 ]]; then
     export ZSH_TMUX_AUTOSTART=false
 fi
 
