@@ -14,6 +14,10 @@ local parsers = {
     "yaml",
 }
 
+local excluded_languages = {
+    "jinja",
+}
+
 -- Install parsers after startup
 vim.schedule(function()
     require("nvim-treesitter").install(parsers)
@@ -41,6 +45,13 @@ vim.api.nvim_create_autocmd({ "Filetype" }, {
 
         local ft = vim.bo[event.buf].ft
         local lang = vim.treesitter.language.get_lang(ft)
+
+        for _, v in ipairs(excluded_languages) do
+            if lang == v then
+                return
+            end
+        end
+
         nvim_treesitter.install({ lang }):await(function(err)
             if err then
                 vim.notify("Treesitter install error for ft: " .. ft .. " err: " .. err)
