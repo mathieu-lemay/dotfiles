@@ -15,3 +15,5 @@ envvars:
       value: "${XDG_DATA_HOME:-${HOME}/.local/share}/cargo"
     - key: GOPATH
       value: "${XDG_DATA_HOME:-${HOME}/.local/share}/go"
+    - key: DO_NOT_TRACK
+      value: "true"
