@@ -12,6 +12,17 @@ if ! command -v crontab &> /dev/null; then
     exit 0
 fi
 
+
+if !crontab -l 2>/dev/null; then
+    # Install the crontab if there isn't one
+    crontab "{{ .chezmoi.sourceDir }}/data/crontab"
+    exit 0
+fi
+
+backup_file="${HOME}/crontab.$(date "+%Y%m%d.%H%M%S").bak"
+warning "There is already a crontab installed. It will be backed up to '${backup_file}'"
+crontab -l > "${backup_file}"
+
 crontab "{{ .chezmoi.sourceDir }}/data/crontab"
 
 # vim: ft=bash
