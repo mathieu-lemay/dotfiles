@@ -2,35 +2,43 @@
 
 set -eu
 
+response=""
+
+if [[ "${1:-}" = "-f" ]]; then
+    response="y"
+fi
+
 branches_gone=$(git branch -vv | sed 's/^\*//' | awk '/: gone]/{print $1}')
 
-if [ $# -ge 1 ] && [ "$1" == "-a" ]; then
+if [[ $# -ge 1 ]] && [[ "$1" == "-a" ]]; then
     branches_merged=$(git branch --merged | sed -E 's/^ +//' | grep -E -v "^(\\*|master)")
 else
     branches_merged=""
 fi
 
-if [ -z "${branches_gone}" ] && [ -z "${branches_merged}" ]; then
+if [[ -z "${branches_gone}" ]] && [[ -z "${branches_merged}" ]]; then
     echo "No branches to delete"
     exit 0
 fi
 
-if [ -n "${branches_gone}" ]; then
+if [[ -n "${branches_gone}" ]]; then
     echo "Branches gone:"
     for b in ${branches_gone}; do
-        echo "  $b"
+        echo "  ${b}"
     done
 fi
 
-if [ -n "${branches_merged}" ]; then
+if [[ -n "${branches_merged}" ]]; then
     echo "Branches merged:"
     for b in ${branches_merged}; do
-        echo "  $b"
+        echo "  ${b}"
     done
 fi
 
-read -r -p "Delete branches? [Y/n] " response
-response="$(echo "$response" | tr '[:upper:]' '[:lower:]')"
+if [[ -z "${response}" ]]; then
+    read -r -p "Delete branches? [Y/n] " response
+    response="$(echo "${response}" | tr '[:upper:]' '[:lower:]')"
+fi
 
 if [[ ${response} != "n" ]]; then
     printf "%s\\n%s\\n" "${branches_gone}" "${branches_merged}" | sort | uniq | xargs git branch -D
