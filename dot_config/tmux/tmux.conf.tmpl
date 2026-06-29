@@ -103,4 +103,7 @@ set -g @plugin 'mathieu-lemay/tmux-current-pane-hostname'
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 run '~/.local/share/tmux/tpm/tpm'
 
+# Free up C-\ for nvim
+unbind -n C-\\
+
 # vim: ft=conf

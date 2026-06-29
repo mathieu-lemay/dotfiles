@@ -50,6 +50,8 @@ function gcloud-login() {
     fi
 }
 
+alias gl=gcloud-login
+
 function gcloud-logout() {
     gcloud auth revoke
     gcloud auth application-default revoke
