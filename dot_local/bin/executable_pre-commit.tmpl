@@ -1,0 +1,4 @@
+{{ if ne (lookPath "prek") "" -}}
+#!/bin/sh
+exec {{ lookPath "prek" }} "$@"
+{{ end -}}
