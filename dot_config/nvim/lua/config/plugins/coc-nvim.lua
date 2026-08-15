@@ -7,6 +7,7 @@ vim.g.coc_global_extensions = {
     "coc-pyright",
     "coc-rust-analyzer",
     "coc-sh",
+    "coc-toml",
     "coc-yaml",
 }
 
