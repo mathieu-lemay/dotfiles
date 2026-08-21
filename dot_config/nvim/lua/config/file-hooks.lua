@@ -32,7 +32,7 @@ vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
 })
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
     pattern = "*.tfvars",
-    command = "set filetype=terraform",
+    command = "set filetype=terraform-vars syntax=terraform",
 })
 
 -- Make NFOs look nice
