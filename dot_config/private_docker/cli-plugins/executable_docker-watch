@@ -1,0 +1,59 @@
+#! /bin/zsh
+
+set -euo pipefail
+
+. ~/.local/lib/log.sh
+
+plugin_name="${$(basename "$0")#"docker-"}"
+cmd="${1:-}"
+shift 1
+
+plugin-metadata() {
+    cat <<- EOF
+    {
+      "SchemaVersion": "0.1.0",
+      "Vendor": "Mathieu Lemay",
+      "Version": "1.0.0",
+      "ShortDescription": "Watch for logs for a container",
+      "URL": "https://github.com/mathieu-lemay"
+    }
+EOF
+}
+
+main() {
+    container="${1:-}"
+    if [[ $# -gt 0 ]] && shift
+
+    if [[ -z "${container}" ]] && command -v sk &>/dev/null; then
+        container="$(docker ps --format="{{.Names}}" | sk --select-1 --exit-0)"
+    fi
+
+    if [[ -z "${container}" ]]; then
+        echo "No container specified" >&2
+        return 1
+    fi
+
+    while :; do
+        if docker container inspect "${container}" >/dev/null; then
+            docker logs --follow "$@" "${container}"
+            if [[ $? -ne 0 ]]; then
+                return
+            fi
+        fi
+
+        sleep 1
+    done
+}
+
+
+case "${cmd}" in
+    "${plugin_name}")
+        main "$@"
+        ;;
+    "docker-cli-plugin-metadata")
+        plugin-metadata
+        ;;
+    *)
+        fatal "Invalid command: ${cmd}"
+        ;;
+esac

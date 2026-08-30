@@ -1,35 +1,3 @@
-function docker-grep-rmi() {
-    select_pattern="${1:?Pattern not specified}"
-    ignore_pattern="${2:-}"
-
-    local images
-
-    images=$(docker images --format={{ "\"{{.Repository}}:{{.Tag}}\"" }} | grep -- "${select_pattern}")
-    if [ -n "${ignore_pattern}" ]; then
-        images=$(echo "${images}" | grep -v -- "${ignore_pattern}")
-    fi
-
-    if [[ -z "${images}" ]]; then
-        echo "Nothing to delete"
-        return 0
-    fi
-
-    echo "Images:"
-    for i in "${=images}"; do
-        echo "  $i"
-    done
-
-    echo -n "Delete images? [Y/n] "
-    read -s -k response
-    echo ""
-
-    response="$(echo "${response}" | tr '[:upper:]' '[:lower:]')"
-
-    if [[ ${response:-y} == "y" ]]; then
-        echo "${images}" | xargs docker rmi
-    fi
-}
-
 function docker-cleanup() {
     local prune_all
 
@@ -99,7 +67,7 @@ function dps() {
 }
 
 function dimg() {
-    docker images --format {{ "\"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"" }} $@
+    docker images --format {{ "\"{{.Repository}}:{{.Tag}}\\t{{.Size}}\"" }} $@ | tail -n +2 | sort -k 2 -h -r
 }
 
 # Fix completion when optional arguments are combined (`-i -t` -> `-it`)

@@ -1,0 +1,164 @@
+#! /bin/zsh
+
+set -euo pipefail
+
+. ~/.local/lib/log.sh
+
+plugin_name="${$(basename "$0")#"docker-"}"
+cmd="${1:-}"
+shift 1
+
+plugin-metadata() {
+    cat <<- EOF
+    {
+      "SchemaVersion": "0.1.0",
+      "Vendor": "Mathieu Lemay",
+      "Version": "0.1.0",
+      "ShortDescription": "Fuzzy find resources",
+      "URL": "https://github.com/mathieu-lemay"
+    }
+EOF
+}
+
+_select() {
+    docker_cmd="${1}"
+    docker_fmt="${2}"
+    query="${3}"
+
+    result=$(docker "${docker_cmd}" ls -a --format="${docker_fmt}" | sk --exit-0 --query="${query}" || true)
+
+    if [[ -z "${result}" ]]; then
+        fatal "No ${docker_cmd} found"
+    fi
+
+    echo "${result}"
+}
+
+cmd-logs() {
+    local container
+    container=$(_select container "{{.Names}}" "${1}")
+    shift
+
+    docker logs "${container}" "$@"
+}
+
+cmd-rm() {
+    local containers
+
+    [[ $# -lt 1 ]] && fatal "No query specified"
+
+    containers=$(_select container "{{.Names}}" "$@")
+
+    if [[ -z "${containers}" ]]; then
+        echo "Nothing to delete"
+        return 0
+    fi
+
+    echo "Containers:"
+    for i in "${=containers}"; do
+        echo "  $i"
+    done
+
+    if [[ -n "${noconfirm:-}" ]] || prompt-confirmation "Delete containers" "y"; then
+        echo "${containers}" | xargs docker rm "${force}" --volumes
+    fi
+}
+
+cmd-rmi() {
+    local images
+
+    [[ $# -lt 1 ]] && fatal "No query specified"
+
+    images=$(_select image "{{.Repository}}:{{.Tag}}" "$@")
+
+    if [[ -z "${images}" ]]; then
+        echo "Nothing to delete"
+        return 0
+    fi
+
+    echo "Images:"
+    for i in "${=images}"; do
+        echo "  $i"
+    done
+
+    if [[ -n "${noconfirm:-}" ]] || prompt-confirmation "Delete images" "y"; then
+        echo "${images}" | xargs docker rmi
+    fi
+}
+
+cmd-kill() {
+    local select_query containers
+
+    [[ $# -lt 1 ]] && fatal "No query specified"
+
+    containers=$(_select container "{{.Names}}" "$@")
+
+    if [[ -z "${containers}" ]]; then
+        echo "Nothing to kill"
+        return 0
+    fi
+
+    echo "Containers:"
+    for i in "${=containers}"; do
+        echo "  $i"
+    done
+
+    if [[ -n "${noconfirm:-}" ]] || prompt-confirmation "Kill containers" "y"; then
+        echo "${containers}" | xargs docker kill
+    fi
+}
+
+main() {
+    [[ $# -lt 1 ]] && fatal "Usage: docker ${plugin_name} cmd [options]"
+
+    local cmd="${1}"
+    shift
+
+    query=""
+    declare -a args
+
+    for a; do
+        if [[ "${a}" == "-"* ]]; then
+            args+=("${a}")
+        elif [[ -n "${query}" ]]; then
+            fatal "Only one query can be specified"
+        else
+            query="${a}"
+        fi
+    done
+
+    case "${cmd}" in
+        logs)
+            cmd-logs "${query}" "$args[@]"
+            ;;
+        "kill")
+            cmd-kill "${query}" "$args[@]"
+            ;;
+        restart)
+            cmd-restart "${query}" "$args[@]"
+            ;;
+        rm)
+            cmd-rm "${query}" "$args[@]"
+            ;;
+        rmi)
+            cmd-rmi "${query}" "$args[@]"
+            ;;
+        *)
+            fatal "Invalid command: ${cmd}"
+            ;;
+    esac
+
+}
+
+
+case "${cmd}" in
+    "${plugin_name}")
+        main "$@"
+        ;;
+    "docker-cli-plugin-metadata")
+        plugin-metadata
+        ;;
+    *)
+        fatal "Invalid command: ${cmd}"
+        ;;
+esac
