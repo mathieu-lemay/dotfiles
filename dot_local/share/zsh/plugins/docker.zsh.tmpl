@@ -80,7 +80,12 @@ function dps() {
 }
 
 function dimg() {
-    docker images --format {{ "\"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"" }} $@
+    if [[ $1 == "-s" ]]; then
+        shift 1
+        docker images --format {{ "\"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"" }} $@ | sort -k 2 -h -r
+    else
+        docker images --format {{ "\"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"" }} $@
+    fi
 }
 
 # Fix completion when optional arguments are combined (`-i -t` -> `-it`)
