@@ -70,28 +70,9 @@ function docker-kill-all() {
 }
 
 function docker-tail() {
-    container="${1:-}"
-    if [[ -z "${container}" ]] && command -v sk &>/dev/null; then
-        container="$(docker ps --format={{ "\"{{.Names}}\"" }} | sk --select-1 --exit-0)"
-    fi
+    printf "\\e[33m[WARNING]\\e[0m %s\\n" "docker-tail is deprecated: use "\`"docker watch"\`" instead" >&2
 
-    if [[ -z "${container}" ]]; then
-        echo "No container specified" >&2
-        return 1
-    fi
-
-    shift 1
-
-    while :; do
-        if docker container inspect "${container}" >/dev/null; then
-            docker logs -f "$@" "${container}"
-            if [[ $? -ne 0 ]]; then
-                return
-            fi
-        fi
-
-        sleep 1
-    done
+    docker watch "$@"
 }
 
 function dps() {
