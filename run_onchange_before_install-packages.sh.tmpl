@@ -8,12 +8,18 @@ fatal()   { printf "\\e[35m[FATAL]\\e[0m   %s\\n" "$*" >&2 ; exit 1 ; }
 info "Installing system packages"
 
 {{ if eq .osid "linux-arch" -}}
-# Ensure the script is marked as changed if paru is installed
+# Ensure the script is marked as changed if any aur helper is installed
 # paru-is-installed: {{ ne (lookPath "paru") "" }}
+# yay-is-installed: {{ ne (lookPath "yay") "" }}
 
 if command -v paru > /dev/null; then
     info "Installing Arch/AUR packages: {{ .packages.linux.arch.aur }}"
     paru -S --needed \
+        {{ .packages.linux.arch.pacman | quoteList | join " " }} \
+        {{ .packages.linux.arch.aur | quoteList | join " " }}
+elif command -v yay > /dev/null; then
+    info "Installing Arch/AUR packages: {{ .packages.linux.arch.aur }}"
+    yay -S --needed \
         {{ .packages.linux.arch.pacman | quoteList | join " " }} \
         {{ .packages.linux.arch.aur | quoteList | join " " }}
 else
