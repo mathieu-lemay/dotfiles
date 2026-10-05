@@ -52,7 +52,7 @@
       },
       "scrolling" : {
         "reverse" : {
-          "vertical" : true
+          "vertical" : false
         }
       }
     },
@@ -86,5 +86,5 @@
       }
     }
   ],
-  "$schema" : "https:\/\/schema.linearmouse.app\/0.9.5"
+  "$schema" : "https:\/\/schema.linearmouse.app\/0.11.4"
 }
