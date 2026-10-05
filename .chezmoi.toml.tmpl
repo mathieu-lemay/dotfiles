@@ -29,6 +29,8 @@
 {{-   if hasKey .chezmoi.osRelease "id" -}}
 {{-     if hasPrefix "opensuse-" .chezmoi.osRelease.id -}}
 {{-       $osid = printf "%s-opensuse" .chezmoi.os -}}
+{{-     else if eq .chezmoi.osRelease.id "archarm" -}}
+{{-       $osid = printf "%s-%s" .chezmoi.os "arch" -}}
 {{-     else -}}
 {{-       $osid = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id -}}
 {{-     end -}}
