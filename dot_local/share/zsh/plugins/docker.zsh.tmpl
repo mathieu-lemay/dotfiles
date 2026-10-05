@@ -82,7 +82,7 @@ function dps() {
 function dimg() {
     if [[ $1 == "-s" ]]; then
         shift 1
-        docker images --format {{ "\"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"" }} $@ | sort -k 2 -h -r
+        docker images --format {{ "\"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"" }} $@ | tail -n +2 | sort -k 2 -h -r
     else
         docker images --format {{ "\"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"" }} $@
     fi
