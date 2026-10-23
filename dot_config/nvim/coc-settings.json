@@ -29,5 +29,11 @@
     "rust-analyzer.server.path": "rust-analyzer",
     "suggest.noselect": true,
     "yaml.customTags": [ "!GetAtt", "!Join", "!Ref", "!Sub" ],
-    "yaml.format.enable": true
+    "yaml.format.enable": true,
+    "json.schemaDownload.trustedDomains": {
+      "https://www.schemastore.org": true,
+      "https://spec.openapis.org": true,
+      "https://schema.postman.com": true,
+      "https://schema.linearmouse.app": true
+    }
 }
