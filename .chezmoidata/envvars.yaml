@@ -15,5 +15,9 @@ envvars:
       value: "${XDG_DATA_HOME:-${HOME}/.local/share}/cargo"
     - key: GOPATH
       value: "${XDG_DATA_HOME:-${HOME}/.local/share}/go"
+    - key: CLAUDE_CONFIG_DIR
+      value: "${XDG_DATA_HOME:-${HOME}/.local/share}/claude"
+    - key: COPILOT_HOME
+      value: "${XDG_DATA_HOME:-${HOME}/.local/share}/copilot"
     - key: DO_NOT_TRACK
       value: "true"
