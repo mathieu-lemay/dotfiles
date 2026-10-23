@@ -72,6 +72,9 @@ export WINEPREFIX=/dev/null
 # https://wiki.archlinux.org/index.php/wine#Prevent_new_Wine_file_associations
 export WINEDLLOVERRIDES="winemenubuilder.exe=d"
 
+# Make Go's package cache writable. https://github.com/golang/go/issues/27161
+export GOFLAGS="-modcacherw"
+
 {{ if and (eq (lookPath "python") "") (ne (lookPath "python3") "") -}}
 # Force python3 for zsh-autoswitch-virtualenv
 export AUTOSWITCH_DEFAULT_PYTHON=python3
