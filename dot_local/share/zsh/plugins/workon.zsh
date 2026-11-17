@@ -8,8 +8,12 @@ __workon_cd() {
 }
 
 __workon_err() {
-    echo "\n$@" >&2
-    zle redisplay
+    if [[ -n "${TMUX}" ]]; then
+        tmux display-message "$@"
+    else
+        echo "\n$@" >&2
+        zle redisplay
+    fi
 }
 
 __workon_add() {
@@ -98,5 +102,22 @@ zle     -N             __workon
 bindkey -M emacs '^ '  __workon
 bindkey -M vicmd '^ '  __workon
 bindkey -M viins '^ '  __workon
+
+# Jump to another worktree
+func wt() {
+    wt_path="$(_fzf_git_worktrees)"
+
+    if [[ -z "${wt_path}" ]]; then
+        __workon_err "No worktree selected"
+        return 1
+    fi
+
+    if [[ "${wt_path}" == "$(pwd)" ]]; then
+        __workon_err "Worktree already selected"
+        return 2
+    fi
+
+    SHLVL=$(( SHLVL - 1 )) sh -c "cd ${wt_path}; exec \"${SHELL:-sh}\""
+}
 
 # vim: ft=zsh

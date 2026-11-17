@@ -8,14 +8,27 @@ GIT_UNSTAGED="✘"
 GIT_STAGED="✔"
 
 # Version Control System
-branch_fmt="%c%u %b  "
+branch_fmt="%c%u %b %m "
 action_fmt="%a"
+
++vi-worktree() {
+  local -a dirs
+  dirs=(${(f)"$(command git rev-parse \
+    --path-format=absolute --git-dir --git-common-dir 2>/dev/null)"})
+
+  if (( ${#dirs} == 2 )) && [[ ${dirs[1]:A} != ${dirs[2]:A} ]]; then
+    msg=" [🌴 ${dirs[1]:t}]"
+    hook_com[misc]+=${msg}
+  fi
+  return 0
+}
 
 zstyle ':vcs_info:*' unstagedstr "${GIT_UNSTAGED}"
 zstyle ':vcs_info:*' stagedstr "${GIT_STAGED}"
 zstyle ':vcs_info:*' formats "${branch_fmt}"
 zstyle ':vcs_info:*' actionformats "${action_fmt}|${branch_fmt}"
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+zstyle ':vcs_info:git+post-backend:*' hooks worktree
 
 unset branch_fmt action_fmt
 

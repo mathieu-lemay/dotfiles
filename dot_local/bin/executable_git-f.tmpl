@@ -8,5 +8,5 @@ command -v sk &>/dev/null || fatal "skim not installed"
 
 git branch -a | grep -Ev "(^\*| -> )" | awk '{$1=$1};1' | sort | uniq \
     | sk --tmux="${SKIM_TMUX_OPTS:-}" -q "${@:-}" --preview 'git log --color -n 50 {} | head -200' \
-    | sed 's@^remotes/origin/@@' \
+    | sed -e 's@^remotes/origin/@@' -e 's/^+ *//' \
     | {{ .command.xargs }} git switch
