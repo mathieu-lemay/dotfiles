@@ -1,91 +1,60 @@
-# https://github.com/derailed/k9s/blob/master/skins/red.yaml
-
-# -----------------------------------------------------------------------------
-# Red skin
-# -----------------------------------------------------------------------------
-
-# Skin...
 k9s:
   body:
-    fgColor: red
-    bgColor: black
-    logoColor: red
-  prompt:
-    fgColor: red
-    bgColor: black
-    suggestColor: red
+    fgColor: "#F4E7EA"
+    bgColor: "#1A0D12"
+    logoColor: "#FF596F"
+
   info:
-    fgColor: red
-    sectionColor: red
-  dialog:
-    fgColor: red
-    bgColor: black
-    buttonFgColor: black
-    buttonBgColor: red
-    buttonFocusFgColor: white
-    buttonFocusBgColor: red
-    labelFgColor: red
-    fieldFgColor: red
+    fgColor: "#F3C7CF"
+    sectionColor: "#FF6B81"
+
   frame:
     border:
-      fgColor: red
-      focusColor: red
+      fgColor: "#85394B"
+      focusColor: "#FF526B"
+
     menu:
-      fgColor: white
-      keyColor: red
-      numKeyColor: red
+      fgColor: "#F0D8DD"
+      keyColor: "#FF7A8A"
+      numKeyColor: "#EAA1AF"
+
     crumbs:
-      fgColor: black
-      bgColor: red
-      activeColor: red
+      fgColor: "#F4E7EA"
+      bgColor: "#5B1D2D"
+      activeColor: "#FF8A9B"
+
     status:
-      newColor: red
-      modifyColor: greenyellow
-      addColor: white
-      errorColor: darkorange
-      pendingColor: darkred
-      highlightColor: red
-      killColor: red
-      completedColor: gray
+      newColor: "#A7DCA8"
+      modifyColor: "#F6C768"
+      addColor: "#F08CA0"
+      errorColor: "#FF526B"
+      highlightColor: "#F0A6B4"
+      killColor: "#91828A"
+      completedColor: "#9E8D94"
+
     title:
-      fgColor: red
-      highlightColor: red
-      counterColor: red
-      filterColor: red
+      fgColor: "#FFDDE3"
+      bgColor: "#3B1722"
+      highlightColor: "#FF7388"
+      counterColor: "#F2A5B2"
+      filterColor: "#FF526B"
+
   views:
-    charts:
-      bgColor: black
-      defaultDialColors:
-        - linegreen
-        - redred
-      defaultChartColors:
-        - linegreen
-        - redred
     table:
-      fgColor: red
-      bgColor: black
-      cursorFgColor: black
-      cursorBgColor: red
-      markColor: darkgoldenrod
+      fgColor: "#F1DDE1"
+      bgColor: "#1A0D12"
+      cursorColor: "#77283B"
+      markColor: "#FF7388"
       header:
-        fgColor: red
-        bgColor: black
-        sorterColor: red
-    xray:
-      fgColor: red
-      bgColor: black
-      cursorColor: red
-      graphicColor: darkgoldenrod
-      showIcons: false
+        fgColor: "#FFDDE3"
+        bgColor: "#421723"
+        sorterColor: "#FF6B81"
+
     yaml:
-      keyColor: red
-      colonColor: white
-      valueColor: red
+      keyColor: "#F28A9C"
+      colonColor: "#DA5169"
+      valueColor: "#F2D5DA"
+
     logs:
-      fgColor: white
-      bgColor: black
-      indicator:
-        fgColor: red
-        bgColor: black
-        toggleOnColor: red
-        toggleOffColor: white
+      fgColor: "#F1DDE1"
+      bgColor: "#160B0F"
