@@ -1,0 +1,67 @@
+#! /bin/bash
+
+{{ if eq .chezmoi.os "linux" -}}
+
+# qdbus6-is-installed: {{ ne (lookPath "qdbus6") "" }}
+# panels.js hash: {{ include "data/plasma-panels.js" | sha256sum }}
+
+set -euo pipefail
+
+. ~/.local/lib/log.sh
+
+info "Configuring Plasma Shell"
+
+info "Removing existing panels"
+qdbus6 org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "panels().forEach(p => p.remove());"
+
+info "Creating new panels"
+script=$(cat "{{ .chezmoi.sourceDir }}/data/plasma-panels.js")
+set +e
+output=$(qdbus6 org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "${script}")
+status=$?
+set -e
+
+if [[ ${status} -ne 0 ]]; then
+    echo "${output}"
+    exit 1
+fi
+
+info "Captured variables"
+echo "${output}" | jq
+
+get_value() {
+    k="${1:?}"
+    n="${2:?}"
+
+    echo "${output}" | jq -er "${k}" || { echo "${n} not found" >&2; exit 1; }
+}
+
+start_plasmashell() {
+    info "Restarting plasma shell"
+    kstart plasmashell
+    info "Done"
+}
+
+if pgrep -x plasmashell >/dev/null; then
+    trap start_plasmashell EXIT
+
+    kquitapp6 plasmashell
+
+    info "Waiting 5 seconds for plasma shell to exit"
+    sleep 5
+fi
+
+# Top Panel
+info "Configuring Top Panel"
+panel_id="$(get_value .top_panel_id "top panel id")"
+kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel ${panel_id}" --key floating 0
+
+# Bottom Panel
+info "Configuring Bottom Panel"
+panel_id="$(get_value .bottom_panel_id "bottom panel id")"
+kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel ${panel_id}" --key panelLengthMode 1 # Fit Content
+kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel ${panel_id}" --key panelVisibility 2 # Dodge Windows
+
+{{- end }}
+
+# vim: ft=bash
