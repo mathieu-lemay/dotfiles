@@ -4,9 +4,9 @@
 # Set default terminal
 export TERMINAL="kitty"
 
-# Use proper date format
-export LC_ALL="{{ if eq .chezmoi.os "darwin" }}en_CA.UTF-8{{ else }}en_US.UTF-8{{ end }}"
-export LC_TIME="en_GB.UTF-8"
+# Set default locales, with proper time format
+export LC_ALL="{{ .locale.default }}"
+export LC_TIME="{{ .locale.time }}"
 
 # XDG Base Directory spec
 {{- range .envvars.xdg }}
