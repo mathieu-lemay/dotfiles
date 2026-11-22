@@ -25,17 +25,16 @@ logout.writeConfig("show_lockScreen", "false")
 
 output.top_panel_id = p.id
 
-// Bottom dock
+// Dock
 var p = new Panel;
-p.location = "bottom";
+p.location = "{{ if eq .chassisType "vm" }}left{{ else }}bottom{{ end}}";
 p.height = 48;
 
 var tasks = p.addWidget("org.kde.plasma.icontasks")
 tasks.currentConfigGroup = ["General"]
 tasks.writeConfig("launchers", "preferred://browser,applications:kitty.desktop,preferred://filemanager,applications:systemsettings.desktop")
 
-output.bottom_panel_id = p.id;
-output.tasks_applet_id = tasks.id
+output.dock_panel_id = p.id;
 
 output.all= panels().map(function (p) {
   return {
@@ -51,3 +50,5 @@ output.all= panels().map(function (p) {
 });
 
 print(JSON.stringify(output));
+
+// vim: ft=javascript

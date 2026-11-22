@@ -3,7 +3,7 @@
 {{ if eq .chezmoi.os "linux" -}}
 
 # qdbus6-is-installed: {{ ne (lookPath "qdbus6") "" }}
-# panels.js hash: {{ include "data/plasma-panels.js" | sha256sum }}
+# panels.js hash: {{ include "data/plasma-panels.js.tmpl" | sha256sum }}
 
 set -euo pipefail
 
@@ -15,7 +15,7 @@ info "Removing existing panels"
 qdbus6 org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "panels().forEach(p => p.remove());"
 
 info "Creating new panels"
-script=$(cat "{{ .chezmoi.sourceDir }}/data/plasma-panels.js")
+script=$(chezmoi execute-template < "{{ .chezmoi.sourceDir }}/data/plasma-panels.js.tmpl")
 set +e
 output=$(qdbus6 org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "${script}")
 status=$?
@@ -56,11 +56,14 @@ info "Configuring Top Panel"
 panel_id="$(get_value .top_panel_id "top panel id")"
 kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel ${panel_id}" --key floating 0
 
-# Bottom Panel
-info "Configuring Bottom Panel"
-panel_id="$(get_value .bottom_panel_id "bottom panel id")"
+# Dock Panel
+info "Configuring Dock Panel"
+panel_id="$(get_value .dock_panel_id "dock panel id")"
 kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel ${panel_id}" --key panelLengthMode 1 # Fit Content
-kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel ${panel_id}" --key panelVisibility 2 # Dodge Windows
+
+# 0: Always Visible, 2: Dodge Windows
+visibility={{ if eq .chassisType "vm" }}0{{ else }}2{{ end }}
+kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel ${panel_id}" --key panelVisibility "${visibility}"
 
 {{- end }}
 
