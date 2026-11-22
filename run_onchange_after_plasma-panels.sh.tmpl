@@ -69,6 +69,7 @@ kwriteconfig6 --file plasmashellrc --group PlasmaViews --group "Panel ${panel_id
 info "Configuring theme"
 kwriteconfig6 --file kdeglobals --group KDE --key LookAndFeelPackage "org.kde.breezedark.desktop"
 kwriteconfig6 --file kdeglobals --group Icons --key Theme "Papirus-Dark"
+kwriteconfig6 --file kdeglobals --group Sounds --key Enable "false"
 kwriteconfig6 --file kwinrc --group "org.kde.kdecoration2" --key ButtonsOnLeft "XIA" # Close, Minimize, Maximize
 kwriteconfig6 --file kwinrc --group "org.kde.kdecoration2" --key ButtonsOnRight "M" # Menu
 
