@@ -18,8 +18,8 @@ export {{ .key }}="{{ .value }}"
 {{- end }}
 
 {{ if eq .osid "linux-arch" -}}
-# Use GCR SSH Agent
-export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-"${XDG_RUNTIME_DIR}/gcr/ssh"}"
+# Use OpenSSH SSH Agent
+export SSH_AUTH_SOCK="${SSH_AUTH_SOCK:-"${XDG_RUNTIME_DIR}/ssh-agent.socket"}"
 
 {{ end -}}
 
